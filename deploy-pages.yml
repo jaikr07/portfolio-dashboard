@@ -1,0 +1,44 @@
+name: Deploy dashboard
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'setup/**'
+      - 'scripts/**'
+      - 'supabase/**'
+      - 'README.md'
+      - 'data/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare private-safe artifact
+        run: |
+          mkdir -p _site
+          rsync -a ./ _site/ \
+            --exclude '.git/' --exclude '.github/' --exclude '_site/' \
+            --exclude 'setup/' --exclude 'scripts/' --exclude 'supabase/' \
+            --exclude 'README.md' --exclude '.gitignore'
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
