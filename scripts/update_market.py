@@ -147,15 +147,155 @@ class SupabaseREST:
 
 
 def history_for(ticker: str, period: str = "2y") -> pd.DataFrame:
+    """Fetch daily price history with multiple fallbacks."""
+
+    # Method 1: yfinance bulk-download interface
     try:
-        frame = yf.Ticker(ticker).history(period=period, interval="1d", auto_adjust=True, actions=False, repair=True)
-        if frame is None:
-            return pd.DataFrame()
-        frame = frame.dropna(how="all")
-        return frame
+        frame = yf.download(
+            tickers=ticker,
+            period=period,
+            interval="1d",
+            auto_adjust=True,
+            actions=False,
+            repair=False,
+            progress=False,
+            threads=False,
+            timeout=30,
+            multi_level_index=False,
+        )
+
+        if frame is not None and not frame.empty:
+            frame = frame.dropna(how="all")
+
+            if "Close" in frame.columns:
+                close_count = pd.to_numeric(
+                    frame["Close"], errors="coerce"
+                ).notna().sum()
+
+                if close_count >= 20:
+                    print(
+                        f" price history received for {ticker} "
+                        f"through yf.download: {len(frame)} rows"
+                    )
+                    return frame
+
     except Exception as exc:  # noqa: BLE001
-        print(f"  history failed for {ticker}: {exc}")
-        return pd.DataFrame()
+        print(f" yf.download failed for {ticker}: {type(exc).__name__}: {exc}")
+
+    # Method 2: Yahoo chart endpoint directly
+    encoded_ticker = requests.utils.quote(ticker, safe="")
+    requested_range = period if period in {"1y", "2y", "5y", "10y", "max"} else "2y"
+
+    headers = {
+        "User-Agent": (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/124.0.0.0 Safari/537.36"
+        ),
+        "Accept": "application/json,text/plain,*/*",
+        "Accept-Language": "en-US,en;q=0.9",
+    }
+
+    for host in ("query1.finance.yahoo.com", "query2.finance.yahoo.com"):
+        try:
+            url = (
+                f"https://{host}/v8/finance/chart/{encoded_ticker}"
+            )
+
+            response = requests.get(
+                url,
+                params={
+                    "range": requested_range,
+                    "interval": "1d",
+                    "events": "div,splits",
+                    "includeAdjustedClose": "true",
+                },
+                headers=headers,
+                timeout=30,
+            )
+
+            if response.status_code == 429:
+                raise RuntimeError("Yahoo rate limit: HTTP 429")
+
+            response.raise_for_status()
+            payload = response.json()
+
+            chart = payload.get("chart") or {}
+            error = chart.get("error")
+
+            if error:
+                raise RuntimeError(str(error))
+
+            results = chart.get("result") or []
+
+            if not results:
+                raise RuntimeError("Yahoo returned no chart result")
+
+            result = results[0]
+            timestamps = result.get("timestamp") or []
+            indicators = result.get("indicators") or {}
+            quote_rows = indicators.get("quote") or []
+
+            if not timestamps or not quote_rows:
+                raise RuntimeError("Yahoo returned no timestamps or OHLC data")
+
+            quotes = quote_rows[0]
+            adjusted_rows = indicators.get("adjclose") or []
+            adjusted = adjusted_rows[0].get("adjclose", []) if adjusted_rows else []
+
+            close_values = adjusted or quotes.get("close") or []
+
+            row_count = len(timestamps)
+
+            def sized(values: list | None) -> list:
+                values = list(values or [])
+                if len(values) < row_count:
+                    values.extend([None] * (row_count - len(values)))
+                return values[:row_count]
+
+            frame = pd.DataFrame(
+                {
+                    "Open": sized(quotes.get("open")),
+                    "High": sized(quotes.get("high")),
+                    "Low": sized(quotes.get("low")),
+                    "Close": sized(close_values),
+                    "Volume": sized(quotes.get("volume")),
+                },
+                index=pd.to_datetime(
+                    timestamps,
+                    unit="s",
+                    utc=True,
+                    errors="coerce",
+                ),
+            )
+
+            frame.index.name = "Date"
+            frame = frame[~frame.index.isna()]
+            frame = frame[~frame.index.duplicated(keep="last")]
+            frame = frame.sort_index()
+            frame = frame.dropna(subset=["Close"])
+
+            if len(frame) >= 20:
+                print(
+                    f" price history received for {ticker} "
+                    f"through {host}: {len(frame)} rows"
+                )
+                return frame
+
+            raise RuntimeError(
+                f"Only {len(frame)} valid rows returned; at least 20 required"
+            )
+
+        except Exception as exc:  # noqa: BLE001
+            print(
+                f" direct Yahoo history failed for {ticker} "
+                f"through {host}: {type(exc).__name__}: {exc}"
+            )
+
+            time.sleep(0.5)
+
+    print(f" no usable price history received for {ticker}")
+    return pd.DataFrame()
 
 
 def search_yahoo_symbol(query: str) -> tuple[str | None, str | None]:
