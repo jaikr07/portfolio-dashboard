@@ -3,12 +3,13 @@ import {
   loadCore,
   aggregateHoldings,
   addTransaction,
+  updateTransaction,
   upsertInstrument,
   deleteTransaction,
   importTradebookCsv,
 } from './data-service.js';
 import { fmtMoney, fmtNum, esc, today } from './utils.js';
-import { updateModeBadge, bindModal } from './common.js';
+import { updateModeBadge } from './common.js';
 
 mountShell('transactions', 'Transactions & Recent Additions');
 const root = document.getElementById('pageContent');
@@ -35,6 +36,12 @@ const canonicalSymbol = symbol =>
 const isHistoryOnly = transaction =>
   transaction.analytics_only === true ||
   String(transaction.analytics_only).toLowerCase() === 'true';
+
+const isEditableManual = transaction =>
+  !isHistoryOnly(transaction) &&
+  String(transaction.source || '') !== 'holdings_snapshot' &&
+  String(transaction.source || '') !== 'zerodha_tradebook' &&
+  String(transaction.transaction_type || '').toLowerCase() !== 'opening';
 
 const transactionType = transaction =>
   String(transaction.transaction_type || '').trim().toLowerCase();
@@ -284,11 +291,20 @@ function renderActivity(transactions) {
               2,
             )}</small>
           </div>
-          <strong class="money ${transactionType(transaction) === 'sell' ? 'negative' : 'positive'}">
-            ${transactionType(transaction) === 'sell' ? '-' : '+'}${fmtMoney(
-              tradeCash(transaction),
-            )}
-          </strong>
+          <div class="activity-actions">
+            <strong class="money ${transactionType(transaction) === 'sell' ? 'negative' : 'positive'}">
+              ${transactionType(transaction) === 'sell' ? '-' : '+'}${fmtMoney(
+                tradeCash(transaction),
+              )}
+            </strong>
+            ${
+              isEditableManual(transaction)
+                ? `<button type="button" class="btn small edit-tx" data-id="${esc(
+                    transaction.id,
+                  )}">Edit</button>`
+                : ''
+            }
+          </div>
         </div>`,
     )
     .join('');
@@ -315,9 +331,20 @@ function renderLedger(transactions) {
             ${isHistoryOnly(transaction) ? '<span class="badge neutral">History only</span> ' : ''}
             ${esc(transaction.notes || '')}
           </td>
-          <td><button class="btn danger small del" data-id="${esc(
-            transaction.id,
-          )}">Delete</button></td>
+          <td>
+            <div class="row-actions">
+              ${
+                isEditableManual(transaction)
+                  ? `<button type="button" class="btn small edit-tx" data-id="${esc(
+                      transaction.id,
+                    )}">Edit</button>`
+                  : '<span class="subtext">Read-only import</span>'
+              }
+              <button type="button" class="btn danger small del" data-id="${esc(
+                transaction.id,
+              )}">Delete</button>
+            </div>
+          </td>
         </tr>`,
     )
     .join('');
@@ -333,6 +360,12 @@ async function run() {
   const matchedImportedSymbols = new Set(
     matchedImported.map(transaction => canonicalSymbol(transaction.display_symbol)),
   ).size;
+  const manualPriceIssues = core.transactions.filter(
+    transaction =>
+      isEditableManual(transaction) &&
+      ['buy', 'sell'].includes(transactionType(transaction)) &&
+      Number(transaction.price || 0) <= 0,
+  );
 
   root.innerHTML = `
     <div class="hero modern-hero">
@@ -367,6 +400,27 @@ async function run() {
           : '<div class="coverage-note">No tradebook history has been imported yet. Future manual transactions will still appear here.</div>'
       }
     </div>
+
+    ${
+      manualPriceIssues.length
+        ? `<div class="notice warning transaction-correction-panel">
+            <div>
+              <strong>${manualPriceIssues.length} manual transaction${manualPriceIssues.length === 1 ? '' : 's'} need${manualPriceIssues.length === 1 ? 's' : ''} correction</strong>
+              <p>A buy or sell was saved with a zero price. This understates the cost basis and recent deployment. Edit the record before using the portfolio totals.</p>
+            </div>
+            <div class="correction-actions">
+              ${manualPriceIssues
+                .slice(0, 5)
+                .map(
+                  transaction => `<button type="button" class="btn small edit-tx" data-id="${esc(
+                    transaction.id,
+                  )}">Fix ${esc(transaction.symbol)} · ${esc(transaction.trade_date)}</button>`,
+                )
+                .join('')}
+            </div>
+          </div>`
+        : ''
+    }
 
     <div class="period-control-row">
       <div>
@@ -425,19 +479,21 @@ async function run() {
 
     <div class="modal-backdrop" id="txModal">
       <div class="modal">
-        <h3>Add transaction</h3>
+        <span class="eyebrow" id="txModalEyebrow">Manual portfolio entry</span>
+        <h3 id="txModalTitle">Add transaction</h3>
+        <p class="modal-copy" id="txModalCopy">New buys and sells update both your holdings and recent-deployment charts.</p>
         <form id="txForm" class="form-grid">
           <div class="field"><label>Symbol</label><input class="input" name="symbol" list="symbols" required><datalist id="symbols">${core.instruments
             .map(instrument => `<option value="${esc(instrument.symbol)}">`)
             .join('')}</datalist></div>
           <div class="field"><label>Yahoo symbol mapping</label><input class="input" name="yahoo_symbol" placeholder="e.g. RELIANCE.NS"></div>
-          <div class="field"><label>Transaction type</label><select class="input" name="transaction_type"><option value="buy">Buy</option><option value="sell">Sell</option><option value="bonus">Bonus</option><option value="split">Split adjustment</option><option value="adjustment">Other adjustment</option></select></div>
+          <div class="field"><label>Transaction type</label><select class="input" id="txType" name="transaction_type"><option value="buy">Buy</option><option value="sell">Sell</option><option value="bonus">Bonus</option><option value="split">Split adjustment</option><option value="adjustment">Other adjustment</option></select></div>
           <div class="field"><label>Trade date</label><input type="date" class="input" name="trade_date" value="${today()}" required></div>
-          <div class="field"><label>Quantity</label><input type="number" step="any" min="0" class="input" name="quantity" required></div>
-          <div class="field"><label>Price per share</label><input type="number" step="any" min="0" class="input" name="price" value="0"></div>
+          <div class="field"><label>Quantity</label><input type="number" step="any" min="0.000001" class="input" name="quantity" required></div>
+          <div class="field"><label>Price per share</label><input type="number" step="any" min="0.0001" class="input" id="txPrice" name="price" placeholder="Required for buy and sell"><small id="priceHelp">Buy and sell transactions require a price above zero.</small></div>
           <div class="field"><label>Fees / taxes</label><input type="number" step="any" min="0" class="input" name="fees" value="0"></div>
           <div class="field full"><label>Notes</label><textarea class="input" name="notes" rows="3"></textarea></div>
-          <div class="full modal-actions"><button type="button" class="btn" id="closeTx">Cancel</button><button class="btn primary">Save transaction</button></div>
+          <div class="full modal-actions"><button type="button" class="btn" id="closeTx">Cancel</button><button class="btn primary" id="txSubmit">Save transaction</button></div>
         </form>
       </div>
     </div>`;
@@ -667,11 +723,103 @@ async function run() {
   });
   renderPeriod(selectedWindow);
 
-  bindModal('txModal', 'openTx', ['closeTx']);
+  const modal = document.getElementById('txModal');
+  const transactionForm = document.getElementById('txForm');
+  const transactionTypeInput = document.getElementById('txType');
+  const priceInput = document.getElementById('txPrice');
+  const priceHelp = document.getElementById('priceHelp');
+  let editingTransactionId = null;
 
-  document.getElementById('txForm').addEventListener('submit', async event => {
+  function setPriceRule() {
+    const type = String(transactionTypeInput.value || '').toLowerCase();
+    const priceRequired = ['buy', 'sell'].includes(type);
+    priceInput.required = priceRequired;
+    priceInput.min = priceRequired ? '0.0001' : '0';
+    priceInput.placeholder = priceRequired
+      ? 'Required for buy and sell'
+      : 'Zero is allowed for bonus or split';
+    priceHelp.textContent = priceRequired
+      ? 'Buy and sell transactions require a price above zero.'
+      : 'A zero price is valid for bonus and split adjustments.';
+    if (!priceRequired && priceInput.value === '') priceInput.value = '0';
+    priceInput.setCustomValidity('');
+  }
+
+  function closeTransactionModal() {
+    modal.classList.remove('open');
+  }
+
+  function openNewTransaction() {
+    editingTransactionId = null;
+    transactionForm.reset();
+    transactionForm.elements.trade_date.value = today();
+    transactionForm.elements.transaction_type.value = 'buy';
+    transactionForm.elements.fees.value = '0';
+    document.getElementById('txModalTitle').textContent = 'Add transaction';
+    document.getElementById('txModalCopy').textContent =
+      'New buys and sells update both your holdings and recent-deployment charts.';
+    document.getElementById('txSubmit').textContent = 'Save transaction';
+    setPriceRule();
+    modal.classList.add('open');
+  }
+
+  function openEditTransaction(transaction) {
+    if (!isEditableManual(transaction)) return;
+    editingTransactionId = transaction.id;
+    const instrument = core.instruments.find(
+      row => canonicalSymbol(row.symbol) === canonicalSymbol(transaction.symbol),
+    );
+    transactionForm.elements.symbol.value = transaction.symbol || '';
+    transactionForm.elements.yahoo_symbol.value = instrument?.yahoo_symbol || '';
+    transactionForm.elements.transaction_type.value = transactionType(transaction);
+    transactionForm.elements.trade_date.value = String(transaction.trade_date || '').slice(0, 10);
+    transactionForm.elements.quantity.value = Number(transaction.quantity || 0);
+    transactionForm.elements.price.value = Number(transaction.price || 0);
+    transactionForm.elements.fees.value = Number(transaction.fees || 0);
+    transactionForm.elements.notes.value = transaction.notes || '';
+    document.getElementById('txModalTitle').textContent = `Edit ${transaction.symbol} transaction`;
+    document.getElementById('txModalCopy').textContent =
+      'Correcting this record will immediately recalculate quantity, average cost, P&L and recent-deployment charts.';
+    document.getElementById('txSubmit').textContent = 'Update transaction';
+    setPriceRule();
+    modal.classList.add('open');
+  }
+
+  document.getElementById('openTx').addEventListener('click', openNewTransaction);
+  document.getElementById('closeTx').addEventListener('click', closeTransactionModal);
+  modal.addEventListener('click', event => {
+    if (event.target === modal) closeTransactionModal();
+  });
+  transactionTypeInput.addEventListener('change', setPriceRule);
+
+  document.querySelectorAll('.edit-tx').forEach(button =>
+    button.addEventListener('click', () => {
+      const transaction = core.transactions.find(
+        row => String(row.id) === String(button.dataset.id),
+      );
+      if (transaction) openEditTransaction(transaction);
+    }),
+  );
+
+  transactionForm.addEventListener('submit', async event => {
     event.preventDefault();
     const form = Object.fromEntries(new FormData(event.target));
+    const type = String(form.transaction_type || '').toLowerCase();
+    const price = Number(form.price || 0);
+    const quantity = Number(form.quantity || 0);
+    if (quantity <= 0) {
+      transactionForm.elements.quantity.setCustomValidity('Enter a quantity above zero.');
+      transactionForm.elements.quantity.reportValidity();
+      return;
+    }
+    transactionForm.elements.quantity.setCustomValidity('');
+    if (['buy', 'sell'].includes(type) && price <= 0) {
+      priceInput.setCustomValidity('Enter the executed price. Buy and sell prices cannot be zero.');
+      priceInput.reportValidity();
+      return;
+    }
+    priceInput.setCustomValidity('');
+
     const symbol = form.symbol.trim().toUpperCase();
     if (!core.instruments.some(instrument => instrument.symbol === symbol)) {
       await upsertInstrument({
@@ -683,7 +831,8 @@ async function run() {
       });
     }
     delete form.yahoo_symbol;
-    await addTransaction(form);
+    if (editingTransactionId) await updateTransaction(editingTransactionId, form);
+    else await addTransaction(form);
     location.reload();
   });
 

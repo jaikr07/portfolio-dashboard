@@ -75,13 +75,49 @@ export async function upsertInstrument(record){
   const {error}=await supabase().from('instruments').upsert(record,{onConflict:'user_id,symbol'});if(error)throw error;
 }
 
+function cleanManualTransaction(record){
+  return {
+    symbol:String(record.symbol||'').trim().toUpperCase(),
+    transaction_type:String(record.transaction_type||'buy').trim().toLowerCase(),
+    quantity:Number(record.quantity),
+    price:Number(record.price||0),
+    fees:Number(record.fees||0),
+    trade_date:record.trade_date||today(),
+    notes:String(record.notes||'').trim(),
+  };
+}
+
 export async function addTransaction(record){
-  const clean={...record,symbol:String(record.symbol).trim().toUpperCase(),quantity:Number(record.quantity),price:Number(record.price||0),fees:Number(record.fees||0),trade_date:record.trade_date||today()};
-  if(record.analytics_only!==undefined) clean.analytics_only=Boolean(record.analytics_only);
+  const clean=cleanManualTransaction(record);
   const s=await session();
   if(!s){const st=localState();st.transactions.push({...clean,id:uid(),created_at:new Date().toISOString()});saveLocal(st);return;}
   const {error}=await supabase().from('transactions').insert(clean);if(error)throw error;
 }
+
+export async function updateTransaction(id,record){
+  if(!id)throw new Error('Transaction ID is missing.');
+  const clean=cleanManualTransaction(record);
+  const s=await session();
+  if(!s){
+    const st=localState();
+    const index=st.transactions.findIndex(x=>String(x.id)===String(id));
+    if(index<0)throw new Error('Transaction record was not found.');
+    const existing=st.transactions[index];
+    if(existing.analytics_only===true||String(existing.analytics_only).toLowerCase()==='true'||String(existing.source||'')==='zerodha_tradebook')throw new Error('Imported tradebook rows are read-only. Correct the source CSV and re-import it instead.');
+    if(String(existing.transaction_type||'').toLowerCase()==='opening'||String(existing.source||'')==='holdings_snapshot')throw new Error('Opening holdings are read-only. Re-import the holdings CSV to correct them.');
+    st.transactions[index]={...existing,...clean,updated_at:new Date().toISOString()};
+    saveLocal(st);
+    return;
+  }
+  const sb=supabase();
+  const {data:existing,error:readError}=await sb.from('transactions').select('analytics_only,source,transaction_type').eq('id',id).single();
+  if(readError)throw readError;
+  if(existing?.analytics_only===true||String(existing?.source||'')==='zerodha_tradebook')throw new Error('Imported tradebook rows are read-only. Correct the source CSV and re-import it instead.');
+  if(String(existing?.transaction_type||'').toLowerCase()==='opening'||String(existing?.source||'')==='holdings_snapshot')throw new Error('Opening holdings are read-only. Re-import the holdings CSV to correct them.');
+  const {error}=await sb.from('transactions').update(clean).eq('id',id);
+  if(error)throw error;
+}
+
 export async function deleteTransaction(id){const s=await session();if(!s){const st=localState();st.transactions=st.transactions.filter(x=>x.id!==id);saveLocal(st);return;}const {error}=await supabase().from('transactions').delete().eq('id',id);if(error)throw error;}
 export async function saveManualAnnouncement(record){const s=await session();if(!s){const st=localState();st.manualAnnouncements.unshift({...record,id:uid(),is_manual:true,published_at:record.published_at||new Date().toISOString()});saveLocal(st);return;}const {error}=await supabase().from('announcements').insert({...record,is_manual:true});if(error)throw error;}
 
