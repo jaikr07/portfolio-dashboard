@@ -218,8 +218,20 @@ def calculate_rsi(close: pd.Series, period: int = 14) -> pd.Series:
 
 
 def technical_snapshot(instrument: Instrument, yahoo_symbol: str, frame: pd.DataFrame) -> dict[str, Any]:
-    close = pd.to_numeric(frame.get("Close"), errors="coerce").dropna()
-    volume = pd.to_numeric(frame.get("Volume"), errors="coerce").reindex(close.index).fillna(0)
+    if frame is None or frame.empty or "Close" not in frame.columns:
+        close = pd.Series(dtype="float64")
+        volume = pd.Series(dtype="float64")
+    else:
+        close = pd.to_numeric(frame["Close"], errors="coerce").dropna()
+
+        if "Volume" in frame.columns:
+            volume = (
+                pd.to_numeric(frame["Volume"], errors="coerce")
+                .reindex(close.index)
+                .fillna(0)
+            )
+        else:
+            volume = pd.Series(0.0, index=close.index)
     if len(close) < 20:
         return {
             "user_id": instrument.user_id,
