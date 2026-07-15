@@ -26,6 +26,9 @@ create table if not exists public.transactions (
   price numeric not null default 0 check (price >= 0),
   fees numeric not null default 0 check (fees >= 0),
   notes text,
+  analytics_only boolean not null default false,
+  external_trade_id text,
+  source text,
   created_at timestamptz not null default now()
 );
 
@@ -65,6 +68,7 @@ create table if not exists public.financial_results (
   net_margin_pct numeric, ocf_margin_pct numeric, fcf_margin_pct numeric,
   cash_conversion_pct numeric, capex_intensity_pct numeric,
   quality_score integer, quality_label text,
+  cash_flow_basis text, cash_flow_note text, cash_metrics_applicable boolean default true,
   currency text default 'INR', source text, fetched_at timestamptz not null default now(),
   unique(user_id, symbol, period_end, period_type)
 );
@@ -118,6 +122,12 @@ alter table public.financial_results add column if not exists cash_conversion_pc
 alter table public.financial_results add column if not exists capex_intensity_pct numeric;
 alter table public.financial_results add column if not exists quality_score integer;
 alter table public.financial_results add column if not exists quality_label text;
+alter table public.financial_results add column if not exists cash_flow_basis text;
+alter table public.financial_results add column if not exists cash_flow_note text;
+alter table public.financial_results add column if not exists cash_metrics_applicable boolean default true;
+alter table public.transactions add column if not exists analytics_only boolean not null default false;
+alter table public.transactions add column if not exists external_trade_id text;
+alter table public.transactions add column if not exists source text;
 alter table public.announcements add column if not exists impact_reason text;
 alter table public.announcements add column if not exists watch_items text;
 alter table public.announcements add column if not exists time_horizon text;
@@ -152,3 +162,14 @@ grant usage on schema public to authenticated;
 grant select, insert, update, delete on public.instruments, public.transactions, public.market_snapshots, public.financial_results, public.announcements to authenticated;
 grant select on public.latest_market_snapshots to authenticated;
 revoke all on public.instruments, public.transactions, public.market_snapshots, public.financial_results, public.announcements from anon;
+
+-- v3 tradebook deduplication constraint.
+do $$
+begin
+  if not exists (
+    select 1 from pg_constraint where conname = 'transactions_user_external_trade_unique'
+  ) then
+    alter table public.transactions
+      add constraint transactions_user_external_trade_unique unique (user_id, external_trade_id);
+  end if;
+end $$;

@@ -517,7 +517,54 @@ def result_quality_score(row: dict[str, Any]) -> tuple[int, str]:
     return score, label
 
 
+def _column_date(value: Any) -> pd.Timestamp | None:
+    try:
+        stamp = pd.Timestamp(value)
+        if pd.isna(stamp):
+            return None
+        if stamp.tzinfo is not None:
+            stamp = stamp.tz_convert(None)
+        return stamp.normalize()
+    except Exception:  # noqa: BLE001
+        return None
+
+
+def nearest_statement_value(
+    series: pd.Series | None,
+    target_column: Any,
+    max_days: int = 75,
+) -> float | None:
+    """Return the nearest statement value when income and cash-flow dates differ."""
+    if series is None or series.empty:
+        return None
+    target = _column_date(target_column)
+    if target is None:
+        return None
+    candidates: list[tuple[int, float]] = []
+    for column, raw in series.items():
+        stamp = _column_date(column)
+        value = clean_number(raw)
+        if stamp is None or value is None:
+            continue
+        distance = abs((stamp - target).days)
+        if distance <= max_days:
+            candidates.append((distance, value))
+    return min(candidates, key=lambda item: item[0])[1] if candidates else None
+
+
+def _sum_available(values: list[float | None], minimum: int = 1) -> float | None:
+    clean = [float(value) for value in values if value is not None]
+    return sum(clean) if len(clean) >= minimum else None
+
+
 def financial_rows(instrument: Instrument, yahoo_symbol: str) -> list[dict[str, Any]]:
+    """Build decision metrics, using TTM cash flow for quarterly rows.
+
+    Yahoo frequently publishes income-statement and cash-flow columns with slightly
+    different dates. Matching only identical column labels leaves OCF, capex and FCF
+    blank. This implementation matches the nearest reporting date and uses trailing
+    four-quarter cash flow, which is more useful than one volatile quarter.
+    """
     if str(instrument.asset_type).lower() == "etf":
         return []
     try:
@@ -534,6 +581,12 @@ def financial_rows(instrument: Instrument, yahoo_symbol: str) -> list[dict[str, 
         print(f"  financial statement fetch failed {yahoo_symbol}: {exc}")
         return []
 
+    sector_name = str(instrument.sector or "").lower()
+    cash_applicable = not any(
+        token in sector_name
+        for token in ("financial", "bank", "insurance", "nbfc", "lending")
+    )
+
     output: list[dict[str, Any]] = []
     for period_type, frame in income_frames.items():
         if frame is None or frame.empty:
@@ -543,48 +596,96 @@ def financial_rows(instrument: Instrument, yahoo_symbol: str) -> list[dict[str, 
         operating = find_metric(frame, ["Operating Income", "EBIT"])
         net = find_metric(frame, ["Net Income", "Net Income Common Stockholders"])
         eps = find_metric(frame, ["Diluted EPS", "Basic EPS"])
-        ocf = find_metric(cash, ["Operating Cash Flow", "Total Cash From Operating Activities", "Cash Flow From Continuing Operating Activities"])
-        capex = find_metric(cash, ["Capital Expenditure", "Capital Expenditures", "Purchase Of PPE", "Purchase Of Property Plant And Equipment"])
+        ocf = find_metric(
+            cash,
+            [
+                "Operating Cash Flow",
+                "Total Cash From Operating Activities",
+                "Cash Flow From Continuing Operating Activities",
+            ],
+        )
+        capex = find_metric(
+            cash,
+            [
+                "Capital Expenditure",
+                "Capital Expenditures",
+                "Purchase Of PPE",
+                "Purchase Of Property Plant And Equipment",
+            ],
+        )
         reported_fcf = find_metric(cash, ["Free Cash Flow"])
 
         columns = sorted(frame.columns, reverse=True)
         limit = 8 if period_type == "quarterly" else 5
 
-        def at(series: pd.Series | None, column: Any) -> float | None:
+        def income_at(series: pd.Series | None, column: Any) -> float | None:
             return clean_number(series.get(column)) if series is not None and column in series.index else None
 
+        def cash_at(series: pd.Series | None, column: Any) -> float | None:
+            return nearest_statement_value(series, column, 80 if period_type == "quarterly" else 140)
+
+        def ttm(series: pd.Series | None, index: int, cash_metric: bool = False) -> float | None:
+            window = columns[index:index + 4]
+            if len(window) < 4:
+                return None
+            getter = cash_at if cash_metric else income_at
+            return _sum_available([getter(series, column) for column in window], minimum=3)
+
         for idx, col in enumerate(columns[:limit]):
-            rev = at(revenue, col)
-            op = at(operating, col)
-            ni = at(net, col)
-            eps_value = at(eps, col)
-            ocf_value = at(ocf, col)
-            capex_value = at(capex, col)
-            fcf_value = at(reported_fcf, col)
+            rev = income_at(revenue, col)
+            op = income_at(operating, col)
+            ni = income_at(net, col)
+            eps_value = income_at(eps, col)
+
+            if period_type == "quarterly":
+                ocf_value = ttm(ocf, idx, cash_metric=True) if cash_applicable else None
+                capex_value = ttm(capex, idx, cash_metric=True) if cash_applicable else None
+                fcf_value = ttm(reported_fcf, idx, cash_metric=True) if cash_applicable else None
+                cash_rev = ttm(revenue, idx)
+                cash_net = ttm(net, idx)
+                old_ocf = ttm(ocf, idx + 4, cash_metric=True) if cash_applicable else None
+                old_capex = ttm(capex, idx + 4, cash_metric=True) if cash_applicable else None
+                old_fcf = ttm(reported_fcf, idx + 4, cash_metric=True) if cash_applicable else None
+                cash_basis = "TTM"
+            else:
+                ocf_value = cash_at(ocf, col) if cash_applicable else None
+                capex_value = cash_at(capex, col) if cash_applicable else None
+                fcf_value = cash_at(reported_fcf, col) if cash_applicable else None
+                cash_rev = rev
+                cash_net = ni
+                old_col = columns[idx + 1] if idx + 1 < len(columns) else None
+                old_ocf = cash_at(ocf, old_col) if old_col is not None and cash_applicable else None
+                old_capex = cash_at(capex, old_col) if old_col is not None and cash_applicable else None
+                old_fcf = cash_at(reported_fcf, old_col) if old_col is not None and cash_applicable else None
+                cash_basis = "Annual"
+
             if fcf_value is None and ocf_value is not None and capex_value is not None:
                 fcf_value = ocf_value + capex_value if capex_value < 0 else ocf_value - capex_value
+            if old_fcf is None and old_ocf is not None and old_capex is not None:
+                old_fcf = old_ocf + old_capex if old_capex < 0 else old_ocf - old_capex
 
             yoy_index = idx + (4 if period_type == "quarterly" else 1)
             sequential_index = idx + 1
             yoy_col = columns[yoy_index] if yoy_index < len(columns) else None
             sequential_col = columns[sequential_index] if sequential_index < len(columns) else None
 
-            old_rev = at(revenue, yoy_col) if yoy_col is not None else None
-            old_op = at(operating, yoy_col) if yoy_col is not None else None
-            old_ni = at(net, yoy_col) if yoy_col is not None else None
-            old_eps = at(eps, yoy_col) if yoy_col is not None else None
-            old_ocf = at(ocf, yoy_col) if yoy_col is not None else None
-            old_capex = at(capex, yoy_col) if yoy_col is not None else None
-            old_fcf = at(reported_fcf, yoy_col) if yoy_col is not None else None
-            if old_fcf is None and old_ocf is not None and old_capex is not None:
-                old_fcf = old_ocf + old_capex if old_capex < 0 else old_ocf - old_capex
-
-            seq_rev = at(revenue, sequential_col) if sequential_col is not None else None
-            seq_op = at(operating, sequential_col) if sequential_col is not None else None
-            seq_ni = at(net, sequential_col) if sequential_col is not None else None
+            old_rev = income_at(revenue, yoy_col) if yoy_col is not None else None
+            old_op = income_at(operating, yoy_col) if yoy_col is not None else None
+            old_ni = income_at(net, yoy_col) if yoy_col is not None else None
+            old_eps = income_at(eps, yoy_col) if yoy_col is not None else None
+            seq_rev = income_at(revenue, sequential_col) if sequential_col is not None else None
+            seq_op = income_at(operating, sequential_col) if sequential_col is not None else None
+            seq_ni = income_at(net, sequential_col) if sequential_col is not None else None
 
             op_margin = safe_margin(op, rev)
             old_op_margin = safe_margin(old_op, old_rev)
+            cash_note = (
+                "TTM cash-flow metrics matched to the nearest reported cash-flow dates."
+                if period_type == "quarterly" and cash_applicable
+                else "Annual cash-flow metrics matched to the nearest reported date."
+                if cash_applicable
+                else "Operating cash flow and capex are not comparable decision metrics for financial businesses."
+            )
             row = {
                 "user_id": instrument.user_id,
                 "symbol": instrument.symbol,
@@ -608,12 +709,19 @@ def financial_rows(instrument: Instrument, yahoo_symbol: str) -> list[dict[str, 
                 "capex_yoy": clean_number(pct_change(capex_value, old_capex, absolute=True)),
                 "fcf_yoy": clean_number(pct_change(fcf_value, old_fcf)),
                 "operating_margin_pct": clean_number(op_margin),
-                "operating_margin_change_yoy_pp": clean_number(op_margin - old_op_margin) if op_margin is not None and old_op_margin is not None else None,
+                "operating_margin_change_yoy_pp": clean_number(op_margin - old_op_margin)
+                if op_margin is not None and old_op_margin is not None
+                else None,
                 "net_margin_pct": clean_number(safe_margin(ni, rev)),
-                "ocf_margin_pct": clean_number(safe_margin(ocf_value, rev)),
-                "fcf_margin_pct": clean_number(safe_margin(fcf_value, rev)),
-                "cash_conversion_pct": clean_number(safe_margin(ocf_value, ni)),
-                "capex_intensity_pct": clean_number(safe_margin(abs(capex_value), rev)) if capex_value is not None else None,
+                "ocf_margin_pct": clean_number(safe_margin(ocf_value, cash_rev)),
+                "fcf_margin_pct": clean_number(safe_margin(fcf_value, cash_rev)),
+                "cash_conversion_pct": clean_number(safe_margin(ocf_value, cash_net)),
+                "capex_intensity_pct": clean_number(safe_margin(abs(capex_value), cash_rev))
+                if capex_value is not None
+                else None,
+                "cash_flow_basis": cash_basis if cash_applicable else "Not applicable",
+                "cash_flow_note": cash_note,
+                "cash_metrics_applicable": cash_applicable,
                 "currency": "INR",
                 "source": "Yahoo Finance via yfinance",
                 "fetched_at": now_iso(),
