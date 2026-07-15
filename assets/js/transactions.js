@@ -25,8 +25,10 @@ function monthlySeries(history){
     byMonth.get(key)[String(t.transaction_type).toLowerCase()]+=amount(t);
   }
   const labels=[]; const buys=[]; const sells=[]; const cumulative=[]; let running=0;
-  if(history.length){
-    const start=new Date(Math.min(...history.map(t=>cleanDate(t).getTime()))); start.setDate(1);
+   if(history.length){
+    const validDates=history.map(t=>cleanDate(t.trade_date)).filter(Boolean);
+    if(!validDates.length)return {labels,buys,sells,cumulative};
+    const start=new Date(Math.min(...validDates.map(d=>d.getTime()))); start.setDate(1);
     const end=new Date(); end.setDate(1);
     for(let d=new Date(start);d<=end;d.setMonth(d.getMonth()+1)){
       const key=monthKey(d),v=byMonth.get(key)||{buy:0,sell:0};
