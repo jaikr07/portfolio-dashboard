@@ -1,5 +1,24 @@
 [
   {
+    "external_id": "c2039bfebfb7f33cdcefbbb339480ec9",
+    "published_at": "2026-07-15T16:54:00+00:00",
+    "title": "ACDR Applauds New FSIC Study Highlighting Debt Relief as an Important Solution to America's Consumer Debt Crisis",
+    "source": "Business Wire",
+    "source_url": "https://finance.yahoo.com/economy/policy/articles/acdr-applauds-fsic-study-highlighting-165400259.html",
+    "summary": "ACDR Applauds New FSIC Study Highlighting Debt Relief as an Important Solution to America's Consumer Debt Crisis",
+    "category": "Credit / balance sheet",
+    "impact_score": 0,
+    "impact_label": "Neutral / monitor",
+    "confidence": "low",
+    "impact_reason": "The balance-sheet effect is not yet clear from the available headline.",
+    "watch_items": "Track net debt, interest cost, maturity schedule, credit-rating rationale and covenant headroom.",
+    "time_horizon": "Near to medium term",
+    "materiality": "Low / unquantified",
+    "is_manual": false,
+    "fetched_at": "2026-07-15T17:11:22.322464+00:00",
+    "symbol": "RELIANCE"
+  },
+  {
     "external_id": "6dfd783470a61e8e750070381117fc4b",
     "published_at": "2026-07-15T16:37:00+00:00",
     "title": "ProVen Growth and Income VCT plc: Interim Management Statement",
@@ -12,7 +31,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:36.925767+00:00",
-    "symbol": "RELIANCE"
+    "symbol": "RELIANCE",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "e9575b3e395bbf7ca8f558be3586c372",
@@ -27,7 +50,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:41.803848+00:00",
-    "symbol": "SILVER"
+    "symbol": "SILVER",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "48bd4d7b5f5b5212dbdcc7e7b732616f",
@@ -42,7 +69,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:23.942914+00:00",
-    "symbol": "PERSISTENT"
+    "symbol": "PERSISTENT",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "3e0f3005bcf8c8bdbd15e142fdab89fa",
@@ -57,7 +88,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:36.925692+00:00",
-    "symbol": "RELIANCE"
+    "symbol": "RELIANCE",
+    "impact_reason": "The result is mixed; the headline alone is insufficient without growth, margin and cash-flow context.",
+    "watch_items": "Check revenue and profit growth, margin movement, operating cash flow, working capital, guidance and one-off items.",
+    "time_horizon": "Immediate to medium term",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "866a5abde942a6768e200ccf537fce99",
@@ -72,7 +107,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:23.942953+00:00",
-    "symbol": "PERSISTENT"
+    "symbol": "PERSISTENT",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "a0be3ea59a8c7788004102717a26a6e6",
@@ -87,7 +126,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:36.925634+00:00",
-    "symbol": "RELIANCE"
+    "symbol": "RELIANCE",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "aaa8e011df9a9ee322cb49ccb397bd15",
@@ -102,7 +145,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:41.803893+00:00",
-    "symbol": "SILVER"
+    "symbol": "SILVER",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "2820916adbde6ad4ab0228105817e55f",
@@ -117,7 +164,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:44:46.248165+00:00",
-    "symbol": "CAMS"
+    "symbol": "CAMS",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "978fdbff0b6b5d2b092493e37eedcbb9",
@@ -132,7 +183,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:23.942933+00:00",
-    "symbol": "PERSISTENT"
+    "symbol": "PERSISTENT",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "4a1f51036d9132ec28992cb77470f997",
@@ -147,7 +202,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:41.803915+00:00",
-    "symbol": "SILVER"
+    "symbol": "SILVER",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "13983e0fd7ccc880a744d8564e8857a4",
@@ -162,7 +221,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:02.339580+00:00",
-    "symbol": "ELLEN"
+    "symbol": "ELLEN",
+    "impact_reason": "New capacity can support future growth, but the benefit appears only when demand, commissioning and utilisation develop as planned.",
+    "watch_items": "Track commissioning date, capex funding, utilisation ramp-up, incremental revenue potential and return on capital.",
+    "time_horizon": "Medium term",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "47377d273f3d7af5d292d959951ed5b0",
@@ -177,7 +240,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:02.339604+00:00",
-    "symbol": "ELLEN"
+    "symbol": "ELLEN",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "3d168a2ccc30833067f7df45cc4dafe2",
@@ -192,7 +259,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:23.942866+00:00",
-    "symbol": "PERSISTENT"
+    "symbol": "PERSISTENT",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "5d2dc212702146f55e064d6a196752ff",
@@ -207,7 +278,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:55.248162+00:00",
-    "symbol": "TARSONS"
+    "symbol": "TARSONS",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "9cf7d0e236044e8a9940fd90bf849714",
@@ -222,7 +297,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:41.803795+00:00",
-    "symbol": "SILVER"
+    "symbol": "SILVER",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "ed151c523596cb2a6977e9c7efd0b68f",
@@ -237,7 +316,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:23.942974+00:00",
-    "symbol": "PERSISTENT"
+    "symbol": "PERSISTENT",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "0c73d475c070aedaac23bba3805de9c3",
@@ -252,7 +335,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:08.744927+00:00",
-    "symbol": "GLAND"
+    "symbol": "GLAND",
+    "impact_reason": "An MOU can create an opportunity pipeline, but it is usually non-binding and should not be treated as confirmed revenue.",
+    "watch_items": "Wait for a binding contract, order value, commercial terms, investment commitment and execution timeline.",
+    "time_horizon": "Medium term",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "bd09c9a12e65ac57500fb27b237049a0",
@@ -267,7 +354,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:02.339541+00:00",
-    "symbol": "ELLEN"
+    "symbol": "ELLEN",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "b1611b4830e8c81dc7c7548f61f8db81",
@@ -282,7 +373,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:41.803868+00:00",
-    "symbol": "SILVER"
+    "symbol": "SILVER",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "53702c94c60f2d07eb8f38af54eeaf63",
@@ -297,7 +392,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:44:46.248202+00:00",
-    "symbol": "CAMS"
+    "symbol": "CAMS",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "6dbeee4c145b194efc3c7febc2eaed89",
@@ -312,7 +411,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:36.925716+00:00",
-    "symbol": "RELIANCE"
+    "symbol": "RELIANCE",
+    "impact_reason": "The result is mixed; the headline alone is insufficient without growth, margin and cash-flow context.",
+    "watch_items": "Check revenue and profit growth, margin movement, operating cash flow, working capital, guidance and one-off items.",
+    "time_horizon": "Immediate to medium term",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "2608dd2781770e77c51a36684d2e077e",
@@ -327,7 +430,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:44:46.248224+00:00",
-    "symbol": "CAMS"
+    "symbol": "CAMS",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "359062e26700b12c8ace0008980e90b0",
@@ -342,7 +449,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:36.925746+00:00",
-    "symbol": "RELIANCE"
+    "symbol": "RELIANCE",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "a47e9c53df82092a91ed4698180d5202",
@@ -357,7 +468,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:23.942893+00:00",
-    "symbol": "PERSISTENT"
+    "symbol": "PERSISTENT",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "b38ece7e68a327afc0e48c0edbb39592",
@@ -372,7 +487,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:08.744957+00:00",
-    "symbol": "GLAND"
+    "symbol": "GLAND",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "5ba51d430afe5db15ddf584e316d3e45",
@@ -387,7 +506,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:02.339625+00:00",
-    "symbol": "ELLEN"
+    "symbol": "ELLEN",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "a2272409c25572c3c5aa281b22aac0ae",
@@ -402,7 +525,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:44:43.324510+00:00",
-    "symbol": "AURUM"
+    "symbol": "AURUM",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "a281c0054a33a50a5d268f713ece2aac",
@@ -417,7 +544,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:41.803826+00:00",
-    "symbol": "SILVER"
+    "symbol": "SILVER",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "0882d5bdbf86e6c15d8b72d996e537b1",
@@ -432,7 +563,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:44:46.248244+00:00",
-    "symbol": "CAMS"
+    "symbol": "CAMS",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "b56e0edff45f16a5eb7e67bde09fcc67",
@@ -447,7 +582,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:44:46.248264+00:00",
-    "symbol": "CAMS"
+    "symbol": "CAMS",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "f91dd74c81ab926ea4454f8d74e31e94",
@@ -462,7 +601,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:36.925666+00:00",
-    "symbol": "RELIANCE"
+    "symbol": "RELIANCE",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "9cf17e40ae4806a21acdd691bb44c915",
@@ -477,7 +620,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:02.339648+00:00",
-    "symbol": "ELLEN"
+    "symbol": "ELLEN",
+    "impact_reason": "The acquisition may add capabilities, customers or market access, but value creation depends on the price paid, integration and funding structure.",
+    "watch_items": "Check purchase valuation, debt or dilution, acquired profitability, integration milestones and management's synergy targets.",
+    "time_horizon": "Medium term",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "e8077e03ad9a8e25d04067f93d6b761f",
@@ -492,7 +639,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:02.339669+00:00",
-    "symbol": "ELLEN"
+    "symbol": "ELLEN",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "358c5951f0c6db02e671fc873a3f57e0",
@@ -507,7 +658,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:44:46.248282+00:00",
-    "symbol": "CAMS"
+    "symbol": "CAMS",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "339ddf0765c6655255a7a71eb2a42014",
@@ -522,7 +677,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:08.744977+00:00",
-    "symbol": "GLAND"
+    "symbol": "GLAND",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "778bf540c05a7b5b78c0058c70fd8fe4",
@@ -537,7 +696,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:08.744997+00:00",
-    "symbol": "GLAND"
+    "symbol": "GLAND",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "068b6fb48de2a4bf113249500f59804e",
@@ -552,7 +715,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:08.745016+00:00",
-    "symbol": "GLAND"
+    "symbol": "GLAND",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "461a5694a8e9bfe79410f5901ff30631",
@@ -567,7 +734,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:44:43.324544+00:00",
-    "symbol": "AURUM"
+    "symbol": "AURUM",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "a412b858b1450c545c28375e7f0ecd6d",
@@ -582,7 +753,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:08.745032+00:00",
-    "symbol": "GLAND"
+    "symbol": "GLAND",
+    "impact_reason": "The acquisition may add capabilities, customers or market access, but value creation depends on the price paid, integration and funding structure.",
+    "watch_items": "Check purchase valuation, debt or dilution, acquired profitability, integration milestones and management's synergy targets.",
+    "time_horizon": "Medium term",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "15e7120ba6a6b2dcd2ed3080bb63350d",
@@ -597,7 +772,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:12.708835+00:00",
-    "symbol": "IEX"
+    "symbol": "IEX",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "f1ccdb7686832adb9590d74d0f3deccb",
@@ -612,7 +791,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:12.708865+00:00",
-    "symbol": "IEX"
+    "symbol": "IEX",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "2fc73db200ddf63b1f9b5cc9da735d6f",
@@ -627,7 +810,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:21.312538+00:00",
-    "symbol": "NEWGEN"
+    "symbol": "NEWGEN",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "547e2075e9e39603f00bf8793517155e",
@@ -642,7 +829,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:52.865233+00:00",
-    "symbol": "SUPRIYA"
+    "symbol": "SUPRIYA",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "61930a9078ba05687b442b1f40e1e5ad",
@@ -657,7 +848,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:44:43.324566+00:00",
-    "symbol": "AURUM"
+    "symbol": "AURUM",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "1991109e5c015c0fd8e6aa71775582b9",
@@ -672,7 +867,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:12.708884+00:00",
-    "symbol": "IEX"
+    "symbol": "IEX",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "af5b695af9f3445baa316a528eabbe02",
@@ -687,7 +886,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:21.312592+00:00",
-    "symbol": "NEWGEN"
+    "symbol": "NEWGEN",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "ff9392de1e0a412bfa6e1eef98f3b3e3",
@@ -702,7 +905,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:12.708904+00:00",
-    "symbol": "IEX"
+    "symbol": "IEX",
+    "impact_reason": "The announcement may create business risk, but its financial materiality needs verification.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Medium"
   },
   {
     "external_id": "6667996d363a8477183713e45f20ab31",
@@ -717,7 +924,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:44:43.324585+00:00",
-    "symbol": "AURUM"
+    "symbol": "AURUM",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "73d7ba7362466914c6c91b38dfe6e060",
@@ -732,7 +943,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:52.865258+00:00",
-    "symbol": "SUPRIYA"
+    "symbol": "SUPRIYA",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "4fa16a46523404ec896b0072a47f097b",
@@ -747,7 +962,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:21.312569+00:00",
-    "symbol": "NEWGEN"
+    "symbol": "NEWGEN",
+    "impact_reason": "New capacity can support future growth, but the benefit appears only when demand, commissioning and utilisation develop as planned.",
+    "watch_items": "Track commissioning date, capex funding, utilisation ramp-up, incremental revenue potential and return on capital.",
+    "time_horizon": "Medium term",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "99ee5d9c7f517b83dcdd60e9ac221f53",
@@ -762,7 +981,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:12.708921+00:00",
-    "symbol": "IEX"
+    "symbol": "IEX",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "96d3a6687b5ab2f6d8f96d6cb1e941c1",
@@ -777,7 +1000,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:44:49.189098+00:00",
-    "symbol": "CHEMTECH"
+    "symbol": "CHEMTECH",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "c992474a16f10af211c3b17c6d3a9d94",
@@ -792,7 +1019,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:21.312610+00:00",
-    "symbol": "NEWGEN"
+    "symbol": "NEWGEN",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "53357d29733eb1790cad951f2d83ac70",
@@ -807,7 +1038,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:12.708937+00:00",
-    "symbol": "IEX"
+    "symbol": "IEX",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "a7e308b27146bf7479a54afa9dbbd99b",
@@ -822,7 +1057,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:19.926658+00:00",
-    "symbol": "MSPL"
+    "symbol": "MSPL",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "75c7b9670df82b0dcae4559fa2b9a8c8",
@@ -837,7 +1076,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:44:57.438764+00:00",
-    "symbol": "EDELWEISS"
+    "symbol": "EDELWEISS",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "a7e25e1a0776f29ec4a2d11a0bf747f9",
@@ -852,7 +1095,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:44:43.324603+00:00",
-    "symbol": "AURUM"
+    "symbol": "AURUM",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "52ba894ccdfb5194492302283d13b338",
@@ -867,7 +1114,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:44:57.438795+00:00",
-    "symbol": "EDELWEISS"
+    "symbol": "EDELWEISS",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "91e72e67f1a84a6520b4f45bd1015c55",
@@ -882,7 +1133,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:44:55.503353+00:00",
-    "symbol": "CYIENT"
+    "symbol": "CYIENT",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "fa728089b3af74b2de24dee1437e15dc",
@@ -897,7 +1152,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:44:55.503377+00:00",
-    "symbol": "CYIENT"
+    "symbol": "CYIENT",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "7b18d38e25ec689314e94b9d220c2c3a",
@@ -912,7 +1171,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:21.312632+00:00",
-    "symbol": "NEWGEN"
+    "symbol": "NEWGEN",
+    "impact_reason": "The acquisition may add capabilities, customers or market access, but value creation depends on the price paid, integration and funding structure.",
+    "watch_items": "Check purchase valuation, debt or dilution, acquired profitability, integration milestones and management's synergy targets.",
+    "time_horizon": "Medium term",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "6d133b11cb6594614c399315acec8425",
@@ -927,7 +1190,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:44:57.438816+00:00",
-    "symbol": "EDELWEISS"
+    "symbol": "EDELWEISS",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "17372be99d1f219ec9b8699341b918c4",
@@ -942,7 +1209,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:46:01.701285+00:00",
-    "symbol": "TRANSWORLD"
+    "symbol": "TRANSWORLD",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "9a70bc400242ed248ff9e7098c5b3739",
@@ -957,7 +1228,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:21.312653+00:00",
-    "symbol": "NEWGEN"
+    "symbol": "NEWGEN",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "60fca08b7829a5edeeff7fcbbf3a38db",
@@ -972,7 +1247,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:44:43.324619+00:00",
-    "symbol": "AURUM"
+    "symbol": "AURUM",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "902be0efe079f8f8f99529a315c4a7c8",
@@ -987,7 +1266,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:13.920062+00:00",
-    "symbol": "IMAGICAA"
+    "symbol": "IMAGICAA",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "cdfb5003f5f0b5f722af81bff9675d79",
@@ -1002,7 +1285,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:44:55.503396+00:00",
-    "symbol": "CYIENT"
+    "symbol": "CYIENT",
+    "impact_reason": "The action may improve per-share value when funded by surplus cash and executed at an attractive valuation.",
+    "watch_items": "Check buyback size, price, funding source, acceptance ratio and post-transaction leverage.",
+    "time_horizon": "Near to medium term",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "3f8ba3950ba98b6f2d0e51a5ec7d9ed9",
@@ -1017,7 +1304,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:46:04.458099+00:00",
-    "symbol": "WCIL"
+    "symbol": "WCIL",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "7a2aa7378389b9cf6931ee15174db68e",
@@ -1032,7 +1323,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:52.865304+00:00",
-    "symbol": "SUPRIYA"
+    "symbol": "SUPRIYA",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "bbbb4f5b19ee071c3f4585a4d3b35c68",
@@ -1047,7 +1342,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:52.865281+00:00",
-    "symbol": "SUPRIYA"
+    "symbol": "SUPRIYA",
+    "impact_reason": "The result signals improving business momentum through growth or margin progression.",
+    "watch_items": "Check revenue and profit growth, margin movement, operating cash flow, working capital, guidance and one-off items.",
+    "time_horizon": "Immediate to medium term",
+    "materiality": "Medium"
   },
   {
     "external_id": "dc180fbf6c613252f4d98990efce4145",
@@ -1062,7 +1361,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:58.703145+00:00",
-    "symbol": "TMCV"
+    "symbol": "TMCV",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "67ec293c29f5829a98c3ac14472ad230",
@@ -1077,7 +1380,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:44:49.189131+00:00",
-    "symbol": "CHEMTECH"
+    "symbol": "CHEMTECH",
+    "impact_reason": "This changes shareholder distribution or share count, but normally does not change the underlying earnings power of the business.",
+    "watch_items": "Check payout sustainability, record date, cash impact and whether the action is supported by free cash flow.",
+    "time_horizon": "Near term",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "a272195d6385532d49c5cee06fc8f287",
@@ -1092,7 +1399,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:46:01.701350+00:00",
-    "symbol": "TRANSWORLD"
+    "symbol": "TRANSWORLD",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "e01d2fc13802dc393367e6c4654f9c53",
@@ -1107,7 +1418,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:35.625451+00:00",
-    "symbol": "RELAXO"
+    "symbol": "RELAXO",
+    "impact_reason": "The result is mixed; the headline alone is insufficient without growth, margin and cash-flow context.",
+    "watch_items": "Check revenue and profit growth, margin movement, operating cash flow, working capital, guidance and one-off items.",
+    "time_horizon": "Immediate to medium term",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "5bc8a42bb97facc044c90a72426e44ba",
@@ -1122,7 +1437,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:44:55.503413+00:00",
-    "symbol": "CYIENT"
+    "symbol": "CYIENT",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "bb8b85395c1c903ab69898d808966ccb",
@@ -1137,7 +1456,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:52.865321+00:00",
-    "symbol": "SUPRIYA"
+    "symbol": "SUPRIYA",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "504184cffe1808ce55957d0889edc9da",
@@ -1152,7 +1475,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:44:55.503470+00:00",
-    "symbol": "CYIENT"
+    "symbol": "CYIENT",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "cef709d46a729ba74d6baf7b0c3e8031",
@@ -1167,6 +1494,29 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:44:55.503497+00:00",
+    "symbol": "CYIENT",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
+  },
+  {
+    "external_id": "e903e9630fcef89a0b56f455349cfb5d",
+    "published_at": "2026-05-29T14:00:00+00:00",
+    "title": "Cyient Named Leader Across All Three Quadrants of ISG Provider Lens™ 2026 Digital Engineering Services Report for North America",
+    "source": "PR Newswire",
+    "source_url": "https://finance.yahoo.com/sectors/technology/articles/cyient-named-leader-across-three-140000552.html",
+    "summary": "Cyient Named Leader Across All Three Quadrants of ISG Provider Lens™ 2026 Digital Engineering Services Report for North America",
+    "category": "Other",
+    "impact_score": 0,
+    "impact_label": "Neutral / monitor",
+    "confidence": "low",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified",
+    "is_manual": false,
+    "fetched_at": "2026-07-15T17:10:34.517842+00:00",
     "symbol": "CYIENT"
   },
   {
@@ -1182,7 +1532,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:52.865340+00:00",
-    "symbol": "SUPRIYA"
+    "symbol": "SUPRIYA",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "e4bea90e1f5826fac3fb171ea68f4a5d",
@@ -1197,7 +1551,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:46:03.170912+00:00",
-    "symbol": "VIYASH"
+    "symbol": "VIYASH",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "b080e3e6535f1ce775dc09308cbd3fd7",
@@ -1212,7 +1570,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:46:01.701310+00:00",
-    "symbol": "TRANSWORLD"
+    "symbol": "TRANSWORLD",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "110434c3dbe368fd8e15fe333e4821e4",
@@ -1227,7 +1589,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:44:57.438866+00:00",
-    "symbol": "EDELWEISS"
+    "symbol": "EDELWEISS",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "ae6609384d2c2107db7f361f217a1703",
@@ -1242,7 +1608,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:44:45.252626+00:00",
-    "symbol": "BLUEJET"
+    "symbol": "BLUEJET",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "afb7d107f2c2a0e9059d58220a0af99f",
@@ -1257,7 +1627,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:55.248196+00:00",
-    "symbol": "TARSONS"
+    "symbol": "TARSONS",
+    "impact_reason": "The result signals improving business momentum through growth or margin progression.",
+    "watch_items": "Check revenue and profit growth, margin movement, operating cash flow, working capital, guidance and one-off items.",
+    "time_horizon": "Immediate to medium term",
+    "materiality": "Medium"
   },
   {
     "external_id": "ce42b375ed049e8db191066457496fa6",
@@ -1272,6 +1646,29 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:44:57.438850+00:00",
+    "symbol": "EDELWEISS",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
+  },
+  {
+    "external_id": "653bbaab56c99e41f139a7c820e4203f",
+    "published_at": "2026-05-25T14:07:00+00:00",
+    "title": "Cyient Semiconductors Announces Strategic Financing with Edelweiss at ~ USD 500 Mn. Equity Valuation",
+    "source": "PR Newswire",
+    "source_url": "https://finance.yahoo.com/markets/stocks/articles/cyient-semiconductors-announces-strategic-financing-140700388.html",
+    "summary": "Cyient Semiconductors Announces Strategic Financing with Edelweiss at ~ USD 500 Mn. Equity Valuation",
+    "category": "Other",
+    "impact_score": 0,
+    "impact_label": "Neutral / monitor",
+    "confidence": "low",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified",
+    "is_manual": false,
+    "fetched_at": "2026-07-15T17:10:36.089104+00:00",
     "symbol": "EDELWEISS"
   },
   {
@@ -1287,7 +1684,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:44:49.189211+00:00",
-    "symbol": "CHEMTECH"
+    "symbol": "CHEMTECH",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "20e23489aaba91b5d7b4407a3260ae7c",
@@ -1302,7 +1703,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:44:49.189190+00:00",
-    "symbol": "CHEMTECH"
+    "symbol": "CHEMTECH",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "c3518daa3dbad9f9bc769fba348fe449",
@@ -1317,7 +1722,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:46:00.371227+00:00",
-    "symbol": "TMPV"
+    "symbol": "TMPV",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "f87be9e7277071831e89515c01f5549d",
@@ -1332,7 +1741,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:22.790348+00:00",
-    "symbol": "OSWALPUMPS"
+    "symbol": "OSWALPUMPS",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "201143785892176777177831c4457d05",
@@ -1347,7 +1760,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:46:01.701365+00:00",
-    "symbol": "TRANSWORLD"
+    "symbol": "TRANSWORLD",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "a0885f7436d0d66f46eb24cabcf6e9fa",
@@ -1362,7 +1779,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:44:49.189233+00:00",
-    "symbol": "CHEMTECH"
+    "symbol": "CHEMTECH",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "d6b4c1f5749e2973d1dbbb367b91e6b9",
@@ -1377,7 +1798,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:46:00.371259+00:00",
-    "symbol": "TMPV"
+    "symbol": "TMPV",
+    "impact_reason": "The result is mixed; the headline alone is insufficient without growth, margin and cash-flow context.",
+    "watch_items": "Check revenue and profit growth, margin movement, operating cash flow, working capital, guidance and one-off items.",
+    "time_horizon": "Immediate to medium term",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "049d9bbe743e19e7248bd9fef4cca532",
@@ -1392,7 +1817,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:46:01.701331+00:00",
-    "symbol": "TRANSWORLD"
+    "symbol": "TRANSWORLD",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "b554bb6680bb609ac499f8d107fb9ad0",
@@ -1407,7 +1836,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:46:01.701380+00:00",
-    "symbol": "TRANSWORLD"
+    "symbol": "TRANSWORLD",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "0c783121f9b2e0ceb1e9240168ec1284",
@@ -1422,7 +1855,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:44.162169+00:00",
-    "symbol": "STYL"
+    "symbol": "STYL",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "41cc79b1f768faa44b09f988a479f16f",
@@ -1437,7 +1874,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:44.162140+00:00",
-    "symbol": "STYL"
+    "symbol": "STYL",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "4a4b2fd80e0d41285de5dfef5594e75e",
@@ -1452,7 +1893,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:44:57.438833+00:00",
-    "symbol": "EDELWEISS"
+    "symbol": "EDELWEISS",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "8f4c276f79dda6e454b1e9e39e6a0042",
@@ -1467,7 +1912,11 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:44:49.189165+00:00",
-    "symbol": "CHEMTECH"
+    "symbol": "CHEMTECH",
+    "impact_reason": "New capacity can support future growth, but the benefit appears only when demand, commissioning and utilisation develop as planned.",
+    "watch_items": "Track commissioning date, capex funding, utilisation ramp-up, incremental revenue potential and return on capital.",
+    "time_horizon": "Medium term",
+    "materiality": "Low / unquantified"
   },
   {
     "external_id": "3b0b640c1b638d67c14ec076f134cd5a",
@@ -1482,6 +1931,10 @@
     "confidence": "low",
     "is_manual": false,
     "fetched_at": "2026-07-15T16:45:11.254791+00:00",
-    "symbol": "HDFCAMC"
+    "symbol": "HDFCAMC",
+    "impact_reason": "The announcement does not yet show a clear change in earnings, cash flow or competitive position.",
+    "watch_items": "Open the original source and identify quantified revenue, margin, cash-flow, capex, debt and timeline implications.",
+    "time_horizon": "Unclear",
+    "materiality": "Low / unquantified"
   }
 ]
