@@ -1,5 +1,6 @@
 import {cfg, uid, today, csvParse} from './utils.js';
 const KEY='portfolio_command_center_v1';
+const ETF_DEFAULTS={LIQUIDCASE:{sector:'ETF / Cash & Commodities',asset_type:'ETF'},SILVER:{sector:'ETF / Cash & Commodities',asset_type:'ETF'}};
 let supabaseClient=null;
 function defaultState(){return {instruments:[],transactions:[],manualAnnouncements:[],settings:{mode:cfg.DEFAULT_MODE||'local'}}}
 function localState(){try{return {...defaultState(),...JSON.parse(localStorage.getItem(KEY)||'{}')}}catch{return defaultState()}}
@@ -30,7 +31,7 @@ export function aggregateHoldings(instruments,transactions){
   const sorted=[...transactions].sort((a,b)=>String(a.trade_date).localeCompare(String(b.trade_date)));
   for(const t of sorted){
     const symbol=String(t.symbol||'').toUpperCase();
-    if(!map.has(symbol))map.set(symbol,{symbol,yahoo_symbol:`${symbol}.NS`,name:symbol,quantity:0,totalCost:0,realizedPnl:0,active:true});
+    if(!map.has(symbol)){const d=ETF_DEFAULTS[symbol]||{};map.set(symbol,{symbol,yahoo_symbol:`${symbol}.NS`,name:symbol,sector:d.sector||'Unclassified',asset_type:d.asset_type||'Equity',quantity:0,totalCost:0,realizedPnl:0,active:true})}
     const p=map.get(symbol),q=Number(t.quantity||0),price=Number(t.price||0),fees=Number(t.fees||0),type=String(t.transaction_type||'buy').toLowerCase();
     if(['buy','opening','bonus'].includes(type)){
       p.quantity+=q; p.totalCost+=type==='bonus'?fees:q*price+fees;
@@ -45,7 +46,7 @@ export function aggregateHoldings(instruments,transactions){
   return [...map.values()].filter(p=>p.active!==false&&p.quantity>0.000001).map(p=>({...p,avgCost:p.quantity?p.totalCost/p.quantity:0}));
 }
 export async function upsertInstrument(record){
-  record={...record,symbol:String(record.symbol).trim().toUpperCase(),yahoo_symbol:String(record.yahoo_symbol||`${record.symbol}.NS`).trim().toUpperCase(),active:record.active!==false};
+  record={...record,symbol:String(record.symbol).trim().toUpperCase(),yahoo_symbol:String(record.yahoo_symbol||`${record.symbol}.NS`).trim().toUpperCase(),sector:String(record.sector||'Unclassified').trim(),asset_type:String(record.asset_type||'Equity').trim(),active:record.active!==false};
   const s=await session();
   if(!s){const st=localState();const i=st.instruments.findIndex(x=>x.symbol===record.symbol);if(i>=0)st.instruments[i]={...st.instruments[i],...record};else st.instruments.push({...record,id:uid()});saveLocal(st);return}
   const {error}=await supabase().from('instruments').upsert(record,{onConflict:'user_id,symbol'});if(error)throw error;
@@ -63,7 +64,8 @@ export async function importBrokerCsv(text){
   for(const r of rows){
     const symbol=(r.Instrument||r.Symbol||'').trim().toUpperCase();if(!symbol)continue;
     const base=symbol.replace(/-(BE|SM|BZ|BL)$/,'');
-    ins.push({symbol,yahoo_symbol:`${base}.NS`,name:symbol,exchange:'NSE',active:true});
+    const defaults=ETF_DEFAULTS[symbol]||{};
+    ins.push({symbol,yahoo_symbol:`${base}.NS`,name:symbol,exchange:'NSE',sector:defaults.sector||'Unclassified',asset_type:defaults.asset_type||'Equity',active:true});
     tx.push({symbol,transaction_type:'opening',trade_date:today(),quantity:Number(r['Qty.']||r.Quantity||0),price:Number(r['Avg. cost']||r['Avg Cost']||0),fees:0,notes:'Imported opening holding'});
   }
   if(!s){
