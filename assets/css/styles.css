@@ -256,3 +256,137 @@ html[data-theme="light"] .sector-section{color:#0f1f33}
   .status-line{font-size:11px}
   .action-item p,.sector-tile footer,.news-card p{font-size:11.5px}
 }
+
+/* v4.2.2 — targeted light-theme component contrast cleanup */
+html[data-theme="light"] .filter-panel,
+html[data-theme="light"] .result-filter-panel{
+  background:rgba(255,255,255,.96);
+  border-color:#c5d2e1;
+  box-shadow:0 12px 28px rgba(31,52,76,.12);
+  backdrop-filter:blur(14px);
+}
+html[data-theme="light"] .search-control{
+  background:#f7f9fc;
+  border:1px solid #becddd;
+  border-radius:12px;
+  padding:2px 10px;
+}
+html[data-theme="light"] .search-control .input{
+  color:#102238;
+  background:transparent;
+  font-weight:650;
+}
+html[data-theme="light"] .search-control .input::placeholder,
+html[data-theme="light"] .input::placeholder{
+  color:#687b91;
+  opacity:1;
+}
+html[data-theme="light"] .search-control span,
+html[data-theme="light"] .filter-label,
+html[data-theme="light"] .sort-control label,
+html[data-theme="light"] .filter-count{
+  color:#43576d;
+}
+html[data-theme="light"] .segmented{
+  background:#e6edf5;
+  border:1px solid #c8d5e3;
+}
+html[data-theme="light"] .segmented button{
+  color:#4a5e74;
+}
+html[data-theme="light"] .segmented button:hover{
+  background:#dce7f2;
+  color:#0f2a45;
+}
+html[data-theme="light"] .segmented button.active{
+  background:#ffffff;
+  color:#0a5688;
+  box-shadow:0 3px 10px rgba(31,52,76,.16);
+}
+html[data-theme="light"] .result-pillars section{
+  background:#f5f8fc;
+  border-color:#c9d5e2;
+}
+html[data-theme="light"] .result-pillars h4,
+html[data-theme="light"] .pillar-heading h4{
+  color:#20364e;
+  font-weight:850;
+}
+html[data-theme="light"] .result-metric{
+  background:#ffffff;
+  border:1px solid #d0dae6;
+}
+html[data-theme="light"] .result-metric span,
+html[data-theme="light"] .result-metric small,
+html[data-theme="light"] .cash-note{
+  color:#4a5f76!important;
+}
+html[data-theme="light"] .result-metric strong{
+  color:#10243a;
+}
+html[data-theme="light"] .result-insight{
+  background:#e8f7f0;
+  border-color:#20a36f;
+}
+html[data-theme="light"] .result-insight.risk-insight{
+  background:#fff0f2;
+  border-color:#c93d53;
+}
+html[data-theme="light"] .result-insight span{
+  color:#385066;
+}
+html[data-theme="light"] .result-insight p{
+  color:#132840;
+}
+html[data-theme="light"] .announcement,
+html[data-theme="light"] .decision-announcement{
+  background:#ffffff;
+  border-color:#cbd6e3;
+}
+html[data-theme="light"] .decision-box,
+html[data-theme="light"] .watch-box{
+  background:#f4f7fb;
+  border-color:#c7d4e2;
+  color:#12263d;
+}
+html[data-theme="light"] .decision-box{
+  border-left-color:#087fc8;
+}
+html[data-theme="light"] .watch-box{
+  border-left-color:#a56800;
+}
+html[data-theme="light"] .decision-box strong,
+html[data-theme="light"] .watch-box strong{
+  color:#10243a;
+  font-weight:900;
+}
+html[data-theme="light"] .decision-box p,
+html[data-theme="light"] .watch-box p{
+  color:#40566e!important;
+  font-size:12px!important;
+  line-height:1.55;
+}
+html[data-theme="light"] .announcement-meta{
+  color:#536980;
+}
+html[data-theme="light"] .impact-panel .subtext{
+  color:#4a6077;
+}
+html[data-theme="light"] .technical-card .ma-strip div,
+html[data-theme="light"] .technical-card .technical-secondary>div{
+  background:#eef3f8;
+  border:1px solid #d1dce8;
+}
+html[data-theme="light"] .technical-card .ma-strip span,
+html[data-theme="light"] .technical-card .technical-secondary span,
+html[data-theme="light"] .technical-card .technical-secondary small{
+  color:#4b6077;
+}
+html[data-theme="light"] .technical-card .ma-strip strong,
+html[data-theme="light"] .technical-card .technical-secondary strong{
+  color:#11263d;
+}
+@media(max-width:900px){
+  html[data-theme="light"] .filter-panel{padding:11px}
+  html[data-theme="light"] .search-control{min-width:100%;width:100%}
+}
