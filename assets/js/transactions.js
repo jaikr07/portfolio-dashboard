@@ -10,7 +10,7 @@ import {
   importMstockTradeWorkbook,
   availableAccounts,
   accountOf,
-} from './data-service.js';
+} from './data-service.js?v=3.5';
 import { fmtMoney, fmtNum, esc, today } from './utils.js';
 import { updateModeBadge } from './common.js';
 
@@ -374,6 +374,9 @@ async function run() {
       ['buy', 'sell'].includes(transactionType(transaction)) &&
       Number(transaction.price || 0) <= 0,
   );
+  const mstockHistoryCount=core.transactions.filter(transaction=>isHistoryOnly(transaction)&&accountOf(transaction)==='m.Stock').length;
+  const zerodhaHistoryCount=core.transactions.filter(transaction=>isHistoryOnly(transaction)&&accountOf(transaction)==='Zerodha').length;
+  const selectedHistoryCount=selectedAccount==='m.Stock'?mstockHistoryCount:selectedAccount==='Zerodha'?zerodhaHistoryCount:mstockHistoryCount+zerodhaHistoryCount;
 
   root.innerHTML = `
     <div class="hero modern-hero">
@@ -407,6 +410,35 @@ async function run() {
             )}</strong>. Purchases before this start date cannot appear here.</div>`
           : '<div class="coverage-note">No tradebook history has been imported yet. Future manual transactions will still appear here.</div>'
       }
+    </div>
+
+    <div class="card broker-import-card ${selectedHistoryCount===0?'attention-card':''}">
+      <div class="section-heading broker-import-heading">
+        <div>
+          <span class="eyebrow">Broker history import</span>
+          <h3>${selectedAccount==='m.Stock'?'Import m.Stock trade history':selectedAccount==='Zerodha'?'Import Zerodha trade history':'Import trade history by broker'}</h3>
+          <p>${selectedHistoryCount===0?'No historical executions are loaded for this view, so all recent-addition charts are zero. Upload the broker file below.':'Historical executions are loaded. Re-importing the same file safely skips duplicate trade IDs.'}</p>
+        </div>
+        <span class="badge ${selectedHistoryCount?'positive':'warning'}">${selectedHistoryCount} imported executions</span>
+      </div>
+      <div class="broker-import-options">
+        <div class="broker-import-option ${selectedAccount==='m.Stock'?'featured':''}">
+          <span class="broker-pill mstock">m.Stock</span>
+          <strong>TradeHistory…xlsx</strong>
+          <p>Reads Trade Date, Buy / Sell, Scrip / Contract, Qty, Price and Trade Id. The client-information header is ignored.</p>
+          <label class="drop-zone compact-drop" for="mstockTradeFile"><strong>Choose m.Stock Excel file</strong><span>.xlsx or .xls</span><input type="file" id="mstockTradeFile" accept=".xlsx,.xls" hidden></label>
+          <button class="btn primary" id="importMstockTradebook">Import m.Stock history</button>
+          <div id="mstockTradeMsg" class="import-message"></div>
+        </div>
+        <div class="broker-import-option ${selectedAccount==='Zerodha'?'featured':''}">
+          <span class="broker-pill zerodha">Zerodha</span>
+          <strong>EQ tradebook CSV</strong>
+          <p>Imports historical executions for analytics without changing quantities from the current-holdings snapshot.</p>
+          <label class="drop-zone compact-drop" for="tradebookFile"><strong>Choose Zerodha tradebook CSV</strong><span>.csv</span><input type="file" id="tradebookFile" accept=".csv" hidden></label>
+          <button class="btn primary" id="importTradebook">Import Zerodha history</button>
+          <div id="tradebookMsg" class="import-message"></div>
+        </div>
+      </div>
     </div>
 
     ${
@@ -447,32 +479,15 @@ async function run() {
 
     <div id="periodDashboard"></div>
 
-    <div class="grid two transaction-lower-grid">
-      <div class="card timeline-card">
-        <div class="section-heading">
-          <div>
-            <h3>Recent activity in current holdings</h3>
-            <p>Imported trades in exited companies are intentionally hidden. Future manual sells remain visible even after a full exit.</p>
-          </div>
-          <span class="badge neutral">${eligible.length} relevant records</span>
+    <div class="card timeline-card transaction-activity-wide">
+      <div class="section-heading">
+        <div>
+          <h3>Recent activity in current holdings</h3>
+          <p>Imported trades in exited companies are intentionally hidden. Future manual sells remain visible even after a full exit.</p>
         </div>
-        <div class="activity-list">${renderActivity(eligible)}</div>
+        <span class="badge neutral">${eligible.length} relevant records</span>
       </div>
-
-      <div class="card import-card">
-        <span class="eyebrow">One-time broker history</span>
-        <h3>Zerodha EQ tradebook</h3>
-        <p>Upload the Zerodha CSV. It is history-only and cannot double-count the holdings snapshot.</p>
-        <label class="drop-zone" for="tradebookFile"><strong>Choose Zerodha tradebook CSV</strong><span>symbol, trade_date, trade_type, quantity and price</span><input type="file" id="tradebookFile" accept=".csv" hidden></label>
-        <button class="btn primary" id="importTradebook">Import Zerodha history</button>
-        <div id="tradebookMsg" class="import-message"></div>
-        <hr class="soft-divider">
-        <h3>m.Stock trade history</h3>
-        <p>Upload the original <strong>TradeHistory…xlsx</strong>. Client details in the header are ignored.</p>
-        <label class="drop-zone" for="mstockTradeFile"><strong>Choose m.Stock Excel file</strong><span>Trade Date, Buy / Sell, Scrip / Contract, Qty, Price and Trade Id</span><input type="file" id="mstockTradeFile" accept=".xlsx,.xls" hidden></label>
-        <button class="btn primary" id="importMstockTradebook">Import m.Stock history</button>
-        <div id="mstockTradeMsg" class="import-message"></div>
-      </div>
+      <div class="activity-list">${renderActivity(eligible)}</div>
     </div>
 
     <details class="details-panel">

@@ -1,5 +1,5 @@
 import {mountShell} from './shell.js';
-import {loadCore, aggregateHoldings, loadAnnouncements, saveManualAnnouncement, availableAccounts} from './data-service.js';
+import {loadCore, aggregateHoldings, loadAnnouncements, saveManualAnnouncement, availableAccounts} from './data-service.js?v=3.5';
 import {esc, impactClass, today, safeUrl} from './utils.js';
 import {updateModeBadge, bindModal} from './common.js';
 

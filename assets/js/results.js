@@ -1,11 +1,12 @@
 import {mountShell} from './shell.js';
-import {loadCore, aggregateHoldings, loadResults, availableAccounts} from './data-service.js';
+import {loadCore, aggregateHoldings, loadResults, availableAccounts} from './data-service.js?v=3.5';
 import {fmtPct, esc} from './utils.js';
 import {updateModeBadge} from './common.js';
 
 mountShell('results','Financial Performance & Cash Quality');
 const root=document.getElementById('pageContent');
 const has=v=>v!==null&&v!==undefined&&v!==''&&Number.isFinite(Number(v));
+const canonicalSymbol=value=>String(value||'').trim().toUpperCase().replace(/-(BE|SM|BZ|BL)$/,'');
 const num=v=>has(v)?Number(v):null;
 const metricClass=v=>!has(v)?'muted':Number(v)>0?'positive':Number(v)<0?'negative':'muted';
 const pp=v=>has(v)?`${Number(v)>0?'+':''}${Number(v).toFixed(2)} pp`:'—';
@@ -53,17 +54,18 @@ function companyCard(item){
 }
 
 async function run(){
-  const [core,res]=await Promise.all([loadCore(),loadResults()]);const accounts=availableAccounts(core.transactions);let selectedAccount=localStorage.getItem('portfolioAccountFilter')||'All accounts';if(selectedAccount!=='All accounts'&&!accounts.includes(selectedAccount))selectedAccount='All accounts';const holdings=aggregateHoldings(core.instruments,core.transactions,selectedAccount);const active=new Set(holdings.map(x=>x.symbol));const insMap=new Map(core.instruments.map(x=>[x.symbol,x]));const etfs=holdings.filter(x=>String(x.asset_type||'').toLowerCase()==='etf').map(x=>x.symbol);
-  const rows=res.filter(x=>active.has(x.symbol));const symbols=[...new Set(holdings.map(x=>x.symbol))].sort();
+  const [core,res]=await Promise.all([loadCore(),loadResults()]);const accounts=availableAccounts(core.transactions);let selectedAccount=localStorage.getItem('portfolioAccountFilter')||'All accounts';if(selectedAccount!=='All accounts'&&!accounts.includes(selectedAccount))selectedAccount='All accounts';const holdings=aggregateHoldings(core.instruments,core.transactions,selectedAccount);const active=new Set(holdings.map(x=>x.symbol));const insMap=new Map();for(const instrument of core.instruments){insMap.set(instrument.symbol,instrument);insMap.set(canonicalSymbol(instrument.symbol),instrument);}const etfs=holdings.filter(x=>String(x.asset_type||'').toLowerCase()==='etf').map(x=>x.symbol);
+  const activeCanonical=new Set([...active].map(canonicalSymbol));const rows=res.filter(x=>active.has(x.symbol)||activeCanonical.has(canonicalSymbol(x.symbol)));const symbols=[...new Set(holdings.map(x=>x.symbol))].sort();
   const items=symbols.filter(s=>!etfs.includes(s)).map(symbol=>{
-    const company=rows.filter(x=>x.symbol===symbol);const quarters=sortedRows(company,'quarterly');const annuals=sortedRows(company,'annual');const q=quarters[0]||annuals[0]||null;
+    const company=rows.filter(x=>x.symbol===symbol||canonicalSymbol(x.symbol)===canonicalSymbol(symbol));const quarters=sortedRows(company,'quarterly');const annuals=sortedRows(company,'annual');const q=quarters[0]||annuals[0]||null;
     const cash=firstWith(quarters,['ocf_margin_pct','cash_conversion_pct','capex_intensity_pct','fcf_margin_pct'])||firstWith(annuals,['ocf_margin_pct','cash_conversion_pct','capex_intensity_pct','fcf_margin_pct'])||q;
-    return {symbol,q,cash,annual:annuals[0]||null,quarters,annuals,sector:insMap.get(symbol)?.sector||'Unclassified'};
+    return {symbol,q,cash,annual:annuals[0]||null,quarters,annuals,sector:(insMap.get(symbol)||insMap.get(canonicalSymbol(symbol)))?.sector||'Unclassified'};
   });
   const availableItems=items.filter(x=>x.q);const latestRows=availableItems.map(x=>x.q);const cashAvailable=items.filter(x=>cashAvailability(x.cash).status==='available').length;const cashNA=items.filter(x=>cashAvailability(x.cash).status==='not-applicable').length;const improving=latestRows.filter(x=>Number(x.quality_score)>=70).length;const weakening=latestRows.filter(x=>has(x.quality_score)&&Number(x.quality_score)<40).length;const medGrowth=median(latestRows.map(x=>x.revenue_yoy));
 
   root.innerHTML=`
     <div class="hero modern-hero"><div><span class="eyebrow">Fundamental health</span><h2>Financial decision dashboard</h2><p>Company cards prioritize growth, margin direction, cash conversion and reinvestment intensity. Missing fields are explained instead of being shown as meaningless dashes.</p></div><label class="account-picker"><span>Account</span><select id="accountFilter" class="input"><option>All accounts</option>${accounts.map(a=>`<option ${a===selectedAccount?'selected':''}>${esc(a)}</option>`).join('')}</select></label></div>
+    ${availableItems.length<items.length?`<div class="notice warning"><strong>Financial-data coverage:</strong> ${availableItems.length}/${items.length} companies have a result record. The m.Stock-only companies will remain blank until the repaired <code>setup/symbols.csv</code> is committed and “Refresh portfolio data” is run with financial results enabled.</div>`:''}
     ${etfs.length?`<div class="notice"><strong>ETF treatment:</strong> ${etfs.map(esc).join(', ')} remain in holdings and technicals but are excluded here because operating revenue, OCF and capex are company metrics.</div>`:''}
     <div class="grid kpis"><div class="card accent-card"><div class="kpi-label">Median revenue growth</div><div class="kpi-value ${metricClass(medGrowth)}">${fmtPct(medGrowth)}</div><div class="kpi-sub">Latest reported quarter</div></div><div class="card"><div class="kpi-label">Improving quality</div><div class="kpi-value positive">${improving}</div><div class="kpi-sub">Score 70 or above</div></div><div class="card"><div class="kpi-label">Weakening quality</div><div class="kpi-value ${weakening?'negative':'positive'}">${weakening}</div><div class="kpi-sub">Score below 40</div></div><div class="card"><div class="kpi-label">Cash-flow coverage</div><div class="kpi-value">${cashAvailable}/${items.length}</div><div class="kpi-sub">${cashNA} financial businesses marked not applicable</div></div></div>
     <div class="filter-panel result-filter-panel"><div class="search-control"><span>⌕</span><input id="resultSearch" class="input" placeholder="Search company or sector"></div><div class="filter-group"><span class="filter-label">Signal</span><div class="segmented"><button class="active" data-quality="all">All</button><button data-quality="improving">Improving</button><button data-quality="mixed">Mixed</button><button data-quality="weakening">Weakening</button><button data-quality="missing">Missing data</button></div></div><div id="resultCount" class="filter-count"></div></div>

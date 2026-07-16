@@ -1,5 +1,5 @@
 import {mountShell} from './shell.js';
-import {loadCore,aggregateHoldings,loadMarket,availableAccounts} from './data-service.js';
+import {loadCore,aggregateHoldings,loadMarket,availableAccounts} from './data-service.js?v=3.5';
 import {fmtMoney,fmtNum,fmtPct,esc,trendClass} from './utils.js';
 import {updateModeBadge} from './common.js';
 
@@ -7,16 +7,18 @@ mountShell('technicals','Technical Levels & Alerts');
 const root=document.getElementById('pageContent');
 const has=v=>v!==null&&v!==undefined&&v!==''&&Number.isFinite(Number(v));
 const num=v=>has(v)?Number(v):0;
+const canonicalSymbol=value=>String(value||'').trim().toUpperCase().replace(/-(BE|SM|BZ|BL)$/,'');
 function bucket(label=''){const x=String(label).toLowerCase();if(x.includes('bull'))return 'bullish';if(x.includes('bear'))return 'bearish';if(x.includes('watch')||x.includes('neutral'))return 'neutral';return 'unavailable';}
 function maState(close,ma){return !has(ma)?'muted':Number(close)>=Number(ma)?'positive':'negative';}
 function rsiState(v){if(!has(v))return {cls:'muted',label:'No data'};if(v>=70)return {cls:'warning',label:'Overbought'};if(v<=35)return {cls:'negative',label:'Weak / oversold'};return {cls:'positive',label:'Balanced'};}
 
 async function run(){
-  const [core,market]=await Promise.all([loadCore(),loadMarket()]);const accounts=availableAccounts(core.transactions);let selectedAccount=localStorage.getItem('portfolioAccountFilter')||'All accounts';if(selectedAccount!=='All accounts'&&!accounts.includes(selectedAccount))selectedAccount='All accounts';const active=new Set(aggregateHoldings(core.instruments,core.transactions,selectedAccount).map(x=>x.symbol));let rows=market.filter(x=>active.has(x.symbol)).sort((a,b)=>(b.trend_score||0)-(a.trend_score||0));
+  const [core,market]=await Promise.all([loadCore(),loadMarket()]);const accounts=availableAccounts(core.transactions);let selectedAccount=localStorage.getItem('portfolioAccountFilter')||'All accounts';if(selectedAccount!=='All accounts'&&!accounts.includes(selectedAccount))selectedAccount='All accounts';const holdings=aggregateHoldings(core.instruments,core.transactions,selectedAccount);const marketMap=new Map();for(const row of market){marketMap.set(String(row.symbol||'').toUpperCase(),row);marketMap.set(canonicalSymbol(row.symbol),row);}let rows=holdings.map(holding=>({...holding,...(marketMap.get(String(holding.symbol).toUpperCase())||marketMap.get(canonicalSymbol(holding.symbol))||{}),symbol:holding.symbol,yahoo_symbol:(marketMap.get(String(holding.symbol).toUpperCase())||marketMap.get(canonicalSymbol(holding.symbol))||{}).yahoo_symbol||holding.yahoo_symbol})).sort((a,b)=>(b.trend_score||0)-(a.trend_score||0));
   const counts=rows.reduce((a,x)=>{a[bucket(x.trend_label)]++;a.alerts+=(x.alerts||[]).length;return a;},{bullish:0,bearish:0,neutral:0,unavailable:0,alerts:0});
   root.innerHTML=`
     <div class="hero modern-hero"><div><span class="eyebrow">Trend & risk</span><h2>Technical signal board</h2><p>Scan trend posture, moving-average structure, RSI and alerts as cards. Exact levels remain available in the expandable table.</p></div><label class="account-picker"><span>Account</span><select id="accountFilter" class="input"><option>All accounts</option>${accounts.map(a=>`<option ${a===selectedAccount?'selected':''}>${esc(a)}</option>`).join('')}</select></label></div>
     <div class="notice">A price below the 200 DMA is a trend warning, not an automatic sell signal. Confirm business fundamentals, liquidity and market regime.</div>
+    ${rows.filter(row=>!has(row.close)).length?`<div class="notice warning"><strong>Technical coverage:</strong> ${rows.length-rows.filter(row=>!has(row.close)).length}/${rows.length} holdings have refreshed price history. Upload the repaired <code>setup/symbols.csv</code> and run a full refresh to populate the m.Stock-only companies.</div>`:''}
     <div class="grid kpis"><div class="card"><div class="kpi-label">Bullish</div><div class="kpi-value positive">${counts.bullish}</div><div class="kpi-sub">Positive combined trend score</div></div><div class="card"><div class="kpi-label">Neutral / watch</div><div class="kpi-value warning">${counts.neutral}</div><div class="kpi-sub">Mixed technical structure</div></div><div class="card"><div class="kpi-label">Bearish</div><div class="kpi-value negative">${counts.bearish}</div><div class="kpi-sub">Negative combined trend score</div></div><div class="card"><div class="kpi-label">Active signals</div><div class="kpi-value">${counts.alerts}</div><div class="kpi-sub">Across the entire portfolio</div></div></div>
     <div class="filter-panel"><div class="search-control"><span>⌕</span><input id="techSearch" class="input" placeholder="Search symbol"></div><div class="filter-group"><span class="filter-label">Trend</span><div class="segmented"><button class="active" data-tech="all">All</button><button data-tech="bullish">Bullish</button><button data-tech="neutral">Neutral</button><button data-tech="bearish">Bearish</button><button data-tech="alerts">With alerts</button></div></div><div id="techCount" class="filter-count"></div></div>
     <div id="technicalCards" class="technical-card-grid"></div>

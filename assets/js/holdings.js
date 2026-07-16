@@ -1,5 +1,5 @@
 import {mountShell} from './shell.js';
-import {loadCore, aggregateHoldings, loadMarket, availableAccounts} from './data-service.js';
+import {loadCore, aggregateHoldings, loadMarket, availableAccounts} from './data-service.js?v=3.5';
 import {fmtMoney, fmtNum, fmtPct, esc, trendClass, debounce} from './utils.js';
 import {updateModeBadge} from './common.js';
 
@@ -10,6 +10,8 @@ let selectedTrend='all';
 let selectedAsset='all';
 
 const number=v=>Number.isFinite(Number(v))?Number(v):0;
+const canonicalSymbol=value=>String(value||'').trim().toUpperCase().replace(/-(BE|SM|BZ|BL)$/,'');
+function displaySector(row){const local=String(row.sector||'').trim();const market=String(row.market?.sector||'').trim();return (!local||/^unclassified$/i.test(local)||/^other \/ review$/i.test(local))?(market||local||'Unclassified'):local;}
 function trendBucket(label=''){
   const x=String(label).toLowerCase();
   if(x.includes('bull'))return 'bullish';
@@ -37,7 +39,7 @@ function render(){
   const q=document.getElementById('search').value.trim().toLowerCase();
   const sort=document.getElementById('sortBy').value;
   let filtered=rows.map(enriched).filter(x=>{
-    const hay=`${x.symbol} ${x.name||''} ${x.sector||x.market.sector||''}`.toLowerCase();
+    const hay=`${x.symbol} ${x.name||''} ${displaySector(x)}`.toLowerCase();
     return (!q||hay.includes(q)) && (selectedTrend==='all'||x.trendBucket===selectedTrend) && (selectedAsset==='all'||x.assetBucket===selectedAsset);
   });
   const sorters={
@@ -56,7 +58,7 @@ function render(){
     const alerts=(x.market.alerts||[]).slice(0,2);
     return `<article class="holding-card ${x.pnl<0?'loss-card':''}">
       <div class="holding-card-head">
-        <div><div class="symbol-line"><span class="symbol-lg">${esc(x.symbol)}</span><span class="asset-chip ${x.assetBucket}">${asset}</span></div><div class="holding-sector">${esc(x.sector||x.market.sector||x.name||'Unclassified')}</div></div>
+        <div><div class="symbol-line"><span class="symbol-lg">${esc(x.symbol)}</span><span class="asset-chip ${x.assetBucket}">${asset}</span></div><div class="holding-sector">${esc(displaySector(x)||x.name||'Unclassified')}</div></div>
         <span class="badge ${trendClass(x.market.trend_label)}">${esc(x.market.trend_label||'No technical data')}</span>
       </div>
       <div class="holding-price-row"><div><span class="metric-label">Latest</span><strong>${fmtMoney(x.price,2)}</strong><small class="${number(x.market.daily_change_pct)>=0?'positive':'negative'}">${fmtPct(x.market.daily_change_pct)} today</small></div><div class="align-right"><span class="metric-label">Return</span><strong class="${x.pct>=0?'positive':'negative'}">${fmtPct(x.pct)}</strong><small class="money ${x.pnl>=0?'positive':'negative'}">${fmtMoney(x.pnl)}</small></div></div>
@@ -66,7 +68,7 @@ function render(){
     </article>`;
   }).join('')||'<div class="empty-state"><strong>No holdings match these filters.</strong><span>Clear a filter or try another search term.</span></div>';
 
-  root.querySelector('#holdingsBody').innerHTML=filtered.map(x=>`<tr><td><span class="symbol">${esc(x.symbol)}</span><span class="subtext">${esc(x.sector||x.market.sector||'Unclassified')}</span></td><td>${x.assetBucket==='etf'?'ETF':x.assetBucket==='reit'?'REIT / InvIT':'Equity'}</td><td>${fmtNum(x.quantity,3)}</td><td class="money">${fmtMoney(x.avgCost,2)}</td><td>${fmtMoney(x.price,2)}</td><td class="money">${fmtMoney(x.totalCost)}</td><td class="money">${fmtMoney(x.value)}</td><td class="money ${x.pnl>=0?'positive':'negative'}">${fmtMoney(x.pnl)}</td><td class="${x.pct>=0?'positive':'negative'}">${fmtPct(x.pct)}</td><td><span class="badge ${trendClass(x.market.trend_label)}">${esc(x.market.trend_label||'No data')}</span></td></tr>`).join('')||'<tr><td colspan="10" class="empty">No matching holdings.</td></tr>';
+  root.querySelector('#holdingsBody').innerHTML=filtered.map(x=>`<tr><td><span class="symbol">${esc(x.symbol)}</span><span class="subtext">${esc(displaySector(x))}</span></td><td>${x.assetBucket==='etf'?'ETF':x.assetBucket==='reit'?'REIT / InvIT':'Equity'}</td><td>${fmtNum(x.quantity,3)}</td><td class="money">${fmtMoney(x.avgCost,2)}</td><td>${fmtMoney(x.price,2)}</td><td class="money">${fmtMoney(x.totalCost)}</td><td class="money">${fmtMoney(x.value)}</td><td class="money ${x.pnl>=0?'positive':'negative'}">${fmtMoney(x.pnl)}</td><td class="${x.pct>=0?'positive':'negative'}">${fmtPct(x.pct)}</td><td><span class="badge ${trendClass(x.market.trend_label)}">${esc(x.market.trend_label||'No data')}</span></td></tr>`).join('')||'<tr><td colspan="10" class="empty">No matching holdings.</td></tr>';
 }
 
 function bindFilterButtons(group,callback){
@@ -78,12 +80,13 @@ function bindFilterButtons(group,callback){
 
 async function run(){
   const [core,market]=await Promise.all([loadCore(),loadMarket()]);
-  const mm=new Map(market.map(x=>[x.symbol,x]));
+  const mm=new Map();for(const row of market){mm.set(String(row.symbol||'').toUpperCase(),row);mm.set(canonicalSymbol(row.symbol),row);}
   const accounts=availableAccounts(core.transactions);let selectedAccount=localStorage.getItem('portfolioAccountFilter')||'All accounts';if(selectedAccount!=='All accounts'&&!accounts.includes(selectedAccount))selectedAccount='All accounts';
-  rows=aggregateHoldings(core.instruments,core.transactions,selectedAccount).map(h=>({...h,market:mm.get(h.symbol)||{}}));
+  rows=aggregateHoldings(core.instruments,core.transactions,selectedAccount).map(h=>({...h,market:mm.get(String(h.symbol).toUpperCase())||mm.get(canonicalSymbol(h.symbol))||{}}));
   const counts=rows.map(enriched).reduce((a,x)=>{a.trend[x.trendBucket]=(a.trend[x.trendBucket]||0)+1;a.asset[x.assetBucket]=(a.asset[x.assetBucket]||0)+1;return a;},{trend:{},asset:{}});
   root.innerHTML=`
     <div class="hero modern-hero"><div><span class="eyebrow">Portfolio composition</span><h2>Holdings command board</h2><p>Scan performance visually, then open the detailed ledger only when you need exact numbers.</p></div><div class="hero-actions"><label class="account-picker"><span>Account</span><select id="accountFilter" class="input"><option>All accounts</option>${accounts.map(a=>`<option ${a===selectedAccount?'selected':''}>${esc(a)}</option>`).join('')}</select></label><a class="btn primary" href="transactions.html">+ Add transaction</a></div></div>
+    ${rows.filter(row=>!row.market.close).length?`<div class="notice warning"><strong>Market-data coverage:</strong> ${rows.length-rows.filter(row=>!row.market.close).length}/${rows.length} holdings have refreshed prices. The missing m.Stock-only symbols require the updated <code>setup/symbols.csv</code> followed by a full “Refresh portfolio data” workflow run.</div>`:''}
     <div class="filter-panel">
       <div class="search-control"><span>⌕</span><input id="search" class="input" placeholder="Search company, symbol or sector"></div>
       <div class="filter-group"><span class="filter-label">Trend</span><div class="segmented"><button class="active" data-trend="all">All <b>${rows.length}</b></button><button data-trend="bullish">Bullish <b>${counts.trend.bullish||0}</b></button><button data-trend="bearish">Bearish <b>${counts.trend.bearish||0}</b></button><button data-trend="neutral">Neutral <b>${counts.trend.neutral||0}</b></button><button data-trend="unavailable">No data <b>${counts.trend.unavailable||0}</b></button></div></div>

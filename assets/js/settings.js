@@ -5,7 +5,7 @@ import {
   exportLocal, importLocal, resetLocal,
   loadCore, loadMarket, upsertInstrument,
   availableAccounts, accountOf, aggregateHoldings,
-} from './data-service.js';
+} from './data-service.js?v=3.5';
 import {download, esc, fmtMoney} from './utils.js';
 import {updateModeBadge} from './common.js';
 

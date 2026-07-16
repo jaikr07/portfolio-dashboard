@@ -1,5 +1,5 @@
 import {mountShell} from './shell.js';
-import {loadCore, aggregateHoldings, loadMarket, loadAnnouncements, availableAccounts} from './data-service.js';
+import {loadCore, aggregateHoldings, loadMarket, loadAnnouncements, availableAccounts} from './data-service.js?v=3.5';
 import {fmtMoney, fmtPct, esc, trendClass, impactClass, safeUrl} from './utils.js';
 import {updateModeBadge} from './common.js';
 

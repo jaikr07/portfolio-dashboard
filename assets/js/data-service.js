@@ -5,6 +5,111 @@ const ETF_DEFAULTS = {
   LIQUIDCASE: {sector:'ETF / Cash & Commodities', asset_type:'ETF'},
   SILVER: {sector:'ETF / Cash & Commodities', asset_type:'ETF'},
 };
+
+const SECURITY_CATALOG = {
+  "AARTIIND": {"yahoo_symbol": "AARTIIND.NS", "name": "AARTIIND", "sector": "Chemicals", "asset_type": "Equity", "exchange": "NSE"},
+  "AARTIPHARM": {"yahoo_symbol": "AARTIPHARM.NS", "name": "Aarti Pharmalabs", "sector": "Healthcare & Pharmaceuticals", "asset_type": "Equity", "exchange": "NSE"},
+  "ADANIGREEN": {"yahoo_symbol": "ADANIGREEN.NS", "name": "ADANIGREEN", "sector": "Renewable Energy & Power", "asset_type": "Equity", "exchange": "NSE"},
+  "AEROENTER": {"yahoo_symbol": "AEROENTER.NS", "name": "Aeroflex Enterprises", "sector": "Metals & Materials", "asset_type": "Equity", "exchange": "NSE"},
+  "AFFLE": {"yahoo_symbol": "AFFLE.NS", "name": "Affle India", "sector": "Technology & Software", "asset_type": "Equity", "exchange": "NSE"},
+  "AGOL": {"yahoo_symbol": "AGOL.BO", "name": "Ashapuri Gold Ornament", "sector": "Consumer", "asset_type": "Equity", "exchange": "BSE"},
+  "AURUM": {"yahoo_symbol": "AURUM.NS", "name": "AURUM", "sector": "Technology & Software", "asset_type": "Equity", "exchange": "NSE"},
+  "BEWLTD-SM": {"yahoo_symbol": "BEWLTD.NS", "name": "BEWLTD-SM", "sector": "Industrial & Capital Goods", "asset_type": "Equity", "exchange": "NSE"},
+  "BLUEJET": {"yahoo_symbol": "BLUEJET.NS", "name": "BLUEJET", "sector": "Healthcare & Pharmaceuticals", "asset_type": "Equity", "exchange": "NSE"},
+  "CAMS": {"yahoo_symbol": "CAMS.NS", "name": "CAMS", "sector": "Financial Services", "asset_type": "Equity", "exchange": "NSE"},
+  "CHEMTECH": {"yahoo_symbol": "CHEMTECH.NS", "name": "CHEMTECH", "sector": "Industrial & Capital Goods", "asset_type": "Equity", "exchange": "NSE"},
+  "CTLLAB": {"yahoo_symbol": "CTLLAB.NS", "name": "CTLLAB", "sector": "Healthcare & Pharmaceuticals", "asset_type": "Equity", "exchange": "NSE"},
+  "CYBERTECH-BE": {"yahoo_symbol": "CYBERTECH.NS", "name": "CYBERTECH-BE", "sector": "Technology & Software", "asset_type": "Equity", "exchange": "NSE"},
+  "CYIENT": {"yahoo_symbol": "CYIENT.NS", "name": "CYIENT", "sector": "Technology & Software", "asset_type": "Equity", "exchange": "NSE"},
+  "EDELWEISS": {"yahoo_symbol": "EDELWEISS.NS", "name": "EDELWEISS", "sector": "Financial Services", "asset_type": "Equity", "exchange": "NSE"},
+  "EIEL": {"yahoo_symbol": "EIEL.NS", "name": "EIEL", "sector": "Infrastructure & Environment", "asset_type": "Equity", "exchange": "NSE"},
+  "ELECTCAST": {"yahoo_symbol": "ELECTCAST.NS", "name": "ELECTCAST", "sector": "Metals & Materials", "asset_type": "Equity", "exchange": "NSE"},
+  "ELLEN": {"yahoo_symbol": "ELLEN.NS", "name": "ELLEN", "sector": "Industrial & Capital Goods", "asset_type": "Equity", "exchange": "NSE"},
+  "FAIRCHEMOR-BE": {"yahoo_symbol": "FAIRCHEMOR.NS", "name": "FAIRCHEMOR-BE", "sector": "Chemicals", "asset_type": "Equity", "exchange": "NSE"},
+  "FLORACORP": {"yahoo_symbol": "FLORACORP.NS", "name": "FLORACORP", "sector": "Other / Review", "asset_type": "Equity", "exchange": "NSE"},
+  "GEMAROMA": {"yahoo_symbol": "GEMAROMA.NS", "name": "Gem Aromatics", "sector": "Chemicals", "asset_type": "Equity", "exchange": "NSE"},
+  "GLAND": {"yahoo_symbol": "GLAND.NS", "name": "GLAND", "sector": "Healthcare & Pharmaceuticals", "asset_type": "Equity", "exchange": "NSE"},
+  "HDFCAMC": {"yahoo_symbol": "HDFCAMC.NS", "name": "HDFCAMC", "sector": "Financial Services", "asset_type": "Equity", "exchange": "NSE"},
+  "IEX": {"yahoo_symbol": "IEX.NS", "name": "IEX", "sector": "Renewable Energy & Power", "asset_type": "Equity", "exchange": "NSE"},
+  "IKIO": {"yahoo_symbol": "IKIO.NS", "name": "IKIO Technologies", "sector": "Industrial & Capital Goods", "asset_type": "Equity", "exchange": "NSE"},
+  "IMAGICAA": {"yahoo_symbol": "IMAGICAA.NS", "name": "IMAGICAA", "sector": "Media & Leisure", "asset_type": "Equity", "exchange": "NSE"},
+  "JTLIND": {"yahoo_symbol": "JTLIND.NS", "name": "JTL Industries", "sector": "Metals & Materials", "asset_type": "Equity", "exchange": "NSE"},
+  "KOTAKBANK": {"yahoo_symbol": "KOTAKBANK.NS", "name": "KOTAKBANK", "sector": "Financial Services", "asset_type": "Equity", "exchange": "NSE"},
+  "LANDMARK": {"yahoo_symbol": "LANDMARK.NS", "name": "Landmark Cars", "sector": "Auto & Components", "asset_type": "Equity", "exchange": "NSE"},
+  "LIQUIDCASE": {"yahoo_symbol": "LIQUIDCASE.NS", "name": "LIQUIDCASE", "sector": "ETF / Cash & Commodities", "asset_type": "ETF", "exchange": "NSE"},
+  "MAYURUNIQ": {"yahoo_symbol": "MAYURUNIQ.NS", "name": "MAYURUNIQ", "sector": "Auto & Components", "asset_type": "Equity", "exchange": "NSE"},
+  "MSPL": {"yahoo_symbol": "MSPL.NS", "name": "MSPL", "sector": "Metals & Materials", "asset_type": "Equity", "exchange": "NSE"},
+  "NEWGEN": {"yahoo_symbol": "NEWGEN.NS", "name": "NEWGEN", "sector": "Technology & Software", "asset_type": "Equity", "exchange": "NSE"},
+  "OSWALPUMPS": {"yahoo_symbol": "OSWALPUMPS.NS", "name": "OSWALPUMPS", "sector": "Industrial & Capital Goods", "asset_type": "Equity", "exchange": "NSE"},
+  "PAUSHAKLTD": {"yahoo_symbol": "PAUSHAKLTD.NS", "name": "Paushak", "sector": "Chemicals", "asset_type": "Equity", "exchange": "NSE"},
+  "PERSISTENT": {"yahoo_symbol": "PERSISTENT.NS", "name": "PERSISTENT", "sector": "Technology & Software", "asset_type": "Equity", "exchange": "NSE"},
+  "PRERINFRA": {"yahoo_symbol": "PRERINFRA.NS", "name": "PRERINFRA", "sector": "Infrastructure & Environment", "asset_type": "Equity", "exchange": "NSE"},
+  "PRITIKAUTO": {"yahoo_symbol": "PRITIKAUTO.NS", "name": "PRITIKAUTO", "sector": "Auto & Components", "asset_type": "Equity", "exchange": "NSE"},
+  "PVRINOX": {"yahoo_symbol": "PVRINOX.NS", "name": "PVRINOX", "sector": "Media & Leisure", "asset_type": "Equity", "exchange": "NSE"},
+  "RADHEDE": {"yahoo_symbol": "RADHEDE.NS", "name": "RADHEDE", "sector": "Real Estate", "asset_type": "Equity", "exchange": "NSE"},
+  "RAIN": {"yahoo_symbol": "RAIN.NS", "name": "Rain Industries", "sector": "Metals & Materials", "asset_type": "Equity", "exchange": "NSE"},
+  "RAYMONDLSL": {"yahoo_symbol": "RAYMONDLSL.NS", "name": "RAYMONDLSL", "sector": "Consumer", "asset_type": "Equity", "exchange": "NSE"},
+  "RELAXO": {"yahoo_symbol": "RELAXO.NS", "name": "RELAXO", "sector": "Consumer", "asset_type": "Equity", "exchange": "NSE"},
+  "RELIANCE": {"yahoo_symbol": "RELIANCE.NS", "name": "RELIANCE", "sector": "Diversified", "asset_type": "Equity", "exchange": "NSE"},
+  "SARLAPOLY": {"yahoo_symbol": "SARLAPOLY.NS", "name": "Sarla Performance Fibers", "sector": "Consumer", "asset_type": "Equity", "exchange": "NSE"},
+  "SEYAIND-BE": {"yahoo_symbol": "SEYAIND.NS", "name": "SEYAIND-BE", "sector": "Chemicals", "asset_type": "Equity", "exchange": "NSE"},
+  "SGFIN": {"yahoo_symbol": "SGFIN.NS", "name": "SGFIN", "sector": "Financial Services", "asset_type": "Equity", "exchange": "NSE"},
+  "SGMART": {"yahoo_symbol": "SGMART.NS", "name": "SGMART", "sector": "Industrial & Capital Goods", "asset_type": "Equity", "exchange": "NSE"},
+  "SILVER": {"yahoo_symbol": "SILVER.NS", "name": "SILVER", "sector": "ETF / Cash & Commodities", "asset_type": "ETF", "exchange": "NSE"},
+  "SONACOMS": {"yahoo_symbol": "SONACOMS.NS", "name": "SONACOMS", "sector": "Auto & Components", "asset_type": "Equity", "exchange": "NSE"},
+  "SONATSOFTW": {"yahoo_symbol": "SONATSOFTW.NS", "name": "Sonata Software", "sector": "Technology & Software", "asset_type": "Equity", "exchange": "NSE"},
+  "STYL": {"yahoo_symbol": "STYL.NS", "name": "STYL", "sector": "Consumer", "asset_type": "Equity", "exchange": "NSE"},
+  "SUNTECK": {"yahoo_symbol": "SUNTECK.NS", "name": "Sunteck Realty", "sector": "Real Estate", "asset_type": "Equity", "exchange": "NSE"},
+  "SUPRIYA": {"yahoo_symbol": "SUPRIYA.NS", "name": "SUPRIYA", "sector": "Healthcare & Pharmaceuticals", "asset_type": "Equity", "exchange": "NSE"},
+  "SWSOLAR": {"yahoo_symbol": "SWSOLAR.NS", "name": "SWSOLAR", "sector": "Renewable Energy & Power", "asset_type": "Equity", "exchange": "NSE"},
+  "TARSONS": {"yahoo_symbol": "TARSONS.NS", "name": "TARSONS", "sector": "Healthcare & Pharmaceuticals", "asset_type": "Equity", "exchange": "NSE"},
+  "TIIL": {"yahoo_symbol": "TIIL.NS", "name": "TIIL", "sector": "Industrial & Capital Goods", "asset_type": "Equity", "exchange": "NSE"},
+  "TMCV": {"yahoo_symbol": "TMCV.NS", "name": "TMCV", "sector": "Auto & Components", "asset_type": "Equity", "exchange": "NSE"},
+  "TMPV": {"yahoo_symbol": "TMPV.NS", "name": "TMPV", "sector": "Auto & Components", "asset_type": "Equity", "exchange": "NSE"},
+  "TRANSWORLD": {"yahoo_symbol": "TRANSWORLD.NS", "name": "TRANSWORLD", "sector": "Logistics & Shipping", "asset_type": "Equity", "exchange": "NSE"},
+  "VIYASH": {"yahoo_symbol": "VIYASH.NS", "name": "VIYASH", "sector": "Healthcare & Pharmaceuticals", "asset_type": "Equity", "exchange": "NSE"},
+  "WCIL": {"yahoo_symbol": "WCIL.NS", "name": "WCIL", "sector": "Logistics & Shipping", "asset_type": "Equity", "exchange": "NSE"},
+};
+
+function normalizedSymbol(value){
+  return String(value||'').trim().toUpperCase();
+}
+function catalogInstrument(symbol,fallback={}){
+  symbol=normalizedSymbol(symbol);
+  const catalog=SECURITY_CATALOG[symbol]||{};
+  const exchange=String(catalog.exchange||fallback.exchange||'NSE').toUpperCase();
+  const base=symbol.replace(/-(BE|SM|BZ|BL)$/,'');
+  const defaultYahoo=`${base}.${exchange==='BSE'?'BO':'NS'}`;
+  return {
+    ...fallback,
+    symbol,
+    yahoo_symbol:catalog.yahoo_symbol||fallback.yahoo_symbol||defaultYahoo,
+    name:catalog.name||fallback.name||symbol,
+    exchange,
+    sector:catalog.sector||fallback.sector||ETF_DEFAULTS[symbol]?.sector||'Unclassified',
+    asset_type:catalog.asset_type||fallback.asset_type||ETF_DEFAULTS[symbol]?.asset_type||(/ETF|LIQUID|SILVER|GOLD/i.test(symbol)?'ETF':'Equity'),
+    active:fallback.active!==false,
+  };
+}
+function normalizeInstrumentRecord(record={}){
+  const symbol=normalizedSymbol(record.symbol);
+  if(!symbol)return record;
+  const catalog=SECURITY_CATALOG[symbol]||{};
+  const localSector=String(record.sector||'').trim();
+  const localName=String(record.name||'').trim();
+  const localAsset=String(record.asset_type||'').trim();
+  const preferred=catalogInstrument(symbol,record);
+  return {
+    ...record,
+    symbol,
+    yahoo_symbol:catalog.yahoo_symbol||record.yahoo_symbol||preferred.yahoo_symbol,
+    name:(!localName||localName===symbol)?preferred.name:localName,
+    exchange:catalog.exchange||record.exchange||preferred.exchange,
+    sector:(!localSector||/^unclassified$/i.test(localSector)||/^other \/ review$/i.test(localSector))?preferred.sector:localSector,
+    asset_type:(!localAsset)?preferred.asset_type:localAsset,
+    active:record.active!==false,
+  };
+}
 let supabaseClient = null;
 
 export const DEFAULT_ACCOUNT = 'Zerodha';
@@ -24,11 +129,17 @@ function defaultState(){
 function localState(){
   try {
     const state={...defaultState(), ...JSON.parse(localStorage.getItem(KEY)||'{}')};
+    const before=JSON.stringify(state.instruments||[]);
+    state.instruments=(state.instruments||[]).map(normalizeInstrumentRecord);
     state.transactions=(state.transactions||[]).map(t=>({...t,account:accountOf(t)}));
+    if(before!==JSON.stringify(state.instruments))localStorage.setItem(KEY,JSON.stringify(state));
     return state;
   } catch { return defaultState(); }
 }
-function saveLocal(state){ localStorage.setItem(KEY, JSON.stringify(state)); }
+function saveLocal(state){
+  state={...state,instruments:(state.instruments||[]).map(normalizeInstrumentRecord),transactions:(state.transactions||[]).map(t=>({...t,account:accountOf(t)}))};
+  localStorage.setItem(KEY, JSON.stringify(state));
+}
 
 export function isCloudConfigured(){ return Boolean(cfg.SUPABASE_URL && cfg.SUPABASE_ANON_KEY); }
 export function supabase(){
@@ -84,7 +195,7 @@ export function aggregateHoldings(instruments,transactions,accountFilter='All ac
 }
 
 export async function upsertInstrument(record){
-  record={...record,symbol:String(record.symbol).trim().toUpperCase(),yahoo_symbol:String(record.yahoo_symbol||`${record.symbol}.NS`).trim().toUpperCase(),sector:String(record.sector||'Unclassified').trim(),asset_type:String(record.asset_type||'Equity').trim(),active:record.active!==false};
+  record=normalizeInstrumentRecord({...record,symbol:normalizedSymbol(record.symbol),yahoo_symbol:String(record.yahoo_symbol||'').trim().toUpperCase(),sector:String(record.sector||'').trim(),asset_type:String(record.asset_type||'').trim(),active:record.active!==false});
   const s=await session();
   if(!s){const st=localState();const i=st.instruments.findIndex(x=>x.symbol===record.symbol);if(i>=0)st.instruments[i]={...st.instruments[i],...record};else st.instruments.push({...record,id:uid()});saveLocal(st);return;}
   const {error}=await supabase().from('instruments').upsert(record,{onConflict:'user_id,symbol'});if(error)throw error;
@@ -144,7 +255,7 @@ export async function importBrokerCsv(text,account=DEFAULT_ACCOUNT){
     const symbol=(r.Instrument||r.Symbol||'').trim().toUpperCase();if(!symbol)continue;
     const base=symbol.replace(/-(BE|SM|BZ|BL)$/,'');
     const defaults=ETF_DEFAULTS[symbol]||{};
-    ins.push({symbol,yahoo_symbol:`${base}.NS`,name:symbol,exchange:'NSE',sector:defaults.sector||'Unclassified',asset_type:defaults.asset_type||'Equity',active:true});
+    ins.push(catalogInstrument(symbol,{yahoo_symbol:`${base}.NS`,name:symbol,exchange:'NSE',sector:defaults.sector||'Unclassified',asset_type:defaults.asset_type||'Equity',active:true}));
     tx.push({symbol,transaction_type:'opening',trade_date:today(),quantity:Number(r['Qty.']||r.Quantity||0),price:Number(r['Avg. cost']||r['Avg Cost']||0),fees:0,notes:`Imported opening holding · ${account}`,analytics_only:false,source,account});
   }
   if(!s){
@@ -182,18 +293,65 @@ async function saveImportedHoldings(ins,tx,account){
 export async function importMstockHoldingsWorkbook(buffer){
   const account='m.Stock';const rows=workbookRows(buffer,'Holdings');const header=rows.findIndex(r=>String(r[0]).trim().toLowerCase()==='scrip name');if(header<0)throw new Error('The m.Stock holdings header “Scrip Name” was not found.');
   const ins=[];const tx=[];
-  for(const r of rows.slice(header+1)){const symbol=mstockSymbol(r[0]);if(!symbol||symbol==='TOTAL')break;const quantity=Number(String(r[1]).replace(/,/g,''));const price=Number(String(r[2]).replace(/,/g,''));if(!Number.isFinite(quantity)||quantity<=0||!Number.isFinite(price))continue;const base=symbol.replace(/-(BE|SM|BZ|BL)$/,'');ins.push({symbol,yahoo_symbol:`${base}.NS`,name:symbol,exchange:'NSE',sector:ETF_DEFAULTS[symbol]?.sector||'Unclassified',asset_type:inferredAssetType(symbol),active:true});tx.push({symbol,transaction_type:'opening',trade_date:today(),quantity,price,fees:0,notes:'Imported opening holding · m.Stock',analytics_only:false,source:'mstock_holdings_snapshot',account});}
+  for(const r of rows.slice(header+1)){const symbol=mstockSymbol(r[0]);if(!symbol||symbol==='TOTAL')break;const quantity=Number(String(r[1]).replace(/,/g,''));const price=Number(String(r[2]).replace(/,/g,''));if(!Number.isFinite(quantity)||quantity<=0||!Number.isFinite(price))continue;const base=symbol.replace(/-(BE|SM|BZ|BL)$/,'');ins.push(catalogInstrument(symbol,{yahoo_symbol:`${base}.NS`,name:symbol,exchange:'NSE',sector:ETF_DEFAULTS[symbol]?.sector||'Unclassified',asset_type:inferredAssetType(symbol),active:true}));tx.push({symbol,transaction_type:'opening',trade_date:today(),quantity,price,fees:0,notes:'Imported opening holding · m.Stock',analytics_only:false,source:'mstock_holdings_snapshot',account});}
   if(!ins.length)throw new Error('No current m.Stock holdings were found in the workbook.');await saveImportedHoldings(ins,tx,account);return {count:ins.length,account};
 }
 async function saveHistoryRecords(records,instruments){
   const s=await session();
-  if(!s){const st=localState();for(const ins of instruments.values()){const i=st.instruments.findIndex(x=>x.symbol===ins.symbol);if(i<0)st.instruments.push({...ins,active:false,id:uid()});}const existing=new Set(st.transactions.map(t=>String(t.external_trade_id||'')).filter(Boolean));const fresh=records.filter(x=>!existing.has(x.external_trade_id)).map(x=>({...x,id:uid()}));st.transactions.push(...fresh);saveLocal(st);return {imported:fresh.length,duplicates:records.length-fresh.length};}
+  if(!s){const st=localState();for(const ins of instruments.values()){const i=st.instruments.findIndex(x=>x.symbol===ins.symbol);if(i<0)st.instruments.push({...normalizeInstrumentRecord(ins),active:false,id:uid()});else st.instruments[i]=normalizeInstrumentRecord({...st.instruments[i],...ins,active:st.instruments[i].active!==false});}const existing=new Set(st.transactions.map(t=>String(t.external_trade_id||'')).filter(Boolean));const fresh=records.filter(x=>!existing.has(x.external_trade_id)).map(x=>({...x,id:uid()}));st.transactions.push(...fresh);saveLocal(st);return {imported:fresh.length,duplicates:records.length-fresh.length};}
   const sb=supabase();const {data:user}=await sb.auth.getUser();const user_id=user.user.id;const {data:existingRows,error:existingError}=await sb.from('instruments').select('symbol');if(existingError)throw existingError;const existingSymbols=new Set((existingRows||[]).map(x=>x.symbol));const missing=[...instruments.values()].filter(x=>!existingSymbols.has(x.symbol)).map(x=>({...x,active:false,user_id}));if(missing.length){const {error:e1}=await sb.from('instruments').insert(missing);if(e1)throw e1;}const {error:e2}=await sb.from('transactions').upsert(records.map(x=>({...x,user_id})),{onConflict:'user_id,external_trade_id',ignoreDuplicates:true});if(e2&&/account|external_trade_id|analytics_only|source/i.test(e2.message||''))throw new Error('Cloud schema needs the multi-account upgrade. Run supabase/upgrade_v3_4.sql, then import again.');if(e2)throw e2;return {imported:records.length,duplicates:0};
 }
 export async function importMstockTradeWorkbook(buffer){
-  const account='m.Stock';const rows=workbookRows(buffer,'Trade History');const header=rows.findIndex(r=>String(r[0]).trim().toLowerCase()==='trade date');if(header<0)throw new Error('The m.Stock “Trade Date” header was not found.');const records=[];const instruments=new Map();
-  for(const r of rows.slice(header+1)){const trade_date=parseIndianDate(r[0]);const type=String(r[2]||'').trim().toLowerCase();const symbol=mstockSymbol(r[3]);const quantity=Number(String(r[4]).replace(/,/g,''));const price=Number(String(r[5]).replace(/,/g,''));const tradeId=String(r[6]||'').trim();if(!trade_date||!symbol||!['buy','sell'].includes(type)||!Number.isFinite(quantity)||quantity<=0||!Number.isFinite(price))continue;const external_trade_id=`mstock-${tradeId||`${symbol}-${type}-${trade_date}-${quantity}-${price}`}`;records.push({symbol,transaction_type:type,trade_date,quantity,price,fees:0,notes:`m.Stock trade history · ${tradeId}`,analytics_only:true,external_trade_id,source:'mstock_tradebook',account,created_at:new Date().toISOString()});if(!instruments.has(symbol))instruments.set(symbol,{symbol,yahoo_symbol:yahooMapping(symbol,'NSE'),name:symbol,exchange:'NSE',sector:ETF_DEFAULTS[symbol]?.sector||'Unclassified',asset_type:inferredAssetType(symbol),active:true});}
-  if(!records.length)throw new Error('No valid m.Stock buy or sell executions were found.');const saved=await saveHistoryRecords(records,instruments);const dates=records.map(x=>x.trade_date).sort();return {rows:records.length,...saved,start:dates[0],end:dates.at(-1),account};
+  const account='m.Stock';
+  const rows=workbookRows(buffer,'Trade History');
+  const header=rows.findIndex(row=>row.some(cell=>String(cell||'').trim().toLowerCase()==='trade date'));
+  if(header<0)throw new Error('The m.Stock “Trade Date” header was not found.');
+
+  const headers=rows[header].map(value=>String(value||'').trim().toLowerCase());
+  const column=(...names)=>headers.findIndex(value=>names.includes(value));
+  const dateCol=column('trade date');
+  const exchangeCol=column('exchange');
+  const typeCol=column('buy / sell','buy/sell');
+  const symbolCol=column('scrip / contract','scrip/contract','scrip name');
+  const qtyCol=column('qty','quantity');
+  const priceCol=column('price','trade price');
+  const idCol=column('trade id','trade no','trade number');
+  if([dateCol,typeCol,symbolCol,qtyCol,priceCol].some(index=>index<0)){
+    throw new Error('The m.Stock trade-history columns could not be identified. Expected Trade Date, Buy / Sell, Scrip / Contract, Qty and Price.');
+  }
+
+  const records=[];
+  const instruments=new Map();
+  for(const row of rows.slice(header+1)){
+    const trade_date=parseIndianDate(row[dateCol]);
+    const type=String(row[typeCol]||'').trim().toLowerCase();
+    const symbol=mstockSymbol(row[symbolCol]);
+    const quantity=Number(String(row[qtyCol]||'').replace(/,/g,''));
+    const price=Number(String(row[priceCol]||'').replace(/,/g,''));
+    const tradeId=idCol>=0?String(row[idCol]||'').trim():'';
+    const exchange=exchangeCol>=0?String(row[exchangeCol]||'NSE').toUpperCase():'NSE';
+    if(!trade_date||!symbol||!['buy','sell'].includes(type)||!Number.isFinite(quantity)||quantity<=0||!Number.isFinite(price)||price<=0)continue;
+    const rawId=tradeId||`${trade_date}-${exchange}-${symbol}-${type}-${quantity}-${price}`;
+    const external_trade_id=`mstock-${rawId}`;
+    records.push({
+      symbol,transaction_type:type,trade_date,quantity,price,fees:0,
+      notes:`m.Stock trade history · ${tradeId||'generated ID'}`,
+      analytics_only:true,external_trade_id,source:'mstock_tradebook',account,
+      created_at:new Date().toISOString(),
+    });
+    if(!instruments.has(symbol)){
+      instruments.set(symbol,catalogInstrument(symbol,{
+        yahoo_symbol:yahooMapping(symbol,exchange.includes('BSE')?'BSE':'NSE'),
+        name:symbol,
+        exchange:exchange.includes('BSE')?'BSE':'NSE',
+        active:true,
+      }));
+    }
+  }
+  if(!records.length)throw new Error('No valid m.Stock buy or sell executions were found.');
+  const saved=await saveHistoryRecords(records,instruments);
+  const dates=records.map(row=>row.trade_date).sort();
+  return {rows:records.length,...saved,start:dates[0],end:dates.at(-1),account};
 }
 
 function toIsoDate(value){
@@ -231,7 +389,7 @@ export async function importTradebookCsv(text,account=DEFAULT_ACCOUNT){
       analytics_only:true, external_trade_id, source:'zerodha_tradebook', account,
       created_at:r.order_execution_time||new Date().toISOString(),
     });
-    if(!instruments.has(symbol))instruments.set(symbol,{symbol,yahoo_symbol:yahooMapping(symbol,exchange),name:symbol,exchange,sector:ETF_DEFAULTS[symbol]?.sector||'Unclassified',asset_type:inferredAssetType(symbol),active:true});
+    if(!instruments.has(symbol))instruments.set(symbol,catalogInstrument(symbol,{yahoo_symbol:yahooMapping(symbol,exchange),name:symbol,exchange,sector:ETF_DEFAULTS[symbol]?.sector||'Unclassified',asset_type:inferredAssetType(symbol),active:true}));
   }
   if(!records.length)throw new Error('No valid buy or sell rows were found in the tradebook.');
 
@@ -266,5 +424,5 @@ export async function loadMarket(){const s=await session();if(s){const {data,err
 export async function loadResults(){const s=await session();if(s){const {data,error}=await supabase().from('financial_results').select('*').order('period_end',{ascending:false});if(!error&&data)return data;}return fetchJson(cfg.RESULTS_DATA_URL||'../data/results.json',[]);}
 export async function loadAnnouncements(){const s=await session();if(s){const {data,error}=await supabase().from('announcements').select('*').order('published_at',{ascending:false}).limit(500);if(!error&&data)return data;}const auto=await fetchJson(cfg.ANNOUNCEMENTS_DATA_URL||'../data/announcements.json',[]);return [...localState().manualAnnouncements,...auto];}
 export function exportLocal(){return JSON.stringify(localState(),null,2);}
-export function importLocal(json){const obj=JSON.parse(json);const state={...defaultState(),...obj};state.transactions=(state.transactions||[]).map(t=>({...t,account:accountOf(t)}));saveLocal(state);}
+export function importLocal(json){const obj=JSON.parse(json);const state={...defaultState(),...obj};state.instruments=(state.instruments||[]).map(normalizeInstrumentRecord);state.transactions=(state.transactions||[]).map(t=>({...t,account:accountOf(t)}));saveLocal(state);}
 export function resetLocal(){localStorage.removeItem(KEY);}
