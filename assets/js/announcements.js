@@ -1,5 +1,5 @@
 import {mountShell} from './shell.js';
-import {loadCore, aggregateHoldings, loadAnnouncements, saveManualAnnouncement} from './data-service.js';
+import {loadCore, aggregateHoldings, loadAnnouncements, saveManualAnnouncement, availableAccounts} from './data-service.js';
 import {esc, impactClass, today, safeUrl} from './utils.js';
 import {updateModeBadge, bindModal} from './common.js';
 
@@ -52,11 +52,12 @@ function render(rows) {
 
 async function run() {
   const [core, ann] = await Promise.all([loadCore(), loadAnnouncements()]);
-  const active = new Set(aggregateHoldings(core.instruments, core.transactions).map(x => x.symbol));
+  const accounts=availableAccounts(core.transactions);let selectedAccount=localStorage.getItem('portfolioAccountFilter')||'All accounts';if(selectedAccount!=='All accounts'&&!accounts.includes(selectedAccount))selectedAccount='All accounts';
+  const active = new Set(aggregateHoldings(core.instruments, core.transactions, selectedAccount).map(x => x.symbol));
   const rows = ann.filter(x => active.has(x.symbol)).sort((a,b) => String(b.published_at).localeCompare(String(a.published_at)));
 
   root.innerHTML = `
-    <div class="hero"><div><h2>Material developments and decision impact</h2><p>Each item separates the factual summary from the likely business effect, what could invalidate the thesis, and the time horizon.</p></div><button class="btn primary" id="openAnn">+ Add manual announcement</button></div>
+    <div class="hero"><div><h2>Material developments and decision impact</h2><p>Each item separates the factual summary from the likely business effect, what could invalidate the thesis, and the time horizon.</p></div><div class="hero-actions"><label class="account-picker"><span>Account</span><select id="accountFilter" class="input"><option>All accounts</option>${accounts.map(a=>`<option ${a===selectedAccount?'selected':''}>${esc(a)}</option>`).join('')}</select></label><button class="btn primary" id="openAnn">+ Add manual announcement</button></div></div>
     <div class="notice warning">The score measures likely business materiality from −5 to +5, not a predicted share-price move. “Neutral / monitor” now includes an explicit explanation of what is missing.</div>
     <div class="card">
       <div class="toolbar">
@@ -111,6 +112,7 @@ async function run() {
     if (sort === 'recent') list.sort((a,b) => String(b.published_at).localeCompare(String(a.published_at)));
     document.getElementById('annList').innerHTML = render(list);
   };
+  document.getElementById('accountFilter').addEventListener('change',e=>{localStorage.setItem('portfolioAccountFilter',e.target.value);location.reload();});
   ['annSearch','annImpact','annPeriod','annSort'].forEach(id => document.getElementById(id).addEventListener(id === 'annSearch' ? 'input' : 'change', apply));
   await updateModeBadge(rows.map(x => x.fetched_at).filter(Boolean).sort().at(-1));
 }

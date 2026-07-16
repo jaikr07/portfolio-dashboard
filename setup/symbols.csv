@@ -1,6 +1,10 @@
 symbol,yahoo_symbol,name,sector,asset_type
 AARTIIND,AARTIIND.NS,AARTIIND,Chemicals,Equity
+AARTIPHARM,AARTIPHARM.NS,Aarti Pharmalabs,Healthcare & Pharmaceuticals,Equity
 ADANIGREEN,ADANIGREEN.NS,ADANIGREEN,Renewable Energy & Power,Equity
+AEROENTER,AEROENTER.NS,Aeroflex Enterprises,Metals & Materials,Equity
+AFFLE,AFFLE.NS,Affle India,Technology & Software,Equity
+AGOL,AGOL.BO,Ashapuri Gold Ornament,Consumer,Equity
 AURUM,AURUM.NS,AURUM,Technology & Software,Equity
 BEWLTD-SM,BEWLTD.NS,BEWLTD-SM,Industrial & Capital Goods,Equity
 BLUEJET,BLUEJET.NS,BLUEJET,Healthcare & Pharmaceuticals,Equity
@@ -15,30 +19,39 @@ ELECTCAST,ELECTCAST.NS,ELECTCAST,Metals & Materials,Equity
 ELLEN,ELLEN.NS,ELLEN,Industrial & Capital Goods,Equity
 FAIRCHEMOR-BE,FAIRCHEMOR.NS,FAIRCHEMOR-BE,Chemicals,Equity
 FLORACORP,FLORACORP.NS,FLORACORP,Other / Review,Equity
+GEMAROMA,GEMAROMA.NS,Gem Aromatics,Chemicals,Equity
 GLAND,GLAND.NS,GLAND,Healthcare & Pharmaceuticals,Equity
 HDFCAMC,HDFCAMC.NS,HDFCAMC,Financial Services,Equity
 IEX,IEX.NS,IEX,Renewable Energy & Power,Equity
+IKIO,IKIO.NS,IKIO Technologies,Industrial & Capital Goods,Equity
 IMAGICAA,IMAGICAA.NS,IMAGICAA,Media & Leisure,Equity
+JTLIND,JTLIND.NS,JTL Industries,Metals & Materials,Equity
 KOTAKBANK,KOTAKBANK.NS,KOTAKBANK,Financial Services,Equity
+LANDMARK,LANDMARK.NS,Landmark Cars,Auto & Components,Equity
 LIQUIDCASE,LIQUIDCASE.NS,LIQUIDCASE,ETF / Cash & Commodities,ETF
 MAYURUNIQ,MAYURUNIQ.NS,MAYURUNIQ,Auto & Components,Equity
 MSPL,MSPL.NS,MSPL,Metals & Materials,Equity
 NEWGEN,NEWGEN.NS,NEWGEN,Technology & Software,Equity
 OSWALPUMPS,OSWALPUMPS.NS,OSWALPUMPS,Industrial & Capital Goods,Equity
+PAUSHAKLTD,PAUSHAKLTD.NS,Paushak,Chemicals,Equity
 PERSISTENT,PERSISTENT.NS,PERSISTENT,Technology & Software,Equity
 PRERINFRA,PRERINFRA.NS,PRERINFRA,Infrastructure & Environment,Equity
 PRITIKAUTO,PRITIKAUTO.NS,PRITIKAUTO,Auto & Components,Equity
 PVRINOX,PVRINOX.NS,PVRINOX,Media & Leisure,Equity
 RADHEDE,RADHEDE.NS,RADHEDE,Real Estate,Equity
+RAIN,RAIN.NS,Rain Industries,Metals & Materials,Equity
 RAYMONDLSL,RAYMONDLSL.NS,RAYMONDLSL,Consumer,Equity
 RELAXO,RELAXO.NS,RELAXO,Consumer,Equity
 RELIANCE,RELIANCE.NS,RELIANCE,Diversified,Equity
+SARLAPOLY,SARLAPOLY.NS,Sarla Performance Fibers,Consumer,Equity
 SEYAIND-BE,SEYAIND.NS,SEYAIND-BE,Chemicals,Equity
 SGFIN,SGFIN.NS,SGFIN,Financial Services,Equity
 SGMART,SGMART.NS,SGMART,Industrial & Capital Goods,Equity
 SILVER,SILVER.NS,SILVER,ETF / Cash & Commodities,ETF
 SONACOMS,SONACOMS.NS,SONACOMS,Auto & Components,Equity
+SONATSOFTW,SONATSOFTW.NS,Sonata Software,Technology & Software,Equity
 STYL,STYL.NS,STYL,Consumer,Equity
+SUNTECK,SUNTECK.NS,Sunteck Realty,Real Estate,Equity
 SUPRIYA,SUPRIYA.NS,SUPRIYA,Healthcare & Pharmaceuticals,Equity
 SWSOLAR,SWSOLAR.NS,SWSOLAR,Renewable Energy & Power,Equity
 TARSONS,TARSONS.NS,TARSONS,Healthcare & Pharmaceuticals,Equity

@@ -29,6 +29,7 @@ create table if not exists public.transactions (
   analytics_only boolean not null default false,
   external_trade_id text,
   source text,
+  account text not null default 'Zerodha',
   created_at timestamptz not null default now()
 );
 
@@ -128,6 +129,9 @@ alter table public.financial_results add column if not exists cash_metrics_appli
 alter table public.transactions add column if not exists analytics_only boolean not null default false;
 alter table public.transactions add column if not exists external_trade_id text;
 alter table public.transactions add column if not exists source text;
+alter table public.transactions add column if not exists account text default 'Zerodha';
+update public.transactions set account=case when lower(coalesce(source,'')) like '%mstock%' then 'm.Stock' else 'Zerodha' end where account is null or btrim(account)='';
+alter table public.transactions alter column account set not null;
 alter table public.announcements add column if not exists impact_reason text;
 alter table public.announcements add column if not exists watch_items text;
 alter table public.announcements add column if not exists time_horizon text;

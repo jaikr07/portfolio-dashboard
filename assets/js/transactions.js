@@ -7,6 +7,9 @@ import {
   upsertInstrument,
   deleteTransaction,
   importTradebookCsv,
+  importMstockTradeWorkbook,
+  availableAccounts,
+  accountOf,
 } from './data-service.js';
 import { fmtMoney, fmtNum, esc, today } from './utils.js';
 import { updateModeBadge } from './common.js';
@@ -39,8 +42,8 @@ const isHistoryOnly = transaction =>
 
 const isEditableManual = transaction =>
   !isHistoryOnly(transaction) &&
-  String(transaction.source || '') !== 'holdings_snapshot' &&
-  String(transaction.source || '') !== 'zerodha_tradebook' &&
+  !String(transaction.source || '').endsWith('_holdings_snapshot') &&
+  !String(transaction.source || '').endsWith('_tradebook') &&
   String(transaction.transaction_type || '').toLowerCase() !== 'opening';
 
 const transactionType = transaction =>
@@ -284,7 +287,7 @@ function renderActivity(transactions) {
               <span class="badge ${typeBadge(transaction)}">${esc(
                 transactionType(transaction),
               )}</span>
-              ${isHistoryOnly(transaction) ? '<span class="badge neutral">Imported history</span>' : '<span class="badge warning">Manual</span>'}
+              ${isHistoryOnly(transaction) ? '<span class="badge neutral">Imported history</span>' : '<span class="badge warning">Manual</span>'}<span class="badge neutral">${esc(accountOf(transaction))}</span>
             </div>
             <small>${fmtNum(transaction.quantity, 3)} shares at ${fmtMoney(
               transaction.price,
@@ -328,7 +331,7 @@ function renderLedger(transactions) {
           <td>${fmtMoney(transaction.price, 2)}</td>
           <td class="money">${fmtMoney(tradeCash(transaction))}</td>
           <td style="text-align:left">
-            ${isHistoryOnly(transaction) ? '<span class="badge neutral">History only</span> ' : ''}
+            ${isHistoryOnly(transaction) ? '<span class="badge neutral">History only</span> ' : ''}<span class="badge neutral">${esc(accountOf(transaction))}</span>
             ${esc(transaction.notes || '')}
           </td>
           <td>
@@ -352,15 +355,20 @@ function renderLedger(transactions) {
 
 async function run() {
   const core = await loadCore();
-  const holdings = aggregateHoldings(core.instruments, core.transactions);
-  const eligible = buildEligibleTransactions(core, holdings);
-  const coverage = importCoverage(core.transactions);
+  const accounts = availableAccounts(core.transactions);
+  let selectedAccount = localStorage.getItem('portfolioAccountFilter') || 'All accounts';
+  if(selectedAccount!=='All accounts' && !accounts.includes(selectedAccount))selectedAccount='All accounts';
+  const scopedTransactions = selectedAccount==='All accounts' ? core.transactions : core.transactions.filter(t=>accountOf(t)===selectedAccount);
+  const scopedCore = {...core,transactions:scopedTransactions};
+  const holdings = aggregateHoldings(core.instruments, core.transactions, selectedAccount);
+  const eligible = buildEligibleTransactions(scopedCore, holdings);
+  const coverage = importCoverage(scopedTransactions);
   const currentHoldingCount = holdings.length;
   const matchedImported = eligible.filter(isHistoryOnly);
   const matchedImportedSymbols = new Set(
     matchedImported.map(transaction => canonicalSymbol(transaction.display_symbol)),
   ).size;
-  const manualPriceIssues = core.transactions.filter(
+  const manualPriceIssues = scopedTransactions.filter(
     transaction =>
       isEditableManual(transaction) &&
       ['buy', 'sell'].includes(transactionType(transaction)) &&
@@ -374,7 +382,7 @@ async function run() {
         <h2>What you are adding now</h2>
         <p>This page tracks recent buys and sells in companies you currently hold. It is separate from your total portfolio cost basis, which can include positions bought before the uploaded tradebook begins.</p>
       </div>
-      <button class="btn primary" id="openTx">+ New transaction</button>
+      <div class="hero-actions"><label class="account-picker"><span>Account</span><select id="accountFilter" class="input"><option>All accounts</option>${accounts.map(a=>`<option ${a===selectedAccount?'selected':''}>${esc(a)}</option>`).join('')}</select></label><button class="btn primary" id="openTx">+ New transaction</button></div>
     </div>
 
     <div class="transaction-context card">
@@ -386,7 +394,7 @@ async function run() {
         </div>
       </div>
       <div class="context-facts">
-        <span><b>${currentHoldingCount}</b> current holdings</span>
+        <span><b>${currentHoldingCount}</b> current holdings · ${esc(selectedAccount)}</span>
         <span><b>${matchedImportedSymbols}</b> current holdings found in the tradebook</span>
         <span><b>${matchedImported.length}</b> matching imported executions</span>
       </div>
@@ -452,17 +460,18 @@ async function run() {
       </div>
 
       <div class="card import-card">
-        <span class="eyebrow">One-time import</span>
+        <span class="eyebrow">One-time broker history</span>
         <h3>Zerodha EQ tradebook</h3>
-        <p>Upload your original tradebook CSV. Imported rows are used only for recent-activity analysis and do not alter the quantities from your current-holdings snapshot.</p>
-        <label class="drop-zone" for="tradebookFile">
-          <strong>Choose tradebook CSV</strong>
-          <span>Expected columns: symbol, trade_date, trade_type, quantity and price</span>
-          <input type="file" id="tradebookFile" accept=".csv" hidden>
-        </label>
-        <button class="btn primary" id="importTradebook">Import transaction history</button>
+        <p>Upload the Zerodha CSV. It is history-only and cannot double-count the holdings snapshot.</p>
+        <label class="drop-zone" for="tradebookFile"><strong>Choose Zerodha tradebook CSV</strong><span>symbol, trade_date, trade_type, quantity and price</span><input type="file" id="tradebookFile" accept=".csv" hidden></label>
+        <button class="btn primary" id="importTradebook">Import Zerodha history</button>
         <div id="tradebookMsg" class="import-message"></div>
-        <div class="notice" style="margin-top:14px;margin-bottom:0">New manual buys and sells update both your current holdings and these recent-activity charts.</div>
+        <hr class="soft-divider">
+        <h3>m.Stock trade history</h3>
+        <p>Upload the original <strong>TradeHistory…xlsx</strong>. Client details in the header are ignored.</p>
+        <label class="drop-zone" for="mstockTradeFile"><strong>Choose m.Stock Excel file</strong><span>Trade Date, Buy / Sell, Scrip / Contract, Qty, Price and Trade Id</span><input type="file" id="mstockTradeFile" accept=".xlsx,.xls" hidden></label>
+        <button class="btn primary" id="importMstockTradebook">Import m.Stock history</button>
+        <div id="mstockTradeMsg" class="import-message"></div>
       </div>
     </div>
 
@@ -486,7 +495,7 @@ async function run() {
           <div class="field"><label>Symbol</label><input class="input" name="symbol" list="symbols" required><datalist id="symbols">${core.instruments
             .map(instrument => `<option value="${esc(instrument.symbol)}">`)
             .join('')}</datalist></div>
-          <div class="field"><label>Yahoo symbol mapping</label><input class="input" name="yahoo_symbol" placeholder="e.g. RELIANCE.NS"></div>
+          <div class="field"><label>Yahoo symbol mapping</label><input class="input" name="yahoo_symbol" placeholder="e.g. RELIANCE.NS"></div><div class="field"><label>Broker account</label><select class="input" name="account">${[...new Set([...accounts,'Zerodha','m.Stock'])].map(a=>`<option>${esc(a)}</option>`).join('')}</select></div>
           <div class="field"><label>Transaction type</label><select class="input" id="txType" name="transaction_type"><option value="buy">Buy</option><option value="sell">Sell</option><option value="bonus">Bonus</option><option value="split">Split adjustment</option><option value="adjustment">Other adjustment</option></select></div>
           <div class="field"><label>Trade date</label><input type="date" class="input" name="trade_date" value="${today()}" required></div>
           <div class="field"><label>Quantity</label><input type="number" step="any" min="0.000001" class="input" name="quantity" required></div>
@@ -755,6 +764,7 @@ async function run() {
     transactionForm.elements.trade_date.value = today();
     transactionForm.elements.transaction_type.value = 'buy';
     transactionForm.elements.fees.value = '0';
+    transactionForm.elements.account.value = selectedAccount==='All accounts'?(accounts[0]||'Zerodha'):selectedAccount;
     document.getElementById('txModalTitle').textContent = 'Add transaction';
     document.getElementById('txModalCopy').textContent =
       'New buys and sells update both your holdings and recent-deployment charts.';
@@ -777,6 +787,7 @@ async function run() {
     transactionForm.elements.price.value = Number(transaction.price || 0);
     transactionForm.elements.fees.value = Number(transaction.fees || 0);
     transactionForm.elements.notes.value = transaction.notes || '';
+    transactionForm.elements.account.value = accountOf(transaction);
     document.getElementById('txModalTitle').textContent = `Edit ${transaction.symbol} transaction`;
     document.getElementById('txModalCopy').textContent =
       'Correcting this record will immediately recalculate quantity, average cost, P&L and recent-deployment charts.';
@@ -785,6 +796,7 @@ async function run() {
     modal.classList.add('open');
   }
 
+  document.getElementById('accountFilter').addEventListener('change',e=>{localStorage.setItem('portfolioAccountFilter',e.target.value);location.reload();});
   document.getElementById('openTx').addEventListener('click', openNewTransaction);
   document.getElementById('closeTx').addEventListener('click', closeTransactionModal);
   modal.addEventListener('click', event => {
@@ -847,7 +859,7 @@ async function run() {
     try {
       message.className = 'import-message';
       message.textContent = 'Importing and checking duplicates…';
-      const result = await importTradebookCsv(await file.text());
+      const result = await importTradebookCsv(await file.text(),'Zerodha');
       message.className = 'import-message positive';
       message.textContent = `Imported ${result.imported} executions (${result.duplicates} duplicates skipped), covering ${result.start} to ${result.end}. Only current-holding history will be shown. Reloading…`;
       setTimeout(() => location.reload(), 900);
@@ -855,6 +867,13 @@ async function run() {
       message.className = 'import-message negative';
       message.textContent = error.message;
     }
+  });
+
+  document.getElementById('importMstockTradebook').addEventListener('click', async () => {
+    const file=document.getElementById('mstockTradeFile').files[0];
+    const message=document.getElementById('mstockTradeMsg');
+    if(!file){message.className='import-message negative';message.textContent='Choose the m.Stock trade-history Excel file first.';return;}
+    try{message.className='import-message';message.textContent='Reading m.Stock executions and checking duplicates…';const result=await importMstockTradeWorkbook(await file.arrayBuffer());message.className='import-message positive';message.textContent=`Imported ${result.imported} m.Stock executions (${result.duplicates} duplicates skipped), covering ${result.start} to ${result.end}. Reloading…`;setTimeout(()=>location.reload(),900);}catch(error){message.className='import-message negative';message.textContent=error.message;}
   });
 
   document.querySelectorAll('.del').forEach(button =>

@@ -7,12 +7,26 @@ const ETF_DEFAULTS = {
 };
 let supabaseClient = null;
 
+export const DEFAULT_ACCOUNT = 'Zerodha';
+export function accountOf(transaction){
+  const explicit=String(transaction?.account||'').trim();
+  if(explicit)return explicit;
+  const source=String(transaction?.source||'').toLowerCase();
+  return source.includes('mstock')?'m.Stock':DEFAULT_ACCOUNT;
+}
+export function availableAccounts(transactions=[]){
+  return [...new Set(transactions.map(accountOf).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
+}
+
 function defaultState(){
   return {instruments:[], transactions:[], manualAnnouncements:[], settings:{mode:cfg.DEFAULT_MODE||'local'}};
 }
 function localState(){
-  try { return {...defaultState(), ...JSON.parse(localStorage.getItem(KEY)||'{}')}; }
-  catch { return defaultState(); }
+  try {
+    const state={...defaultState(), ...JSON.parse(localStorage.getItem(KEY)||'{}')};
+    state.transactions=(state.transactions||[]).map(t=>({...t,account:accountOf(t)}));
+    return state;
+  } catch { return defaultState(); }
 }
 function saveLocal(state){ localStorage.setItem(KEY, JSON.stringify(state)); }
 
@@ -40,11 +54,12 @@ export async function loadCore(){
   return {instruments:instruments||[],transactions:transactions||[],manualAnnouncements:manualAnnouncements||[],settings:{mode:'cloud'}};
 }
 
-export function aggregateHoldings(instruments,transactions){
+export function aggregateHoldings(instruments,transactions,accountFilter='All accounts'){
   const map=new Map();
   for(const ins of instruments)map.set(ins.symbol,{...ins,quantity:0,totalCost:0,realizedPnl:0});
   const sorted=[...transactions].sort((a,b)=>String(a.trade_date).localeCompare(String(b.trade_date)));
   for(const t of sorted){
+    if(accountFilter!=='All accounts' && accountOf(t)!==accountFilter)continue;
     // A broker tradebook imported after a current-holdings snapshot is history-only.
     // It is used for the deployment chart, but must not double-count current holdings.
     if(t.analytics_only===true || String(t.analytics_only).toLowerCase()==='true') continue;
@@ -84,6 +99,7 @@ function cleanManualTransaction(record){
     fees:Number(record.fees||0),
     trade_date:record.trade_date||today(),
     notes:String(record.notes||'').trim(),
+    account:String(record.account||DEFAULT_ACCOUNT).trim()||DEFAULT_ACCOUNT,
   };
 }
 
@@ -103,8 +119,8 @@ export async function updateTransaction(id,record){
     const index=st.transactions.findIndex(x=>String(x.id)===String(id));
     if(index<0)throw new Error('Transaction record was not found.');
     const existing=st.transactions[index];
-    if(existing.analytics_only===true||String(existing.analytics_only).toLowerCase()==='true'||String(existing.source||'')==='zerodha_tradebook')throw new Error('Imported tradebook rows are read-only. Correct the source CSV and re-import it instead.');
-    if(String(existing.transaction_type||'').toLowerCase()==='opening'||String(existing.source||'')==='holdings_snapshot')throw new Error('Opening holdings are read-only. Re-import the holdings CSV to correct them.');
+    if(existing.analytics_only===true||String(existing.analytics_only).toLowerCase()==='true'||/_tradebook$/.test(String(existing.source||'')))throw new Error('Imported tradebook rows are read-only. Correct the source CSV and re-import it instead.');
+    if(String(existing.transaction_type||'').toLowerCase()==='opening'||String(existing.source||'').endsWith('_holdings_snapshot'))throw new Error('Opening holdings are read-only. Re-import the holdings CSV to correct them.');
     st.transactions[index]={...existing,...clean,updated_at:new Date().toISOString()};
     saveLocal(st);
     return;
@@ -112,8 +128,8 @@ export async function updateTransaction(id,record){
   const sb=supabase();
   const {data:existing,error:readError}=await sb.from('transactions').select('analytics_only,source,transaction_type').eq('id',id).single();
   if(readError)throw readError;
-  if(existing?.analytics_only===true||String(existing?.source||'')==='zerodha_tradebook')throw new Error('Imported tradebook rows are read-only. Correct the source CSV and re-import it instead.');
-  if(String(existing?.transaction_type||'').toLowerCase()==='opening'||String(existing?.source||'')==='holdings_snapshot')throw new Error('Opening holdings are read-only. Re-import the holdings CSV to correct them.');
+  if(existing?.analytics_only===true||/_tradebook$/.test(String(existing?.source||'')))throw new Error('Imported tradebook rows are read-only. Correct the source CSV and re-import it instead.');
+  if(String(existing?.transaction_type||'').toLowerCase()==='opening'||String(existing?.source||'').endsWith('_holdings_snapshot'))throw new Error('Opening holdings are read-only. Re-import the holdings CSV to correct them.');
   const {error}=await sb.from('transactions').update(clean).eq('id',id);
   if(error)throw error;
 }
@@ -121,24 +137,63 @@ export async function updateTransaction(id,record){
 export async function deleteTransaction(id){const s=await session();if(!s){const st=localState();st.transactions=st.transactions.filter(x=>x.id!==id);saveLocal(st);return;}const {error}=await supabase().from('transactions').delete().eq('id',id);if(error)throw error;}
 export async function saveManualAnnouncement(record){const s=await session();if(!s){const st=localState();st.manualAnnouncements.unshift({...record,id:uid(),is_manual:true,published_at:record.published_at||new Date().toISOString()});saveLocal(st);return;}const {error}=await supabase().from('announcements').insert({...record,is_manual:true});if(error)throw error;}
 
-export async function importBrokerCsv(text){
+export async function importBrokerCsv(text,account=DEFAULT_ACCOUNT){
   const rows=csvParse(text),state=localState(),s=await session(),ins=[],tx=[];
+  const source=`${String(account).toLowerCase().replace(/[^a-z0-9]+/g,'_')}_holdings_snapshot`;
   for(const r of rows){
     const symbol=(r.Instrument||r.Symbol||'').trim().toUpperCase();if(!symbol)continue;
     const base=symbol.replace(/-(BE|SM|BZ|BL)$/,'');
     const defaults=ETF_DEFAULTS[symbol]||{};
     ins.push({symbol,yahoo_symbol:`${base}.NS`,name:symbol,exchange:'NSE',sector:defaults.sector||'Unclassified',asset_type:defaults.asset_type||'Equity',active:true});
-    tx.push({symbol,transaction_type:'opening',trade_date:today(),quantity:Number(r['Qty.']||r.Quantity||0),price:Number(r['Avg. cost']||r['Avg Cost']||0),fees:0,notes:'Imported opening holding',analytics_only:false,source:'holdings_snapshot'});
+    tx.push({symbol,transaction_type:'opening',trade_date:today(),quantity:Number(r['Qty.']||r.Quantity||0),price:Number(r['Avg. cost']||r['Avg Cost']||0),fees:0,notes:`Imported opening holding · ${account}`,analytics_only:false,source,account});
   }
   if(!s){
     for(const x of ins){const i=state.instruments.findIndex(v=>v.symbol===x.symbol);if(i<0)state.instruments.push({...x,id:uid()});else state.instruments[i]={...state.instruments[i],...x};}
-    state.transactions=state.transactions.filter(t=>t.notes!=='Imported opening holding');
-    state.transactions.push(...tx.map(x=>({...x,id:uid(),created_at:new Date().toISOString()})));saveLocal(state);return {count:ins.length};
+    state.transactions=state.transactions.filter(t=>!(String(t.transaction_type).toLowerCase()==='opening'&&accountOf(t)===account));
+    state.transactions.push(...tx.map(x=>({...x,id:uid(),created_at:new Date().toISOString()})));saveLocal(state);return {count:ins.length,account};
   }
   const sb=supabase();const {data:user}=await sb.auth.getUser();const user_id=user.user.id;
   const {error:e1}=await sb.from('instruments').upsert(ins.map(x=>({...x,user_id})),{onConflict:'user_id,symbol'});if(e1)throw e1;
-  await sb.from('transactions').delete().eq('notes','Imported opening holding');
-  const {error:e2}=await sb.from('transactions').insert(tx.map(x=>({...x,user_id})));if(e2)throw e2;return {count:ins.length};
+  await sb.from('transactions').delete().eq('transaction_type','opening').eq('account',account);
+  const {error:e2}=await sb.from('transactions').insert(tx.map(x=>({...x,user_id})));if(e2)throw e2;return {count:ins.length,account};
+}
+
+function workbookRows(buffer,sheetHint){
+  if(!window.XLSX)throw new Error('Excel reader did not load. Refresh the page and try again.');
+  const workbook=window.XLSX.read(buffer,{type:'array',cellDates:false});
+  const sheetName=workbook.SheetNames.find(name=>name.toLowerCase().includes(String(sheetHint||'').toLowerCase()))||workbook.SheetNames[0];
+  return window.XLSX.utils.sheet_to_json(workbook.Sheets[sheetName],{header:1,raw:false,defval:''});
+}
+function mstockSymbol(value){return String(value||'').trim().toUpperCase().replace(/-EQ$/,'');}
+function parseIndianDate(value){
+  const raw=String(value||'').trim();
+  const m=raw.match(/^(\d{1,2})[-\/]([A-Za-z]{3}|\d{1,2})[-\/](\d{2,4})$/);
+  if(!m)return toIsoDate(raw);
+  const months={jan:1,feb:2,mar:3,apr:4,may:5,jun:6,jul:7,aug:8,sep:9,oct:10,nov:11,dec:12};
+  const day=Number(m[1]);const month=/[A-Za-z]/.test(m[2])?months[m[2].toLowerCase()]:Number(m[2]);let year=Number(m[3]);if(year<100)year+=2000;
+  if(!day||!month||!year)return '';
+  return `${year}-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+}
+async function saveImportedHoldings(ins,tx,account){
+  const s=await session();
+  if(!s){const state=localState();for(const x of ins){const i=state.instruments.findIndex(v=>v.symbol===x.symbol);if(i<0)state.instruments.push({...x,id:uid()});else state.instruments[i]={...state.instruments[i],...x};}state.transactions=state.transactions.filter(t=>!(String(t.transaction_type).toLowerCase()==='opening'&&accountOf(t)===account));state.transactions.push(...tx.map(x=>({...x,id:uid(),created_at:new Date().toISOString()})));saveLocal(state);return;}
+  const sb=supabase();const {data:user}=await sb.auth.getUser();const user_id=user.user.id;const {error:e1}=await sb.from('instruments').upsert(ins.map(x=>({...x,user_id})),{onConflict:'user_id,symbol'});if(e1)throw e1;await sb.from('transactions').delete().eq('transaction_type','opening').eq('account',account);const {error:e2}=await sb.from('transactions').insert(tx.map(x=>({...x,user_id})));if(e2)throw e2;
+}
+export async function importMstockHoldingsWorkbook(buffer){
+  const account='m.Stock';const rows=workbookRows(buffer,'Holdings');const header=rows.findIndex(r=>String(r[0]).trim().toLowerCase()==='scrip name');if(header<0)throw new Error('The m.Stock holdings header “Scrip Name” was not found.');
+  const ins=[];const tx=[];
+  for(const r of rows.slice(header+1)){const symbol=mstockSymbol(r[0]);if(!symbol||symbol==='TOTAL')break;const quantity=Number(String(r[1]).replace(/,/g,''));const price=Number(String(r[2]).replace(/,/g,''));if(!Number.isFinite(quantity)||quantity<=0||!Number.isFinite(price))continue;const base=symbol.replace(/-(BE|SM|BZ|BL)$/,'');ins.push({symbol,yahoo_symbol:`${base}.NS`,name:symbol,exchange:'NSE',sector:ETF_DEFAULTS[symbol]?.sector||'Unclassified',asset_type:inferredAssetType(symbol),active:true});tx.push({symbol,transaction_type:'opening',trade_date:today(),quantity,price,fees:0,notes:'Imported opening holding · m.Stock',analytics_only:false,source:'mstock_holdings_snapshot',account});}
+  if(!ins.length)throw new Error('No current m.Stock holdings were found in the workbook.');await saveImportedHoldings(ins,tx,account);return {count:ins.length,account};
+}
+async function saveHistoryRecords(records,instruments){
+  const s=await session();
+  if(!s){const st=localState();for(const ins of instruments.values()){const i=st.instruments.findIndex(x=>x.symbol===ins.symbol);if(i<0)st.instruments.push({...ins,active:false,id:uid()});}const existing=new Set(st.transactions.map(t=>String(t.external_trade_id||'')).filter(Boolean));const fresh=records.filter(x=>!existing.has(x.external_trade_id)).map(x=>({...x,id:uid()}));st.transactions.push(...fresh);saveLocal(st);return {imported:fresh.length,duplicates:records.length-fresh.length};}
+  const sb=supabase();const {data:user}=await sb.auth.getUser();const user_id=user.user.id;const {data:existingRows,error:existingError}=await sb.from('instruments').select('symbol');if(existingError)throw existingError;const existingSymbols=new Set((existingRows||[]).map(x=>x.symbol));const missing=[...instruments.values()].filter(x=>!existingSymbols.has(x.symbol)).map(x=>({...x,active:false,user_id}));if(missing.length){const {error:e1}=await sb.from('instruments').insert(missing);if(e1)throw e1;}const {error:e2}=await sb.from('transactions').upsert(records.map(x=>({...x,user_id})),{onConflict:'user_id,external_trade_id',ignoreDuplicates:true});if(e2&&/account|external_trade_id|analytics_only|source/i.test(e2.message||''))throw new Error('Cloud schema needs the multi-account upgrade. Run supabase/upgrade_v3_4.sql, then import again.');if(e2)throw e2;return {imported:records.length,duplicates:0};
+}
+export async function importMstockTradeWorkbook(buffer){
+  const account='m.Stock';const rows=workbookRows(buffer,'Trade History');const header=rows.findIndex(r=>String(r[0]).trim().toLowerCase()==='trade date');if(header<0)throw new Error('The m.Stock “Trade Date” header was not found.');const records=[];const instruments=new Map();
+  for(const r of rows.slice(header+1)){const trade_date=parseIndianDate(r[0]);const type=String(r[2]||'').trim().toLowerCase();const symbol=mstockSymbol(r[3]);const quantity=Number(String(r[4]).replace(/,/g,''));const price=Number(String(r[5]).replace(/,/g,''));const tradeId=String(r[6]||'').trim();if(!trade_date||!symbol||!['buy','sell'].includes(type)||!Number.isFinite(quantity)||quantity<=0||!Number.isFinite(price))continue;const external_trade_id=`mstock-${tradeId||`${symbol}-${type}-${trade_date}-${quantity}-${price}`}`;records.push({symbol,transaction_type:type,trade_date,quantity,price,fees:0,notes:`m.Stock trade history · ${tradeId}`,analytics_only:true,external_trade_id,source:'mstock_tradebook',account,created_at:new Date().toISOString()});if(!instruments.has(symbol))instruments.set(symbol,{symbol,yahoo_symbol:yahooMapping(symbol,'NSE'),name:symbol,exchange:'NSE',sector:ETF_DEFAULTS[symbol]?.sector||'Unclassified',asset_type:inferredAssetType(symbol),active:true});}
+  if(!records.length)throw new Error('No valid m.Stock buy or sell executions were found.');const saved=await saveHistoryRecords(records,instruments);const dates=records.map(x=>x.trade_date).sort();return {rows:records.length,...saved,start:dates[0],end:dates.at(-1),account};
 }
 
 function toIsoDate(value){
@@ -156,7 +211,7 @@ function yahooMapping(symbol,exchange){
  * Current quantities remain driven by the imported holdings snapshot, avoiding
  * double-counting when the tradebook covers only part of the portfolio history.
  */
-export async function importTradebookCsv(text){
+export async function importTradebookCsv(text,account=DEFAULT_ACCOUNT){
   const rows=csvParse(text);
   const required=['symbol','trade_date','trade_type','quantity','price'];
   if(!rows.length || required.some(k=>!(k in rows[0]))) throw new Error(`This does not look like a Zerodha tradebook. Required columns: ${required.join(', ')}.`);
@@ -167,12 +222,13 @@ export async function importTradebookCsv(text){
     const trade_date=toIsoDate(r.trade_date);
     const quantity=Number(r.quantity); const price=Number(r.price);
     if(!symbol || !['buy','sell'].includes(type) || !trade_date || !Number.isFinite(quantity) || quantity<=0 || !Number.isFinite(price))continue;
-    const external_trade_id=String(r.trade_id||`${symbol}-${type}-${trade_date}-${r.order_execution_time||''}-${quantity}-${price}`).trim();
+    const rawTradeId=String(r.trade_id||`${symbol}-${type}-${trade_date}-${r.order_execution_time||''}-${quantity}-${price}`).trim();
+    const external_trade_id=`zerodha-${rawTradeId}`;
     const exchange=String(r.exchange||'NSE').toUpperCase();
     records.push({
       symbol, transaction_type:type, trade_date, quantity, price, fees:0,
       notes:`Tradebook history · ${external_trade_id}`,
-      analytics_only:true, external_trade_id, source:'zerodha_tradebook',
+      analytics_only:true, external_trade_id, source:'zerodha_tradebook', account,
       created_at:r.order_execution_time||new Date().toISOString(),
     });
     if(!instruments.has(symbol))instruments.set(symbol,{symbol,yahoo_symbol:yahooMapping(symbol,exchange),name:symbol,exchange,sector:ETF_DEFAULTS[symbol]?.sector||'Unclassified',asset_type:inferredAssetType(symbol),active:true});
@@ -210,5 +266,5 @@ export async function loadMarket(){const s=await session();if(s){const {data,err
 export async function loadResults(){const s=await session();if(s){const {data,error}=await supabase().from('financial_results').select('*').order('period_end',{ascending:false});if(!error&&data)return data;}return fetchJson(cfg.RESULTS_DATA_URL||'../data/results.json',[]);}
 export async function loadAnnouncements(){const s=await session();if(s){const {data,error}=await supabase().from('announcements').select('*').order('published_at',{ascending:false}).limit(500);if(!error&&data)return data;}const auto=await fetchJson(cfg.ANNOUNCEMENTS_DATA_URL||'../data/announcements.json',[]);return [...localState().manualAnnouncements,...auto];}
 export function exportLocal(){return JSON.stringify(localState(),null,2);}
-export function importLocal(json){const obj=JSON.parse(json);saveLocal({...defaultState(),...obj});}
+export function importLocal(json){const obj=JSON.parse(json);const state={...defaultState(),...obj};state.transactions=(state.transactions||[]).map(t=>({...t,account:accountOf(t)}));saveLocal(state);}
 export function resetLocal(){localStorage.removeItem(KEY);}

@@ -1,5 +1,5 @@
 import {mountShell} from './shell.js';
-import {loadCore, aggregateHoldings, loadMarket} from './data-service.js';
+import {loadCore, aggregateHoldings, loadMarket, availableAccounts} from './data-service.js';
 import {fmtMoney, fmtNum, fmtPct, esc, trendClass, debounce} from './utils.js';
 import {updateModeBadge} from './common.js';
 
@@ -79,10 +79,11 @@ function bindFilterButtons(group,callback){
 async function run(){
   const [core,market]=await Promise.all([loadCore(),loadMarket()]);
   const mm=new Map(market.map(x=>[x.symbol,x]));
-  rows=aggregateHoldings(core.instruments,core.transactions).map(h=>({...h,market:mm.get(h.symbol)||{}}));
+  const accounts=availableAccounts(core.transactions);let selectedAccount=localStorage.getItem('portfolioAccountFilter')||'All accounts';if(selectedAccount!=='All accounts'&&!accounts.includes(selectedAccount))selectedAccount='All accounts';
+  rows=aggregateHoldings(core.instruments,core.transactions,selectedAccount).map(h=>({...h,market:mm.get(h.symbol)||{}}));
   const counts=rows.map(enriched).reduce((a,x)=>{a.trend[x.trendBucket]=(a.trend[x.trendBucket]||0)+1;a.asset[x.assetBucket]=(a.asset[x.assetBucket]||0)+1;return a;},{trend:{},asset:{}});
   root.innerHTML=`
-    <div class="hero modern-hero"><div><span class="eyebrow">Portfolio composition</span><h2>Holdings command board</h2><p>Scan performance visually, then open the detailed ledger only when you need exact numbers.</p></div><a class="btn primary" href="transactions.html">+ Add transaction</a></div>
+    <div class="hero modern-hero"><div><span class="eyebrow">Portfolio composition</span><h2>Holdings command board</h2><p>Scan performance visually, then open the detailed ledger only when you need exact numbers.</p></div><div class="hero-actions"><label class="account-picker"><span>Account</span><select id="accountFilter" class="input"><option>All accounts</option>${accounts.map(a=>`<option ${a===selectedAccount?'selected':''}>${esc(a)}</option>`).join('')}</select></label><a class="btn primary" href="transactions.html">+ Add transaction</a></div></div>
     <div class="filter-panel">
       <div class="search-control"><span>⌕</span><input id="search" class="input" placeholder="Search company, symbol or sector"></div>
       <div class="filter-group"><span class="filter-label">Trend</span><div class="segmented"><button class="active" data-trend="all">All <b>${rows.length}</b></button><button data-trend="bullish">Bullish <b>${counts.trend.bullish||0}</b></button><button data-trend="bearish">Bearish <b>${counts.trend.bearish||0}</b></button><button data-trend="neutral">Neutral <b>${counts.trend.neutral||0}</b></button><button data-trend="unavailable">No data <b>${counts.trend.unavailable||0}</b></button></div></div>
@@ -92,6 +93,7 @@ async function run(){
     </div>
     <div id="holdingCards" class="holding-card-grid"></div>
     <details class="details-panel"><summary>Open detailed holdings table</summary><div class="table-wrap"><table class="data-table"><thead><tr><th>Instrument / sector</th><th>Asset</th><th>Qty</th><th>Avg cost</th><th>Latest</th><th>Invested</th><th>Value</th><th>P&amp;L</th><th>Return</th><th>Technical</th></tr></thead><tbody id="holdingsBody"></tbody></table></div></details>`;
+  document.getElementById('accountFilter').addEventListener('change',e=>{localStorage.setItem('portfolioAccountFilter',e.target.value);location.reload();});
   document.getElementById('search').addEventListener('input',debounce(render));
   document.getElementById('sortBy').addEventListener('change',render);
   bindFilterButtons('trend',v=>selectedTrend=v);
