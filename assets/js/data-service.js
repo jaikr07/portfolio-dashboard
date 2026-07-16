@@ -331,8 +331,8 @@ export async function importMstockTradeWorkbook(buffer){
     const tradeId=idCol>=0?String(row[idCol]||'').trim():'';
     const exchange=exchangeCol>=0?String(row[exchangeCol]||'NSE').toUpperCase():'NSE';
     if(!trade_date||!symbol||!['buy','sell'].includes(type)||!Number.isFinite(quantity)||quantity<=0||!Number.isFinite(price)||price<=0)continue;
-    const rawId=tradeId||`${trade_date}-${exchange}-${symbol}-${type}-${quantity}-${price}`;
-    const external_trade_id=`mstock-${rawId}`;
+    const rawId=tradeId||'generated';
+    const external_trade_id=`mstock-${trade_date}-${exchange}-${rawId}-${symbol}-${type}-${quantity}-${price}`;
     records.push({
       symbol,transaction_type:type,trade_date,quantity,price,fees:0,
       notes:`m.Stock trade history · ${tradeId||'generated ID'}`,
@@ -349,9 +349,10 @@ export async function importMstockTradeWorkbook(buffer){
     }
   }
   if(!records.length)throw new Error('No valid m.Stock buy or sell executions were found.');
-  const saved=await saveHistoryRecords(records,instruments);
-  const dates=records.map(row=>row.trade_date).sort();
-  return {rows:records.length,...saved,start:dates[0],end:dates.at(-1),account};
+  const normalizedRecords=uniqueExternalTradeIds(records);
+  const saved=await saveHistoryRecords(normalizedRecords,instruments);
+  const dates=normalizedRecords.map(row=>row.trade_date).sort();
+  return {rows:normalizedRecords.length,...saved,start:dates[0],end:dates.at(-1),account};
 }
 
 function toIsoDate(value){
@@ -437,6 +438,39 @@ function batches(values,size=250){
   return out;
 }
 
+function safeIdPart(value){
+  return String(value??'').trim().toLowerCase().replace(/[^a-z0-9._-]+/g,'-').replace(/^-+|-+$/g,'').slice(0,80);
+}
+
+/**
+ * Older m.Stock exports can reuse the same Trade Id on different dates. The
+ * original importer used only that Trade Id, which produced duplicate cloud
+ * keys. Preserve every genuine execution by giving repeated IDs a stable,
+ * transaction-specific suffix before writing to Supabase.
+ */
+function uniqueExternalTradeIds(rows){
+  const seen=new Map();
+  const used=new Set();
+  return rows.map((row,index)=>{
+    const original=String(row.external_trade_id||'').trim();
+    if(!original)return {...row,external_trade_id:null};
+    const occurrence=(seen.get(original)||0)+1;
+    seen.set(original,occurrence);
+    let candidate=original;
+    if(occurrence>1 || used.has(candidate)){
+      const detail=[
+        safeIdPart(row.trade_date),safeIdPart(row.account),safeIdPart(row.symbol),
+        safeIdPart(row.transaction_type),safeIdPart(row.quantity),safeIdPart(row.price),occurrence
+      ].filter(Boolean).join('-');
+      candidate=`${original}-${detail||index+1}`;
+      let suffix=2;
+      while(used.has(candidate))candidate=`${original}-${detail||index+1}-${suffix++}`;
+    }
+    used.add(candidate);
+    return {...row,external_trade_id:candidate};
+  });
+}
+
 export async function migrateLocalToCloud(){
   const current=await session();
   if(!current)throw new Error('Sign in before moving browser data to cloud.');
@@ -455,18 +489,23 @@ export async function migrateLocalToCloud(){
   const {error:manualDeleteError}=await sb.from('announcements').delete().eq('user_id',user_id).eq('is_manual',true);
   if(manualDeleteError)throw manualDeleteError;
 
-  const instruments=(state.instruments||[]).map(row=>({
-    user_id,
-    symbol:String(row.symbol||'').toUpperCase(),
-    yahoo_symbol:String(row.yahoo_symbol||'').toUpperCase(),
-    name:row.name||row.symbol,
-    exchange:row.exchange||'NSE',
-    sector:row.sector||'Unclassified',
-    asset_type:row.asset_type||'Equity',
-    active:row.active!==false,
-  })).filter(row=>row.symbol&&row.yahoo_symbol);
+  const instrumentMap=new Map();
+  for(const row of state.instruments||[]){
+    const item={
+      user_id,
+      symbol:String(row.symbol||'').toUpperCase(),
+      yahoo_symbol:String(row.yahoo_symbol||'').toUpperCase(),
+      name:row.name||row.symbol,
+      exchange:row.exchange||'NSE',
+      sector:row.sector||'Unclassified',
+      asset_type:row.asset_type||'Equity',
+      active:row.active!==false,
+    };
+    if(item.symbol&&item.yahoo_symbol)instrumentMap.set(item.symbol,item);
+  }
+  const instruments=[...instrumentMap.values()];
 
-  const transactions=(state.transactions||[]).map(row=>({
+  const transactions=uniqueExternalTradeIds((state.transactions||[]).map(row=>({
     user_id,
     symbol:String(row.symbol||'').toUpperCase(),
     transaction_type:String(row.transaction_type||'buy').toLowerCase(),
@@ -480,7 +519,7 @@ export async function migrateLocalToCloud(){
     source:row.source||null,
     account:accountOf(row),
     created_at:row.created_at||new Date().toISOString(),
-  })).filter(row=>row.symbol&&row.quantity>=0);
+  })).filter(row=>row.symbol&&row.quantity>=0));
 
   const manual=(state.manualAnnouncements||[]).map(row=>({
     user_id,
