@@ -1,8 +1,8 @@
 {
   "id": "./",
-  "name": "Jai's Portfolio Command Center",
-  "short_name": "Portfolio",
-  "description": "Private multi-broker portfolio tracking, technical signals, results and announcements.",
+  "name": "JKR Investments",
+  "short_name": "JKR Investments",
+  "description": "Private multi-broker portfolio intelligence, technical signals, results and announcements.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

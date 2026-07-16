@@ -1,13 +1,13 @@
 import {cfg,esc} from './utils.js';
-import {isCloudConfigured,session,signIn} from './data-service.js?v=4.0';
-import {initPwa} from './pwa.js?v=4.0';
+import {isCloudConfigured,session,signIn} from './data-service.js?v=4.1';
+import {initPwa} from './pwa.js?v=4.2';
 
 function loginMarkup(){
   return `<main class="auth-screen">
     <section class="auth-card">
-      <div class="auth-logo">PC</div>
+      <picture class="auth-brand-picture"><img class="auth-brand-logo auth-brand-logo-light" src="assets/icons/jkr-light.png" alt="JKR Investments"><img class="auth-brand-logo auth-brand-logo-dark" src="assets/icons/jkr-dark.png" alt="JKR Investments"></picture>
       <span class="eyebrow">Private cloud portfolio</span>
-      <h1>${esc(cfg.APP_NAME||'Portfolio Command Center')}</h1>
+      <h1>JKR Investments</h1>
       <p>Sign in to access your Zerodha and m.Stock portfolio on this device.</p>
       <form id="globalLoginForm" class="auth-form">
         <label>Email address<input class="input" type="email" name="email" autocomplete="username" required></label>
