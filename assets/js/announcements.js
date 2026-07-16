@@ -1,5 +1,7 @@
+import {ensureAuthenticated} from './auth-gate.js?v=4.0';
+await ensureAuthenticated();
 import {mountShell} from './shell.js';
-import {loadCore, aggregateHoldings, loadAnnouncements, saveManualAnnouncement, availableAccounts} from './data-service.js?v=3.5';
+import {loadCore, aggregateHoldings, loadAnnouncements, saveManualAnnouncement, availableAccounts} from './data-service.js?v=4.0';
 import {esc, impactClass, today, safeUrl} from './utils.js';
 import {updateModeBadge, bindModal} from './common.js';
 

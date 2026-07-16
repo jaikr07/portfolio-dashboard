@@ -93,3 +93,11 @@ a{color:inherit;text-decoration:none} button,input,select,textarea{font:inherit}
 .transaction-activity-wide{margin-top:18px}
 .data-repair-note{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:12px;background:rgba(86,194,255,.07);border:1px solid rgba(86,194,255,.22);margin-bottom:16px;color:#c8eaff;font-size:11.5px}
 @media(max-width:900px){.broker-import-options{grid-template-columns:1fr}.broker-import-heading{align-items:flex-start;flex-direction:column}}
+
+
+/* v4 cloud login and installable app */
+.auth-screen{min-height:100vh;display:grid;place-items:center;padding:24px;background:radial-gradient(circle at 20% 20%,rgba(79,124,255,.18),transparent 34%),radial-gradient(circle at 80% 15%,rgba(133,93,255,.18),transparent 30%),#07111f;color:#eef5ff}
+.auth-card{width:min(440px,100%);padding:34px;border:1px solid #203654;border-radius:22px;background:rgba(12,27,48,.96);box-shadow:0 28px 80px rgba(0,0,0,.38)}
+.auth-logo{width:56px;height:56px;border-radius:18px;display:grid;place-items:center;margin-bottom:18px;font-weight:800;background:linear-gradient(135deg,#54b6ff,#805cff);box-shadow:0 12px 32px rgba(84,182,255,.25)}
+.auth-card h1{font-size:28px;margin:8px 0 10px}.auth-card>p{color:#9db1cc;line-height:1.55}.auth-form{display:grid;gap:14px;margin-top:22px}.auth-form label{display:grid;gap:7px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#8fa7c4}.auth-submit{width:100%;justify-content:center;margin-top:4px}.auth-footnote{font-size:12px;margin:18px 0 0!important}.migration-box{margin:14px 0;padding:14px;border:1px solid rgba(84,182,255,.35);border-radius:14px;background:rgba(84,182,255,.08)}.migration-box p{margin:6px 0 12px;color:#a8bad1}.topbar-actions{flex-wrap:wrap}.topbar-actions .btn[hidden]{display:none!important}
+@media(max-width:720px){.auth-card{padding:24px}.auth-card h1{font-size:24px}.topbar-actions #authBadge{display:none}.topbar-actions{gap:6px}.topbar-actions .btn{padding:7px 9px;font-size:11px}}

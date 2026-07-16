@@ -419,10 +419,107 @@ export async function importTradebookCsv(text,account=DEFAULT_ACCOUNT){
   return {rows:records.length, imported:records.length, duplicates:0, start:records.map(x=>x.trade_date).sort()[0], end:records.map(x=>x.trade_date).sort().at(-1)};
 }
 
+
+export function localDataSummary(){
+  const state=localState();
+  return {
+    instruments:(state.instruments||[]).length,
+    transactions:(state.transactions||[]).length,
+    manualAnnouncements:(state.manualAnnouncements||[]).length,
+    accounts:availableAccounts(state.transactions||[]),
+    migratedAt:localStorage.getItem('portfolioCloudMigrationAt')||'',
+  };
+}
+
+function batches(values,size=250){
+  const out=[];
+  for(let i=0;i<values.length;i+=size)out.push(values.slice(i,i+size));
+  return out;
+}
+
+export async function migrateLocalToCloud(){
+  const current=await session();
+  if(!current)throw new Error('Sign in before moving browser data to cloud.');
+  const state=localState();
+  if(!(state.instruments||[]).length && !(state.transactions||[]).length && !(state.manualAnnouncements||[]).length){
+    throw new Error('There is no browser-only portfolio data to move.');
+  }
+  const sb=supabase();
+  const user_id=current.user.id;
+
+  // Replace only the signed-in user's private portfolio records.
+  for(const table of ['transactions','instruments']){
+    const {error}=await sb.from(table).delete().eq('user_id',user_id);
+    if(error)throw error;
+  }
+  const {error:manualDeleteError}=await sb.from('announcements').delete().eq('user_id',user_id).eq('is_manual',true);
+  if(manualDeleteError)throw manualDeleteError;
+
+  const instruments=(state.instruments||[]).map(row=>({
+    user_id,
+    symbol:String(row.symbol||'').toUpperCase(),
+    yahoo_symbol:String(row.yahoo_symbol||'').toUpperCase(),
+    name:row.name||row.symbol,
+    exchange:row.exchange||'NSE',
+    sector:row.sector||'Unclassified',
+    asset_type:row.asset_type||'Equity',
+    active:row.active!==false,
+  })).filter(row=>row.symbol&&row.yahoo_symbol);
+
+  const transactions=(state.transactions||[]).map(row=>({
+    user_id,
+    symbol:String(row.symbol||'').toUpperCase(),
+    transaction_type:String(row.transaction_type||'buy').toLowerCase(),
+    trade_date:row.trade_date||today(),
+    quantity:Number(row.quantity||0),
+    price:Number(row.price||0),
+    fees:Number(row.fees||0),
+    notes:row.notes||null,
+    analytics_only:row.analytics_only===true||String(row.analytics_only).toLowerCase()==='true',
+    external_trade_id:row.external_trade_id||null,
+    source:row.source||null,
+    account:accountOf(row),
+    created_at:row.created_at||new Date().toISOString(),
+  })).filter(row=>row.symbol&&row.quantity>=0);
+
+  const manual=(state.manualAnnouncements||[]).map(row=>({
+    user_id,
+    symbol:String(row.symbol||'PORTFOLIO').toUpperCase(),
+    external_id:row.external_id||null,
+    published_at:row.published_at||new Date().toISOString(),
+    title:row.title||'Manual note',
+    source:row.source||'Manual',
+    source_url:row.source_url||null,
+    summary:row.summary||null,
+    category:row.category||'Manual',
+    impact_score:Number(row.impact_score||0),
+    impact_label:row.impact_label||null,
+    confidence:row.confidence||null,
+    impact_reason:row.impact_reason||null,
+    watch_items:row.watch_items||null,
+    time_horizon:row.time_horizon||null,
+    materiality:row.materiality||null,
+    is_manual:true,
+  }));
+
+  for(const group of batches(instruments)){
+    const {error}=await sb.from('instruments').insert(group);if(error)throw error;
+  }
+  for(const group of batches(transactions)){
+    const {error}=await sb.from('transactions').insert(group);if(error)throw error;
+  }
+  for(const group of batches(manual)){
+    const {error}=await sb.from('announcements').insert(group);if(error)throw error;
+  }
+  localStorage.setItem('portfolioCloudMigrationAt',new Date().toISOString());
+  return {instruments:instruments.length,transactions:transactions.length,manualAnnouncements:manual.length};
+}
+
 export async function fetchJson(url,fallback=[]){try{if(!location.pathname.includes('/pages/')&&url.startsWith('../'))url=url.slice(3);const r=await fetch(`${url}?v=${Date.now()}`);if(!r.ok)throw new Error(r.status);return await r.json();}catch{return fallback;}}
 export async function loadMarket(){const s=await session();if(s){const {data,error}=await supabase().from('latest_market_snapshots').select('*');if(!error&&data)return data;}return fetchJson(cfg.MARKET_DATA_URL||'../data/market.json',[]);}
 export async function loadResults(){const s=await session();if(s){const {data,error}=await supabase().from('financial_results').select('*').order('period_end',{ascending:false});if(!error&&data)return data;}return fetchJson(cfg.RESULTS_DATA_URL||'../data/results.json',[]);}
 export async function loadAnnouncements(){const s=await session();if(s){const {data,error}=await supabase().from('announcements').select('*').order('published_at',{ascending:false}).limit(500);if(!error&&data)return data;}const auto=await fetchJson(cfg.ANNOUNCEMENTS_DATA_URL||'../data/announcements.json',[]);return [...localState().manualAnnouncements,...auto];}
+export async function exportCurrentData(){return JSON.stringify(await loadCore(),null,2);}
 export function exportLocal(){return JSON.stringify(localState(),null,2);}
 export function importLocal(json){const obj=JSON.parse(json);const state={...defaultState(),...obj};state.instruments=(state.instruments||[]).map(normalizeInstrumentRecord);state.transactions=(state.transactions||[]).map(t=>({...t,account:accountOf(t)}));saveLocal(state);}
 export function resetLocal(){localStorage.removeItem(KEY);}

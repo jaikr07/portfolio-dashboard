@@ -1,3 +1,5 @@
+import {ensureAuthenticated} from './auth-gate.js?v=4.0';
+await ensureAuthenticated();
 import { mountShell } from './shell.js';
 import {
   loadCore,
@@ -10,7 +12,7 @@ import {
   importMstockTradeWorkbook,
   availableAccounts,
   accountOf,
-} from './data-service.js?v=3.5';
+} from './data-service.js?v=4.0';
 import { fmtMoney, fmtNum, esc, today } from './utils.js';
 import { updateModeBadge } from './common.js';
 
