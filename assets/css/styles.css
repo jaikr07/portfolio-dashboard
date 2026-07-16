@@ -135,3 +135,124 @@ html[data-theme="light"] .data-table tr:hover td{background:rgba(22,142,232,.05)
 @media(max-width:620px){
   .topbar-actions #installBtn,.topbar-actions #privacyBtn{font-size:0;width:38px;height:38px;padding:0;display:grid;place-items:center}.topbar-actions #installBtn::before{content:'⬇';font-size:15px}.topbar-actions #privacyBtn::before{content:'◉';font-size:15px}.topbar-actions #globalSignOutBtn{font-size:0;width:38px;height:38px;padding:0}.topbar-actions #globalSignOutBtn::before{content:'↪';font-size:16px}.theme-select{width:42px;max-width:42px;color:transparent;padding:8px;background-position:center;background-image:none}.theme-select option{color:#102033}.grid.kpis{grid-template-columns:1fr}.kpi-value{font-size:22px}.hero h2{font-size:24px}.card{padding:15px;border-radius:14px}.holding-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.period-summary-grid{grid-template-columns:1fr}.technical-secondary,.ma-strip{grid-template-columns:repeat(3,minmax(0,1fr));overflow:auto}.chart-box{height:240px}.modal-backdrop{padding:8px}.modal{padding:16px;border-radius:15px}.brand-picture,.brand-logo{width:46px;height:46px}.topbar-left{min-width:0}.topbar-left>div{min-width:0}
 }
+
+/* v4.2.1 — Light theme contrast and readability patch */
+:root[data-theme="light"]{
+  --bg:#eef3f8;
+  --panel:#ffffff;
+  --panel-2:#f3f7fb;
+  --text:#0f1f33;
+  --muted:#42556b;
+  --border:#c7d3e1;
+  --accent:#087fc8;
+  --positive:#087a52;
+  --negative:#bf3044;
+  --warning:#9b6200;
+  --neutral:#566a80;
+  --shadow:0 12px 30px rgba(31,52,76,.12);
+  --soft-border:rgba(54,78,105,.20)
+}
+html[data-theme="light"] body{background:linear-gradient(135deg,#f7f9fc 0%,#edf2f7 55%,#f8fafc 100%);color:var(--text)}
+html[data-theme="light"] .sidebar{background:rgba(250,252,255,.98);border-right-color:#c7d3e1}
+html[data-theme="light"] .topbar{background:rgba(250,252,255,.94);border-bottom-color:#c7d3e1}
+html[data-theme="light"] .brand h1,
+html[data-theme="light"] .page-title,
+html[data-theme="light"] .hero h2,
+html[data-theme="light"] .modern-hero h2,
+html[data-theme="light"] .card h3,
+html[data-theme="light"] .section-heading h3,
+html[data-theme="light"] .symbol,
+html[data-theme="light"] .symbol-lg,
+html[data-theme="light"] .action-item strong,
+html[data-theme="light"] .sector-tile>div:first-child span,
+html[data-theme="light"] .news-card h4{color:#0c1b2d}
+html[data-theme="light"] .brand p,
+html[data-theme="light"] .status-line,
+html[data-theme="light"] .hero p,
+html[data-theme="light"] .modern-hero p,
+html[data-theme="light"] .card-intro,
+html[data-theme="light"] .section-heading p,
+html[data-theme="light"] .subtext,
+html[data-theme="light"] .kpi-label,
+html[data-theme="light"] .kpi-sub,
+html[data-theme="light"] .metric-label,
+html[data-theme="light"] .holding-sector,
+html[data-theme="light"] .action-item p,
+html[data-theme="light"] .sector-tile footer small,
+html[data-theme="light"] .news-meta,
+html[data-theme="light"] .news-card p,
+html[data-theme="light"] .performer-row small,
+html[data-theme="light"] .result-metric span,
+html[data-theme="light"] .result-metric small,
+html[data-theme="light"] .cash-note,
+html[data-theme="light"] .metric-explanation{color:#42556b!important}
+html[data-theme="light"] .nav a{color:#405269;font-weight:650}
+html[data-theme="light"] .nav a:hover,
+html[data-theme="light"] .nav a.active{background:#e7eef7;color:#102033}
+html[data-theme="light"] .sidebar-footer{background:#ffffff;color:#405269;border-color:#c7d3e1}
+html[data-theme="light"] .card,
+html[data-theme="light"] .technical-card,
+html[data-theme="light"] .company-result-card,
+html[data-theme="light"] .holding-card,
+html[data-theme="light"] .details-panel{background:#ffffff;border-color:#c7d3e1;box-shadow:0 10px 26px rgba(31,52,76,.10)}
+html[data-theme="light"] .action-columns>div,
+html[data-theme="light"] .sector-tile,
+html[data-theme="light"] .news-card,
+html[data-theme="light"] .signal-item,
+html[data-theme="light"] .period-summary-card,
+html[data-theme="light"] .addition-item,
+html[data-theme="light"] .broker-import-option,
+html[data-theme="light"] .account-summary,
+html[data-theme="light"] .capital-split>div,
+html[data-theme="light"] .chart-legend-list div,
+html[data-theme="light"] .breadth-summary div,
+html[data-theme="light"] .holding-stats div,
+html[data-theme="light"] .ma-strip div,
+html[data-theme="light"] .technical-secondary>div,
+html[data-theme="light"] .result-pillars section,
+html[data-theme="light"] .result-metric,
+html[data-theme="light"] .context-facts span,
+html[data-theme="light"] .quality-orb{background:#eef3f8;border-color:#c8d4e2;color:#13243a}
+html[data-theme="light"] .action-columns>div{background:#edf2f7}
+html[data-theme="light"] .action-column-title{color:#13243a;font-weight:800}
+html[data-theme="light"] .action-column-title b{background:#dce5ef;color:#1f3248}
+html[data-theme="light"] .action-item{border-top-color:#c9d4e1}
+html[data-theme="light"] .action-icon{background:#dde6f0;color:#1f3248}
+html[data-theme="light"] .sector-bar,
+html[data-theme="light"] .mini-progress{background:#d6e0eb}
+html[data-theme="light"] .news-card small,
+html[data-theme="light"] .details-panel summary,
+html[data-theme="light"] .result-pillars h4,
+html[data-theme="light"] .coverage-note strong,
+html[data-theme="light"] .addition-values b{color:#273b52}
+html[data-theme="light"] .badge.neutral{background:#e4ebf3;border-color:#c5d1df;color:#31445b}
+html[data-theme="light"] .input,
+html[data-theme="light"] .modal,
+html[data-theme="light"] .data-table th{background:#f7f9fc;color:#172a40;border-color:#c7d3e1}
+html[data-theme="light"] .data-table td{color:#172a40;border-bottom-color:#d6dee8}
+html[data-theme="light"] .data-table th{font-weight:800}
+html[data-theme="light"] .notice{background:#e5f3fb;color:#164d70;border-color:#9ecbe3}
+html[data-theme="light"] .notice.warning{background:#fff4d8;color:#754900;border-color:#e1bd68}
+html[data-theme="light"] .text-link{color:#066cae}
+html[data-theme="light"] .btn{background:#eef3f8;color:#172a40;border-color:#bcc9d8}
+html[data-theme="light"] .btn.primary{color:#03101c}
+html[data-theme="light"] .theme-select{background-color:#eef3f8;color:#172a40;border-color:#bcc9d8}
+html[data-theme="light"] .positive{color:#06724b!important}
+html[data-theme="light"] .negative{color:#b02d3f!important}
+html[data-theme="light"] .warning{color:#8b5800!important}
+html[data-theme="light"] .kpi-value{color:#0f1f33}
+html[data-theme="light"] .eyebrow{color:#006ba8}
+html[data-theme="light"] .metric-explanation{background:#edf2f7;border:1px solid #d2dce8}
+html[data-theme="light"] .technical-clear{background:#e3f4ec;color:#087a52}
+html[data-theme="light"] .technical-alert-list{background:#fff4d8;color:#8b5800}
+html[data-theme="light"] .action-centre,
+html[data-theme="light"] .sector-section{color:#0f1f33}
+
+/* Slightly larger supporting text for readability in both themes */
+.card-intro,.section-heading p,.action-item p,.sector-tile footer,.news-card p,.status-line,.kpi-sub{font-size:12px}
+.action-item strong,.sector-tile>div:first-child,.news-card h4{font-size:12.5px}
+@media(max-width:760px){
+  .nav a{font-size:15px}
+  .status-line{font-size:11px}
+  .action-item p,.sector-tile footer,.news-card p{font-size:11.5px}
+}
