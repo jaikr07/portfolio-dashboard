@@ -29,7 +29,7 @@
       "Price below 50 DMA"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.035489+00:00"
+    "fetched_at": "2026-10-05T20:50:48.942687+00:00"
   },
   {
     "symbol": "AARTIPHARM",
@@ -61,7 +61,7 @@
       "Within 2% of 52-week high"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.039181+00:00"
+    "fetched_at": "2026-10-05T20:50:48.946590+00:00"
   },
   {
     "symbol": "ADANIGREEN",
@@ -94,7 +94,7 @@
       "High volume: 4.5× 20-day average"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.042882+00:00"
+    "fetched_at": "2026-10-05T20:50:48.950481+00:00"
   },
   {
     "symbol": "AEROENTER",
@@ -126,7 +126,7 @@
       "Price below 50 DMA"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.046563+00:00"
+    "fetched_at": "2026-10-05T20:50:48.954361+00:00"
   },
   {
     "symbol": "AFFLE",
@@ -159,7 +159,7 @@
       "Price below 50 DMA"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.050272+00:00"
+    "fetched_at": "2026-10-05T20:50:48.958225+00:00"
   },
   {
     "symbol": "AGOL",
@@ -191,7 +191,7 @@
       "Price below 200 DMA"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.054033+00:00"
+    "fetched_at": "2026-10-05T20:50:48.962114+00:00"
   },
   {
     "symbol": "AURUM",
@@ -223,7 +223,7 @@
       "Price below 50 DMA"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.057850+00:00"
+    "fetched_at": "2026-10-05T20:50:48.965982+00:00"
   },
   {
     "symbol": "BEWLTD-SM",
@@ -255,7 +255,7 @@
       "Price below 200 DMA"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.061639+00:00"
+    "fetched_at": "2026-10-05T20:50:48.969775+00:00"
   },
   {
     "symbol": "BLUEJET",
@@ -287,7 +287,7 @@
       "Price below 50 DMA"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.065312+00:00"
+    "fetched_at": "2026-10-05T20:50:48.973626+00:00"
   },
   {
     "symbol": "CAMS",
@@ -298,15 +298,15 @@
     "close": 677.25,
     "daily_change_pct": 0.931446,
     "return_1m_pct": -8.707957,
-    "return_3m_pct": -13.422022,
-    "return_6m_pct": 1.520298,
-    "return_1y_pct": -8.356991,
+    "return_3m_pct": -13.422028,
+    "return_6m_pct": 1.520307,
+    "return_1y_pct": -8.356984,
     "return_2y_pct": -20.742428,
     "sma20": 708.267496,
     "sma50": 746.387123,
-    "sma200": 735.023081,
+    "sma200": 735.023082,
     "ema20": 707.331605,
-    "ema50": 732.39072,
+    "ema50": 732.390721,
     "rsi14": 34.391236,
     "high_52w": 829.347961,
     "low_52w": 617.275635,
@@ -320,7 +320,7 @@
       "Price below 50 DMA"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.069063+00:00"
+    "fetched_at": "2026-10-05T20:50:48.977550+00:00"
   },
   {
     "symbol": "CHEMTECH",
@@ -353,7 +353,7 @@
       "Price below 50 DMA"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.072804+00:00"
+    "fetched_at": "2026-10-05T20:50:48.981435+00:00"
   },
   {
     "symbol": "CTLLAB",
@@ -388,7 +388,7 @@
       "RSI below 30: oversold condition"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.076450+00:00"
+    "fetched_at": "2026-10-05T20:50:48.985138+00:00"
   },
   {
     "symbol": "CYBERTECH-BE",
@@ -418,7 +418,7 @@
     "trend_label": "Bullish",
     "alerts": [],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.080202+00:00"
+    "fetched_at": "2026-10-05T20:50:48.989030+00:00"
   },
   {
     "symbol": "CYIENT",
@@ -448,7 +448,7 @@
     "trend_label": "Strong bullish",
     "alerts": [],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.084077+00:00"
+    "fetched_at": "2026-10-05T20:50:48.993034+00:00"
   },
   {
     "symbol": "EDELWEISS",
@@ -478,7 +478,7 @@
     "trend_label": "Strong bullish",
     "alerts": [],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.087829+00:00"
+    "fetched_at": "2026-10-05T20:50:48.996951+00:00"
   },
   {
     "symbol": "EIEL",
@@ -511,7 +511,7 @@
       "Price below 50 DMA"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.091470+00:00"
+    "fetched_at": "2026-10-05T20:50:49.000682+00:00"
   },
   {
     "symbol": "ELECTCAST",
@@ -544,7 +544,7 @@
       "Price below 50 DMA"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.095184+00:00"
+    "fetched_at": "2026-10-05T20:50:49.004547+00:00"
   },
   {
     "symbol": "ELLEN",
@@ -574,7 +574,7 @@
     "trend_label": "Bullish",
     "alerts": [],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.098803+00:00"
+    "fetched_at": "2026-10-05T20:50:49.008200+00:00"
   },
   {
     "symbol": "FAIRCHEMOR-BE",
@@ -606,7 +606,7 @@
       "Price below 50 DMA"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.102547+00:00"
+    "fetched_at": "2026-10-05T20:50:49.012056+00:00"
   },
   {
     "symbol": "FLORACORP",
@@ -640,7 +640,7 @@
       "52-week breakdown"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.106341+00:00"
+    "fetched_at": "2026-10-05T20:50:49.015972+00:00"
   },
   {
     "symbol": "GEMAROMA",
@@ -673,7 +673,7 @@
       "Price below 50 DMA"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.110018+00:00"
+    "fetched_at": "2026-10-05T20:50:49.019644+00:00"
   },
   {
     "symbol": "GLAND",
@@ -703,7 +703,7 @@
     "trend_label": "Bullish",
     "alerts": [],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.113817+00:00"
+    "fetched_at": "2026-10-05T20:50:49.023456+00:00"
   },
   {
     "symbol": "HDFCAMC",
@@ -717,7 +717,7 @@
     "return_3m_pct": -16.777234,
     "return_6m_pct": 0.570661,
     "return_1y_pct": -14.737166,
-    "return_2y_pct": 7.480997,
+    "return_2y_pct": 7.481009,
     "sma20": 2390.250012,
     "sma50": 2492.292002,
     "sma200": 2558.771558,
@@ -737,7 +737,7 @@
       "High volume: 1.8× 20-day average"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.117609+00:00"
+    "fetched_at": "2026-10-05T20:50:49.027338+00:00"
   },
   {
     "symbol": "IEX",
@@ -772,7 +772,7 @@
       "RSI below 30: oversold condition"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.121335+00:00"
+    "fetched_at": "2026-10-05T20:50:49.031176+00:00"
   },
   {
     "symbol": "IKIO",
@@ -804,7 +804,7 @@
       "Price below 50 DMA"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.125035+00:00"
+    "fetched_at": "2026-10-05T20:50:49.035070+00:00"
   },
   {
     "symbol": "IMAGICAA",
@@ -836,7 +836,7 @@
       "Price below 50 DMA"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.128783+00:00"
+    "fetched_at": "2026-10-05T20:50:49.038951+00:00"
   },
   {
     "symbol": "JTLIND",
@@ -850,7 +850,7 @@
     "return_3m_pct": 3.924031,
     "return_6m_pct": 77.092845,
     "return_1y_pct": 26.725083,
-    "return_2y_pct": -27.667868,
+    "return_2y_pct": -27.667873,
     "sma20": 88.444241,
     "sma50": 82.439548,
     "sma200": 71.217635,
@@ -866,7 +866,7 @@
     "trend_label": "Bullish",
     "alerts": [],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.132567+00:00"
+    "fetched_at": "2026-10-05T20:50:49.042778+00:00"
   },
   {
     "symbol": "KOTAKBANK",
@@ -898,7 +898,7 @@
       "High volume: 4.7× 20-day average"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.136547+00:00"
+    "fetched_at": "2026-10-05T20:50:49.046645+00:00"
   },
   {
     "symbol": "LANDMARK",
@@ -930,40 +930,41 @@
       "Price below 50 DMA"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.140224+00:00"
+    "fetched_at": "2026-10-05T20:50:49.050541+00:00"
   },
   {
     "symbol": "LIQUIDCASE",
     "yahoo_symbol": "LIQUIDCASE.NS",
     "sector": "ETF / Cash & Commodities",
     "asset_type": "ETF",
-    "as_of": "2026-09-30",
-    "close": 116.150002,
-    "daily_change_pct": 0.025834,
-    "return_1m_pct": 0.362912,
-    "return_3m_pct": 1.131914,
-    "return_6m_pct": 2.343822,
-    "return_1y_pct": 4.980118,
-    "return_2y_pct": 11.201537,
-    "sma20": 115.955,
-    "sma50": 115.6478,
-    "sma200": 114.02705,
-    "ema20": 115.954745,
-    "ema50": 115.642814,
+    "as_of": "2026-10-05",
+    "close": 116.220001,
+    "daily_change_pct": 0.017215,
+    "return_1m_pct": 0.362693,
+    "return_3m_pct": 1.157631,
+    "return_6m_pct": 2.36942,
+    "return_1y_pct": 4.986454,
+    "return_2y_pct": 11.204668,
+    "sma20": 116.0175,
+    "sma50": 115.7104,
+    "sma200": 114.09215,
+    "ema20": 116.020261,
+    "ema50": 115.706613,
     "rsi14": 100.0,
-    "high_52w": 116.150002,
-    "low_52w": 110.639999,
-    "volume": 26123360.0,
-    "avg_volume20": 18143790.3,
-    "volume_ratio": 1.439796,
+    "high_52w": 116.220001,
+    "low_52w": 110.75,
+    "volume": 35960196.0,
+    "avg_volume20": 18745466.3,
+    "volume_ratio": 1.918341,
     "trend_score": 5,
     "trend_label": "Bullish",
     "alerts": [
       "Within 2% of 52-week high",
+      "High volume: 1.9× 20-day average",
       "RSI above 75: overbought risk"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.143942+00:00"
+    "fetched_at": "2026-10-05T20:50:49.054216+00:00"
   },
   {
     "symbol": "MAYURUNIQ",
@@ -995,7 +996,7 @@
       "Price below 50 DMA"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.147652+00:00"
+    "fetched_at": "2026-10-05T20:50:49.058068+00:00"
   },
   {
     "symbol": "MSPL",
@@ -1028,7 +1029,7 @@
       "Price below 50 DMA"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.151504+00:00"
+    "fetched_at": "2026-10-05T20:50:49.062011+00:00"
   },
   {
     "symbol": "NEWGEN",
@@ -1042,7 +1043,7 @@
     "return_3m_pct": -3.872744,
     "return_6m_pct": 3.130827,
     "return_1y_pct": -48.133206,
-    "return_2y_pct": -64.445496,
+    "return_2y_pct": -64.445499,
     "sma20": 495.282498,
     "sma50": 520.337999,
     "sma200": 532.465924,
@@ -1062,7 +1063,7 @@
       "RSI below 30: oversold condition"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.155208+00:00"
+    "fetched_at": "2026-10-05T20:50:49.068190+00:00"
   },
   {
     "symbol": "OSWALPUMPS",
@@ -1096,7 +1097,7 @@
       "52-week breakdown"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.158819+00:00"
+    "fetched_at": "2026-10-05T20:50:49.072979+00:00"
   },
   {
     "symbol": "PAUSHAKLTD",
@@ -1128,7 +1129,7 @@
       "Price below 50 DMA"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.162461+00:00"
+    "fetched_at": "2026-10-05T20:50:49.076627+00:00"
   },
   {
     "symbol": "PERSISTENT",
@@ -1160,7 +1161,7 @@
       "Price below 50 DMA"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.166231+00:00"
+    "fetched_at": "2026-10-05T20:50:49.080486+00:00"
   },
   {
     "symbol": "PRERINFRA",
@@ -1193,7 +1194,7 @@
       "Price below 50 DMA"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.170020+00:00"
+    "fetched_at": "2026-10-05T20:50:49.084314+00:00"
   },
   {
     "symbol": "PRITIKAUTO",
@@ -1225,7 +1226,7 @@
       "Price below 50 DMA"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.173763+00:00"
+    "fetched_at": "2026-10-05T20:50:49.088174+00:00"
   },
   {
     "symbol": "PVRINOX",
@@ -1255,7 +1256,7 @@
     "trend_label": "Bullish",
     "alerts": [],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.177495+00:00"
+    "fetched_at": "2026-10-05T20:50:49.092079+00:00"
   },
   {
     "symbol": "RADHEDE",
@@ -1288,7 +1289,7 @@
       "Price below 50 DMA"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.181239+00:00"
+    "fetched_at": "2026-10-05T20:50:49.096263+00:00"
   },
   {
     "symbol": "RAIN",
@@ -1320,7 +1321,7 @@
       "Price below 50 DMA"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.184994+00:00"
+    "fetched_at": "2026-10-05T20:50:49.100214+00:00"
   },
   {
     "symbol": "RAYMONDLSL",
@@ -1354,7 +1355,7 @@
       "52-week breakdown"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.188658+00:00"
+    "fetched_at": "2026-10-05T20:50:49.103961+00:00"
   },
   {
     "symbol": "RELAXO",
@@ -1388,7 +1389,7 @@
       "RSI below 30: oversold condition"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.192403+00:00"
+    "fetched_at": "2026-10-05T20:50:49.107846+00:00"
   },
   {
     "symbol": "RELIANCE",
@@ -1423,7 +1424,7 @@
       "RSI below 30: oversold condition"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.196093+00:00"
+    "fetched_at": "2026-10-05T20:50:49.111789+00:00"
   },
   {
     "symbol": "SARLAPOLY",
@@ -1455,7 +1456,7 @@
       "Price below 50 DMA"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.199886+00:00"
+    "fetched_at": "2026-10-05T20:50:49.115703+00:00"
   },
   {
     "symbol": "SEYAIND-BE",
@@ -1487,7 +1488,7 @@
       "Price below 200 DMA"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.203614+00:00"
+    "fetched_at": "2026-10-05T20:50:49.119607+00:00"
   },
   {
     "symbol": "SGFIN",
@@ -1520,7 +1521,7 @@
       "High volume: 5.1× 20-day average"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.207176+00:00"
+    "fetched_at": "2026-10-05T20:50:49.123407+00:00"
   },
   {
     "symbol": "SGMART",
@@ -1552,32 +1553,32 @@
       "Price below 50 DMA"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.210744+00:00"
+    "fetched_at": "2026-10-05T20:50:49.127204+00:00"
   },
   {
     "symbol": "SILVER",
     "yahoo_symbol": "SILVER.NS",
     "sector": "ETF / Cash & Commodities",
     "asset_type": "ETF",
-    "as_of": "2026-09-30",
-    "close": 218.960007,
-    "daily_change_pct": 0.146363,
-    "return_1m_pct": -3.762305,
-    "return_3m_pct": -5.228526,
-    "return_6m_pct": -5.641024,
-    "return_1y_pct": 57.843141,
-    "return_2y_pct": 146.32693,
-    "sma20": 227.926999,
-    "sma50": 228.1336,
-    "sma200": 241.37725,
-    "ema20": 226.945457,
-    "ema50": 228.846828,
-    "rsi14": 39.144175,
+    "as_of": "2026-10-02",
+    "close": 217.940002,
+    "daily_change_pct": 0.0,
+    "return_1m_pct": -5.09493,
+    "return_3m_pct": -3.562106,
+    "return_6m_pct": -9.331444,
+    "return_1y_pct": 52.715291,
+    "return_2y_pct": 138.133753,
+    "sma20": 226.606999,
+    "sma50": 228.03,
+    "sma200": 241.5948,
+    "ema20": 225.311814,
+    "ema50": 228.008164,
+    "rsi14": 38.169415,
     "high_52w": 367.119995,
     "low_52w": 137.460007,
-    "volume": 734070.0,
-    "avg_volume20": 770838.4,
-    "volume_ratio": 0.952301,
+    "volume": 0.0,
+    "avg_volume20": 720282.1,
+    "volume_ratio": 0.0,
     "trend_score": -6,
     "trend_label": "Strong bearish",
     "alerts": [
@@ -1585,7 +1586,7 @@
       "Price below 50 DMA"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.214474+00:00"
+    "fetched_at": "2026-10-05T20:50:49.131033+00:00"
   },
   {
     "symbol": "SONACOMS",
@@ -1615,7 +1616,7 @@
     "trend_label": "Strong bullish",
     "alerts": [],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.218180+00:00"
+    "fetched_at": "2026-10-05T20:50:49.134956+00:00"
   },
   {
     "symbol": "SONATSOFTW",
@@ -1627,15 +1628,15 @@
     "daily_change_pct": -1.62633,
     "return_1m_pct": -12.184579,
     "return_3m_pct": -6.676181,
-    "return_6m_pct": 9.509008,
+    "return_6m_pct": 9.509015,
     "return_1y_pct": -24.725911,
-    "return_2y_pct": -58.566198,
+    "return_2y_pct": -58.566194,
     "sma20": 273.187501,
     "sma50": 295.747174,
-    "sma200": 284.044788,
+    "sma200": 284.04479,
     "ema20": 275.043938,
     "ema50": 284.36286,
-    "rsi14": 34.365281,
+    "rsi14": 34.36528,
     "high_52w": 383.03949,
     "low_52w": 205.986252,
     "volume": 852770.0,
@@ -1648,7 +1649,7 @@
       "Price below 50 DMA"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.221897+00:00"
+    "fetched_at": "2026-10-05T20:50:49.138852+00:00"
   },
   {
     "symbol": "STYL",
@@ -1680,7 +1681,7 @@
       "Price below 50 DMA"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.225447+00:00"
+    "fetched_at": "2026-10-05T20:50:49.142587+00:00"
   },
   {
     "symbol": "SUNTECK",
@@ -1713,7 +1714,7 @@
       "Price below 50 DMA"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.229166+00:00"
+    "fetched_at": "2026-10-05T20:50:49.146486+00:00"
   },
   {
     "symbol": "SUPRIYA",
@@ -1743,7 +1744,7 @@
     "trend_label": "Strong bullish",
     "alerts": [],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.232923+00:00"
+    "fetched_at": "2026-10-05T20:50:49.150449+00:00"
   },
   {
     "symbol": "SWSOLAR",
@@ -1777,7 +1778,7 @@
       "RSI below 30: oversold condition"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.236666+00:00"
+    "fetched_at": "2026-10-05T20:50:49.154366+00:00"
   },
   {
     "symbol": "TARSONS",
@@ -1807,7 +1808,7 @@
     "trend_label": "Strong bullish",
     "alerts": [],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.240407+00:00"
+    "fetched_at": "2026-10-05T20:50:49.158317+00:00"
   },
   {
     "symbol": "TIIL",
@@ -1821,7 +1822,7 @@
     "return_3m_pct": 16.007218,
     "return_6m_pct": 29.751136,
     "return_1y_pct": 25.487491,
-    "return_2y_pct": -6.077153,
+    "return_2y_pct": -6.077146,
     "sma20": 3070.47998,
     "sma50": 3003.817988,
     "sma200": 2509.052419,
@@ -1839,7 +1840,7 @@
       "Price below 50 DMA"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.244081+00:00"
+    "fetched_at": "2026-10-05T20:50:49.162273+00:00"
   },
   {
     "symbol": "TMCV",
@@ -1872,7 +1873,7 @@
       "Price below 50 DMA"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.247610+00:00"
+    "fetched_at": "2026-10-05T20:50:49.165983+00:00"
   },
   {
     "symbol": "TMPV",
@@ -1907,7 +1908,7 @@
       "RSI below 30: oversold condition"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.251311+00:00"
+    "fetched_at": "2026-10-05T20:50:49.169942+00:00"
   },
   {
     "symbol": "TRANSWORLD",
@@ -1940,7 +1941,7 @@
       "Price below 50 DMA"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.255005+00:00"
+    "fetched_at": "2026-10-05T20:50:49.173809+00:00"
   },
   {
     "symbol": "VIYASH",
@@ -1973,7 +1974,7 @@
       "Price below 50 DMA"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.258743+00:00"
+    "fetched_at": "2026-10-05T20:50:49.177738+00:00"
   },
   {
     "symbol": "WCIL",
@@ -2005,6 +2006,6 @@
       "Price below 200 DMA"
     ],
     "source": "Yahoo Finance via yfinance",
-    "fetched_at": "2026-10-02T18:04:55.262395+00:00"
+    "fetched_at": "2026-10-05T20:50:49.181572+00:00"
   }
 ]
